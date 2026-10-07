@@ -46,7 +46,9 @@ The simulator needs no `Local.xcconfig`. To run on a device, copy
   Accounts.
 
 Nothing else in the repository names a team or a person, so a fork
-needs no other change.
+needs no other change. The shared Keychain group that app and share
+extension use is derived from the same two values:
+`<team prefix>.<HRCEK_BUNDLE_PREFIX>.Hrcek.shared`.
 
 ## The project file
 

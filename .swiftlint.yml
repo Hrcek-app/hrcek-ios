@@ -1,4 +1,4 @@
-included: [Hrcek, HrcekShare, HrcekUITests, HrcekKit/Sources, HrcekKit/Tests]
+included: [Hrcek, HrcekShare, HrcekTests, HrcekUITests, HrcekKit/Sources, HrcekKit/Tests]
 excluded: [HrcekKit/.build, .build]
 
 # swift-format owns layout; these rules would fight it.

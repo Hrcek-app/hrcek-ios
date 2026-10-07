@@ -35,6 +35,13 @@
   },
   "testTargets" : [
     {
+      "target" : {
+        "containerPath" : "container:Hrcek.xcodeproj",
+        "identifier" : "F4234E575F898900A9DFA634",
+        "name" : "HrcekTests"
+      }
+    },
+    {
       "skippedTests" : [
         "ShareE2ETests"
       ],

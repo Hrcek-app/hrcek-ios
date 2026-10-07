@@ -41,6 +41,16 @@
         }
       }
     },
+    "Hrček for iOS (%@)" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hrček za iOS (%@)"
+          }
+        }
+      }
+    },
     "Something went wrong. Try again." : {
       "localizations" : {
         "sl" : {
