@@ -32,6 +32,7 @@ Run everything yourself with `prek run --all-files`.
 | hooks | Every hook above on all files, then gitleaks over the whole history |
 | kit | `scripts/test-kit` and `scripts/test-kit --simulator` |
 | app | `scripts/test-app` |
+| e2e | `scripts/e2e`, after the others pass, against `Hrcek-app/hrcek` from `main` |
 
 Jobs run on GitHub's `xcode-27` macOS image, which is a preview at the
 time of writing. Xcode is selected explicitly with `DEVELOPER_DIR`.

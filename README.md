@@ -9,8 +9,9 @@ project, without any guarantees.**
 
 ## Status
 
-Early: the project, its checks and a first bilingual screen. Signing
-in and saving the shared page come next.
+Early, but usable: sign in once in the app, then share any page from
+Safari or another browser to Hrček to save it. Editing what you save
+from the Share sheet comes later.
 
 ## Documentation
 

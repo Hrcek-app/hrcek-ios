@@ -48,3 +48,22 @@ logs the server's error code. Debug builds also log request and
 response bodies, after `LogRedaction` has replaced passwords, tokens,
 identifiers and email addresses with `‹redacted›`. Release builds never
 log bodies.
+
+## The share extension
+
+The extension logs under the same subsystem, category `share`:
+
+```bash
+xcrun simctl spawn booted log stream --level debug \
+  --predicate 'subsystem == "app.hrcek" AND category IN {"share", "api"}'
+```
+
+To debug it in Xcode, run the extension's target and choose Safari
+when Xcode asks which app to run. Then share a page to Hrček;
+breakpoints in `HrcekShare/` and in HrcekKit's `ShareModel` and
+`EntrySaver` are hit.
+
+The extension and the app share nothing but the Keychain item. If the
+extension says to sign in while the app shows you signed in, the two
+are not using the same Keychain group: compare `HrcekKeychainGroup` in
+both built Info.plists.
