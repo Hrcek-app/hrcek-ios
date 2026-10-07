@@ -9,7 +9,6 @@ online.
 You will not use the app much on its own. You save pages from your
 browser: open the page, tap **Share**, and choose **Hrček**.
 
-Before you can save anything, [sign in](sign-in.md) in the app.
-
-This is an early version: saving pages from the Share sheet arrives
-next, and this manual grows with it.
+- [Signing in](sign-in.md) — do this once, in the app.
+- [Saving pages](saving-pages.md) — from Safari or another browser.
+- [Troubleshooting](troubleshooting.md) — what the messages mean.

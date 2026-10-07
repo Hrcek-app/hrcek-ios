@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# Signs in to a real Hrček from the app, shares a page from Safari to the
+# extension, and checks through the API that it was saved.
+set -euo pipefail
+root=$(cd "$(dirname "$0")/.." && pwd)
+backend=${HRCEK_BACKEND_DIR:-$root/../hrcek}
+if [[ ! -f "$backend/manage.py" ]]; then
+  backend="$root/.build/e2e/hrcek"
+  [[ -d "$backend" ]] || git clone --depth 1 https://github.com/Hrcek-app/hrcek.git "$backend"
+fi
+
+work="$root/.build/e2e/run"
+mkdir -p "$work"
+api_port=8766
+page_port=8767
+email="e2e-$(date +%s)@example.com"
+password=$(openssl rand -hex 16)
+HRCEK_DB_PATH="$work/db-$(date +%s).sqlite3"
+export HRCEK_DB_PATH
+pids=()
+cleanup() { kill "${pids[@]}" 2>/dev/null || true; }
+trap cleanup EXIT
+
+(cd "$backend" && uv sync --quiet && uv run python manage.py migrate --verbosity 0)
+(cd "$backend" && uv run python manage.py shell --verbosity 0 -c "
+from django.utils import timezone
+from hrcek.accounts.models import User
+User.objects.create_user('$email', '$password', display_name='E2E', email_verified_at=timezone.now())
+")
+(cd "$backend" && exec uv run python manage.py runserver "127.0.0.1:$api_port" --noreload \
+  >"$work/backend.log" 2>&1) &
+pids+=($!)
+(cd "$root/scripts/e2e-page" && exec uv run --no-project python -m http.server "$page_port" \
+  --bind 127.0.0.1 >"$work/page.log" 2>&1) &
+pids+=($!)
+for _ in $(seq 100); do
+  curl -fs "http://127.0.0.1:$api_port/api/health" >/dev/null &&
+    curl -fs "http://127.0.0.1:$page_port/" >/dev/null && break
+  sleep 0.3
+done
+
+server="http://localhost:$api_port"
+page="http://localhost:$page_port/"
+"$root/scripts/contract-test" --url "$server" --identifier "$email" --password "$password"
+
+TEST_RUNNER_HRCEK_E2E_SERVER=$server TEST_RUNNER_HRCEK_E2E_EMAIL=$email \
+  TEST_RUNNER_HRCEK_E2E_PASSWORD=$password TEST_RUNNER_HRCEK_E2E_PAGE=$page \
+  "$root/scripts/test-app" --plan E2E
+
+token=$(curl -fs "$server/api/auth/tokens/exchange" -H 'Content-Type: application/json' \
+  -d "{\"name\":\"e2e check\",\"identifier\":\"$email\",\"password\":\"$password\"}" |
+  jq -r .token)
+title=$(curl -fs "$server/api/entries/lookup" -H "Authorization: Bearer $token" \
+  -H 'Content-Type: application/json' -d "{\"url\":\"$page\"}" | jq -r .title)
+echo "Saved entry: $page, title: \"$title\""
+if [[ "$title" != "Hrček E2E page" ]]; then
+  echo "Expected the page to be saved with its title" >&2
+  exit 1
+fi

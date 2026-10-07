@@ -111,6 +111,16 @@
         }
       }
     },
+    "There's no web address to save here." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu ni spletnega naslova, ki bi ga lahko shranili."
+          }
+        }
+      }
+    },
     "Too many attempts. Wait a while and try again." : {
       "localizations" : {
         "sl" : {

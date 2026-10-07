@@ -53,10 +53,12 @@ func signIn(
 @MainActor
 func declineSavingThePassword(_ app: XCUIApplication) {
     let notNow = app.buttons["Not Now"]
-    if notNow.waitForExistence(timeout: 3) {
-        notNow.tap()
-        XCTAssertTrue(notNow.waitForNonExistence(timeout: 5))
+    // A tap while the prompt is still sliding in is lost, so try again.
+    for _ in 0..<3 where notNow.waitForExistence(timeout: 3) {
+        tapWhenHittable(notNow)
+        if notNow.waitForNonExistence(timeout: 3) { return }
     }
+    XCTAssertFalse(notNow.exists, "the save-password prompt would not go away")
 }
 
 /// Taps once the element can take the tap: a sheet that is still going
