@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Runs HrcekKit's tests on the Mac, or with --simulator in an iPhone
+# simulator, where the Keychain tests also run.
+set -euo pipefail
+root=$(cd "$(dirname "$0")/.." && pwd)
+cd "$root/HrcekKit"
+if [[ "${1:-}" == --simulator ]]; then
+  result="$root/.build/results/kit-$(date +%Y%m%d-%H%M%S).xcresult"
+  xcodebuild test -scheme HrcekKit -destination "$("$root/scripts/simulator")" \
+    -derivedDataPath "$root/.build/kit-simulator" -resultBundlePath "$result" \
+    -collect-test-diagnostics never -quiet
+  "$root/scripts/check-warnings" "$result"
+else
+  swift test --quiet
+fi

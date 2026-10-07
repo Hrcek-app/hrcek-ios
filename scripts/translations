@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Brings every String Catalog in line with the strings the compiler finds.
+# A fixer: when it changes a catalogue, the commit stops so the new
+# entries can be translated and added.
+set -euo pipefail
+root=$(cd "$(dirname "$0")/.." && pwd)
+dd="$root/.build/translations"
+xcodebuild build -project "$root/Hrcek.xcodeproj" -scheme Hrcek \
+  -destination "generic/platform=iOS Simulator" -derivedDataPath "$dd" -quiet
+built="$dd/Build/Intermediates.noindex"
+
+sync_catalog() {
+  local catalog=$1 dir=$2 files=()
+  while IFS= read -r -d '' f; do files+=("$f"); done \
+    < <(find "$dir" -name '*.stringsdata' -print0)
+  xcrun xcstringstool sync "$root/$catalog" --stringsdata "${files[@]}"
+}
+
+sync_catalog Hrcek/Localizable.xcstrings "$built/Hrcek.build/Debug-iphonesimulator/Hrcek.build"
+sync_catalog HrcekShare/Localizable.xcstrings "$built/Hrcek.build/Debug-iphonesimulator/HrcekShare.build"
+kit_catalog=HrcekKit/Sources/HrcekKit/Resources/Localizable.xcstrings
+if [[ -f "$root/$kit_catalog" ]]; then
+  sync_catalog "$kit_catalog" "$built/HrcekKit.build/Debug-iphonesimulator/HrcekKit-t.build"
+fi

@@ -1,0 +1,35 @@
+{
+  "configurations" : [
+    {
+      "id" : "7034F544-17A3-41EC-AC17-528C02BC9988",
+      "name" : "English",
+      "options" : {
+        "environmentVariableEntries" : [
+          {
+            "key" : "HRCEK_TEST_LANGUAGE",
+            "value" : "en"
+          }
+        ],
+        "language" : "en",
+        "region" : "GB"
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true,
+    "defaultTestExecutionTimeAllowance" : 300
+  },
+  "testTargets" : [
+    {
+      "selectedTests" : [
+        "ShareE2ETests"
+      ],
+      "target" : {
+        "containerPath" : "container:Hrcek.xcodeproj",
+        "identifier" : "853915A884B6A0DC7C0DD458",
+        "name" : "HrcekUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

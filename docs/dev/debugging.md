@@ -1,0 +1,36 @@
+# Debugging
+
+## Logs
+
+Everything logs through `Log` in HrcekKit, with the subsystem
+`app.hrcek` and a category per area: `app`, `api`, `auth`, `share`,
+`ui`. App and share extension use the same subsystem.
+
+Watch the simulator's log from a terminal:
+
+```bash
+xcrun simctl spawn booted log stream --level debug \
+  --predicate 'subsystem == "app.hrcek"'
+```
+
+Narrow it with `AND category == "api"`. On a device, use Console.app
+with the same subsystem filter, or `log stream` on the Mac while the
+phone is connected.
+
+Look back instead of streaming:
+
+```bash
+xcrun simctl spawn booted log show --last 10m --info \
+  --predicate 'subsystem == "app.hrcek"'
+```
+
+## What is never logged
+
+Tokens, passwords and email addresses never appear in a log in clear.
+Values that could carry them are logged with `privacy: .private`.
+
+## The debugger
+
+Run the **Hrcek** scheme from Xcode as usual. To debug the share
+extension, run the extension's scheme and choose Safari when Xcode asks
+which app to run, then share a page to Hrček.

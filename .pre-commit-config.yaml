@@ -1,0 +1,70 @@
+default_install_hook_types: [pre-commit]
+exclude: '\.xcresult/'
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+        # Test plans and catalogues are JSON under other names.
+        files: \.(json|xcstrings|xctestplan)$
+        types: [file]
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+      - id: check-added-large-files
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: 745eface02aef23e168a8afb6b5737818efbea95  # frozen: v0.11.0.1
+    hooks:
+      - id: shellcheck
+        files: ^scripts/
+        types: [shell]
+
+  - repo: local
+    hooks:
+      - id: gitleaks
+        name: gitleaks (no secrets)
+        entry: gitleaks git --pre-commit --staged --redact --no-banner
+        language: system
+        pass_filenames: false
+
+      - id: swift-format
+        name: swift-format (formatted)
+        entry: xcrun swift-format lint --strict --parallel
+        language: system
+        types: [swift]
+
+      - id: swiftlint
+        name: swiftlint (lint and complexity)
+        entry: swiftlint lint --strict --quiet
+        language: system
+        types: [swift]
+        pass_filenames: false
+
+      # A fixer, like the backend's translations hook: if catalogues lag
+      # the source it updates them and the commit stops.
+      - id: translations-updated
+        name: translations (catalogues match the source)
+        entry: scripts/translations
+        language: system
+        files: \.(swift|xcstrings)$
+        pass_filenames: false
+
+      # Never fails: a nudge, not a gate.
+      - id: translations-status
+        name: translations (how complete Slovenian is)
+        entry: scripts/translation-status
+        language: system
+        files: \.(swift|xcstrings)$
+        pass_filenames: false
+        verbose: true
+
+      - id: kit-tests
+        name: HrcekKit tests
+        entry: scripts/test-kit
+        language: system
+        files: ^HrcekKit/
+        pass_filenames: false

@@ -1,0 +1,26 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Hrček" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hrček"
+          }
+        }
+      }
+    },
+    "Save pages to Hrček with your browser's Share button." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strani shranite v Hrček z gumbom Deli v brskalniku."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

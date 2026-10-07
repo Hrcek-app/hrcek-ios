@@ -1,0 +1,49 @@
+{
+  "configurations" : [
+    {
+      "id" : "7D5439C2-6559-4478-BF5B-7AC2FA4D3E06",
+      "name" : "English",
+      "options" : {
+        "environmentVariableEntries" : [
+          {
+            "key" : "HRCEK_TEST_LANGUAGE",
+            "value" : "en"
+          }
+        ],
+        "language" : "en",
+        "region" : "GB"
+      }
+    },
+    {
+      "id" : "53259AEF-169C-4725-B553-0805C442ABD8",
+      "name" : "Slovenian",
+      "options" : {
+        "environmentVariableEntries" : [
+          {
+            "key" : "HRCEK_TEST_LANGUAGE",
+            "value" : "sl"
+          }
+        ],
+        "language" : "sl",
+        "region" : "SI"
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true,
+    "defaultTestExecutionTimeAllowance" : 180
+  },
+  "testTargets" : [
+    {
+      "skippedTests" : [
+        "ShareE2ETests"
+      ],
+      "target" : {
+        "containerPath" : "container:Hrcek.xcodeproj",
+        "identifier" : "853915A884B6A0DC7C0DD458",
+        "name" : "HrcekUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Builds the app and runs a test plan (default: Hrcek) in the simulator.
+set -euo pipefail
+root=$(cd "$(dirname "$0")/.." && pwd)
+plan=Hrcek
+if [[ "${1:-}" == --plan ]]; then plan=$2; fi
+result="$root/.build/results/$plan-$(date +%Y%m%d-%H%M%S).xcresult"
+xcodebuild test -project "$root/Hrcek.xcodeproj" -scheme Hrcek -testPlan "$plan" \
+  -destination "$("$root/scripts/simulator")" -derivedDataPath "$root/.build/xcode" \
+  -resultBundlePath "$result" -collect-test-diagnostics never -quiet
+"$root/scripts/check-warnings" "$result"
