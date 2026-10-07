@@ -5,6 +5,17 @@ root=$(cd "$(dirname "$0")/.." && pwd)
 plan=Hrcek
 if [[ "${1:-}" == --plan ]]; then plan=$2; fi
 result="$root/.build/results/$plan-$(date +%Y%m%d-%H%M%S).xcresult"
+
+# UI tests sign in to a fake Hrček; scripts/e2e passes a real one instead.
+port=${HRCEK_STUB_PORT:-8765}
+mkdir -p "$root/.build"
+"$root/scripts/stub-server" --port "$port" >"$root/.build/stub-server.log" 2>&1 &
+stub=$!
+trap 'kill $stub 2>/dev/null || true' EXIT
+for _ in $(seq 50); do
+  curl -fs "http://127.0.0.1:$port/api/health" >/dev/null && break
+  sleep 0.2
+done
 xcodebuild test -project "$root/Hrcek.xcodeproj" -scheme Hrcek -testPlan "$plan" \
   -destination "$("$root/scripts/simulator")" -derivedDataPath "$root/.build/xcode" \
   -resultBundlePath "$result" -collect-test-diagnostics never -quiet

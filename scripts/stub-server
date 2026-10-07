@@ -1,0 +1,18 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.13"
+# ///
+"""Runs the fake Hrček on 127.0.0.1 (default port 8765) until stopped."""
+
+import argparse
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from hrcek_stub import serve  # noqa: E402
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--port", type=int, default=8765)
+port = parser.parse_args().port
+print(f"Fake Hrček on http://localhost:{port}", flush=True)
+serve(port).serve_forever()

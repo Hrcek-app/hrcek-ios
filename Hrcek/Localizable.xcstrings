@@ -1,6 +1,36 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Choose Hrček. If it isn't in the row, tap More and add it." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Izberite Hrček. Če ga ni v vrstici, tapnite Več in ga dodajte."
+          }
+        }
+      }
+    },
+    "Email" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-pošta"
+          }
+        }
+      }
+    },
+    "How to save a page" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kako shranite stran"
+          }
+        }
+      }
+    },
     "Hrček" : {
       "localizations" : {
         "sl" : {
@@ -11,12 +41,128 @@
         }
       }
     },
-    "Save pages to Hrček with your browser's Share button." : {
+    "Manage this phone's access on the website" : {
       "localizations" : {
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Strani shranite v Hrček z gumbom Deli v brskalniku."
+            "value" : "Dostop tega telefona upravljajte na spletni strani"
+          }
+        }
+      }
+    },
+    "Open the page in Safari or another browser." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stran odprite v Safariju ali drugem brskalniku."
+          }
+        }
+      }
+    },
+    "Password" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geslo"
+          }
+        }
+      }
+    },
+    "Server address" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naslov strežnika"
+          }
+        }
+      }
+    },
+    "Sign in" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prijava"
+          }
+        }
+      }
+    },
+    "Sign in to Hrček" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prijava v Hrček"
+          }
+        }
+      }
+    },
+    "Sign out" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odjava"
+          }
+        }
+      }
+    },
+    "Sign out?" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se želite odjaviti?"
+          }
+        }
+      }
+    },
+    "Signed in as %@ on %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Signed in as %1$@ on %2$@"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prijavljeni ste kot %1$@ na %2$@"
+          }
+        }
+      }
+    },
+    "Tap the Share button." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tapnite gumb Deli."
+          }
+        }
+      }
+    },
+    "The address you open Hrček at in your browser." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naslov, na katerem Hrček odprete v brskalniku."
+          }
+        }
+      }
+    },
+    "This phone forgets your sign-in. Its access token keeps working until you remove it on the website's clients page." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Telefon pozabi vašo prijavo. Njegov žeton za dostop deluje, dokler ga ne odstranite na strani odjemalcev na spletni strani."
           }
         }
       }
