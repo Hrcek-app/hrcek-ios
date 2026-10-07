@@ -27,3 +27,44 @@ extension XCTestCase {
         return app
     }
 }
+
+/// The fake Hrček that `scripts/test-app` starts.
+let stubServer =
+    "http://localhost:\(ProcessInfo.processInfo.environment["HRCEK_STUB_PORT"] ?? "8765")"
+
+/// Fills in and submits the sign-in form, the way a person would.
+@MainActor
+func signIn(
+    _ app: XCUIApplication, email: String, password: String = "correct horse",
+    server: String = stubServer
+) {
+    let field = app.textFields["server"]
+    XCTAssertTrue(field.waitForExistence(timeout: 10))
+    field.tap()
+    field.typeText(server)
+    app.textFields["email"].tap()
+    app.textFields["email"].typeText(email)
+    app.secureTextFields["password"].tap()
+    app.secureTextFields["password"].typeText(password)
+    app.buttons["signIn"].tap()
+}
+
+/// iOS offers to save the password after a sign-in; a person would decline.
+@MainActor
+func declineSavingThePassword(_ app: XCUIApplication) {
+    let notNow = app.buttons["Not Now"]
+    if notNow.waitForExistence(timeout: 3) {
+        notNow.tap()
+        XCTAssertTrue(notNow.waitForNonExistence(timeout: 5))
+    }
+}
+
+/// Taps once the element can take the tap: a sheet that is still going
+/// away swallows taps without failing them.
+@MainActor
+func tapWhenHittable(_ element: XCUIElement) {
+    let hittable = XCTNSPredicateExpectation(
+        predicate: NSPredicate(format: "hittable == true"), object: element)
+    XCTAssertEqual(XCTWaiter.wait(for: [hittable], timeout: 10), .completed)
+    element.tap()
+}

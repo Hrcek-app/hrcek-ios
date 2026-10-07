@@ -68,3 +68,10 @@ repos:
         language: system
         files: ^HrcekKit/
         pass_filenames: false
+
+      - id: contract-fake
+        name: stub server honours the API contract
+        entry: scripts/contract-test --fake
+        language: system
+        files: ^scripts/(hrcek_stub\.py|contract-test)$
+        pass_filenames: false
