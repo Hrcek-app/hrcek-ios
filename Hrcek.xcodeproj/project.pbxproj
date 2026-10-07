@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		36077EC45396ACA89F0C19A5 /* HrcekShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C9B5CB078D92C67B1AA6AA74 /* HrcekShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4CA038AB2D9D03CA117DC55C /* HrcekKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8579A349DD7619435EB00561 /* HrcekKit */; };
 		73F8C0172724C06ABC651F47 /* HrcekKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3FB60BD273682868DAB10C43 /* HrcekKit */; };
 		D0B0A57D49160B638D1FA2C9 /* HrcekKit in Frameworks */ = {isa = PBXBuildFile; productRef = 497BD7E38772586BF5671D90 /* HrcekKit */; };
 /* End PBXBuildFile section */
@@ -21,6 +22,13 @@
 			remoteInfo = HrcekShare;
 		};
 		519C37EA7C768D2D5FB881F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6321CCF6FD0493B98FD7D226 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 734A80398ACCC53E5A1D275E;
+			remoteInfo = Hrcek;
+		};
+		BAC418D25353F1175395CFD2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6321CCF6FD0493B98FD7D226 /* Project object */;
 			proxyType = 1;
@@ -44,9 +52,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		15F690BBC895C35CCE78EE16 /* HrcekTests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = HrcekTests.xcconfig; sourceTree = "<group>"; };
 		3C3B1AE1AE6436CD811F18F2 /* HrcekKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HrcekKit; path = HrcekKit; sourceTree = SOURCE_ROOT; };
 		535CA4AC73531E89134C0CAB /* HrcekShare.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = HrcekShare.xcconfig; sourceTree = "<group>"; };
 		577E317D0BEF04EFF21F6A85 /* HrcekUITests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = HrcekUITests.xcconfig; sourceTree = "<group>"; };
+		6F817FB51A3DE0DB042BF860 /* HrcekTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = HrcekTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		83CE2AB6977CC62497FF5F59 /* HrcekUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = HrcekUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A77C8A32091B617C02F1EBD9 /* Hrcek.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Hrcek.xcconfig; sourceTree = "<group>"; };
 		A8069F538C12EC5D3FA2DBA5 /* Hrcek.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Hrcek.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +81,15 @@
 			explicitFolders = (
 			);
 			path = Hrcek;
+			sourceTree = "<group>";
+		};
+		C23A26F3524B2409EDD68132 /* HrcekTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = HrcekTests;
 			sourceTree = "<group>";
 		};
 		F330FD5139D999DAF8C0E98B /* HrcekUITests */ = {
@@ -101,6 +120,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B702DF70C78402CEE0529453 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CA038AB2D9D03CA117DC55C /* HrcekKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -109,6 +136,7 @@
 			children = (
 				A77C8A32091B617C02F1EBD9 /* Hrcek.xcconfig */,
 				535CA4AC73531E89134C0CAB /* HrcekShare.xcconfig */,
+				15F690BBC895C35CCE78EE16 /* HrcekTests.xcconfig */,
 				577E317D0BEF04EFF21F6A85 /* HrcekUITests.xcconfig */,
 				B255180A86457A4E258F350B /* Shared.xcconfig */,
 			);
@@ -120,6 +148,7 @@
 			children = (
 				A8069F538C12EC5D3FA2DBA5 /* Hrcek.app */,
 				C9B5CB078D92C67B1AA6AA74 /* HrcekShare.appex */,
+				6F817FB51A3DE0DB042BF860 /* HrcekTests.xctest */,
 				83CE2AB6977CC62497FF5F59 /* HrcekUITests.xctest */,
 			);
 			name = Products;
@@ -131,6 +160,7 @@
 				1D1ACC00FB5F5D24C12B0209 /* Config */,
 				43F8868CEA8AEF863B1FFC9C /* Hrcek */,
 				39664C5B215FA268A1D1CD9A /* HrcekShare */,
+				C23A26F3524B2409EDD68132 /* HrcekTests */,
 				F330FD5139D999DAF8C0E98B /* HrcekUITests */,
 				39B6E8BD10CC05D1EB70D623 /* Packages */,
 				1F17DF19BD3EB183038E7CA5 /* Products */,
@@ -218,6 +248,30 @@
 			productReference = 83CE2AB6977CC62497FF5F59 /* HrcekUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		F4234E575F898900A9DFA634 /* HrcekTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 49E0BA515F360318BAD6FFC3 /* Build configuration list for PBXNativeTarget "HrcekTests" */;
+			buildPhases = (
+				A8295A09066D19725194242E /* Sources */,
+				7809ACCBBD891F7131ABC2F5 /* Resources */,
+				B702DF70C78402CEE0529453 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D9B2425750DFC707FAC34A0D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C23A26F3524B2409EDD68132 /* HrcekTests */,
+			);
+			name = HrcekTests;
+			packageProductDependencies = (
+				8579A349DD7619435EB00561 /* HrcekKit */,
+			);
+			productName = HrcekTests;
+			productReference = 6F817FB51A3DE0DB042BF860 /* HrcekTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -248,6 +302,7 @@
 			targets = (
 				734A80398ACCC53E5A1D275E /* Hrcek */,
 				70C662AF5180900143494D47 /* HrcekShare */,
+				F4234E575F898900A9DFA634 /* HrcekTests */,
 				853915A884B6A0DC7C0DD458 /* HrcekUITests */,
 			);
 		};
@@ -269,6 +324,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		381F61616151ACFFEB03044C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7809ACCBBD891F7131ABC2F5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -299,6 +361,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A8295A09066D19725194242E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -311,6 +380,11 @@
 			isa = PBXTargetDependency;
 			target = 70C662AF5180900143494D47 /* HrcekShare */;
 			targetProxy = 49D0E5E979210512FE053B17 /* PBXContainerItemProxy */;
+		};
+		D9B2425750DFC707FAC34A0D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 734A80398ACCC53E5A1D275E /* Hrcek */;
+			targetProxy = BAC418D25353F1175395CFD2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -514,6 +588,32 @@
 			};
 			name = Debug;
 		};
+		A6B5AADBDB2E1840A645ECDD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 15F690BBC895C35CCE78EE16 /* HrcekTests.xcconfig */;
+			buildSettings = {
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		EDB1E0D5FD87B804F0B72D3D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 15F690BBC895C35CCE78EE16 /* HrcekTests.xcconfig */;
+			buildSettings = {
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -531,6 +631,15 @@
 			buildConfigurations = (
 				3EFB6F31C0261F26239D8FC4 /* Debug */,
 				87FFA25EBB615BD26A0AA4BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		49E0BA515F360318BAD6FFC3 /* Build configuration list for PBXNativeTarget "HrcekTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDB1E0D5FD87B804F0B72D3D /* Debug */,
+				A6B5AADBDB2E1840A645ECDD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -568,6 +677,10 @@
 			productName = HrcekKit;
 		};
 		497BD7E38772586BF5671D90 /* HrcekKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HrcekKit;
+		};
+		8579A349DD7619435EB00561 /* HrcekKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = HrcekKit;
 		};

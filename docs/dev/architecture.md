@@ -54,3 +54,27 @@ it adds `https://` when there is no scheme, lowercases the host, drops
 trailing slashes, keeps a path (Hrček may be served below one), and
 refuses plain `http` except for this machine, because the password
 would otherwise travel in the clear.
+
+## Signing in and where credentials live
+
+`AuthService` signs in by trading the email address and password for
+an API token (`POST /api/auth/tokens/exchange`), then asks who the
+token belongs to (`GET /api/auth/me`). The token is named
+"Hrček for iOS (<device name>)" in the person's language, which is how
+they recognise this phone on the website's clients page. The password
+is never stored.
+
+Server address, token and display name are stored together, as one
+Keychain item, by `KeychainCredentialStore`. The item lives in a
+shared Keychain access group, so the share extension reads exactly what
+the app saved. There is no App Group: nothing else needs sharing.
+
+The group name, `<team prefix>.<bundle prefix>.Hrcek.shared`, is
+written into both Info.plists at build time (`HrcekKeychainGroup`) and
+granted by `Support/Hrcek.entitlements` and
+`Support/HrcekShare.entitlements`. The item is readable after the
+phone's first unlock and never leaves the device.
+
+**Signing out only forgets the token on this phone.** The API cannot
+revoke a token — by design, a token cannot manage tokens — so the
+person removes it on the website's clients page, and the app says so.
