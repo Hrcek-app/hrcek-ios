@@ -9,7 +9,7 @@ let package = Package(
     platforms: [.iOS(.v18), .macOS(.v15)],
     products: [.library(name: "HrcekKit", targets: ["HrcekKit"])],
     targets: [
-        .target(name: "HrcekKit", swiftSettings: strict),
+        .target(name: "HrcekKit", resources: [.process("Resources")], swiftSettings: strict),
         .testTarget(
             name: "HrcekKitTests",
             dependencies: ["HrcekKit"],

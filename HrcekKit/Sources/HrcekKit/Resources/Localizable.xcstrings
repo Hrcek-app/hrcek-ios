@@ -1,0 +1,126 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Can't make a secure connection to the server." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S strežnikom ni mogoče vzpostaviti varne povezave."
+          }
+        }
+      }
+    },
+    "Can't reach the server. Check the address." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strežnika ni mogoče doseči. Preverite naslov."
+          }
+        }
+      }
+    },
+    "Can't reach the server. Try again." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strežnika ni mogoče doseči. Poskusite znova."
+          }
+        }
+      }
+    },
+    "Enter the address of your Hrček server." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vnesite naslov svojega strežnika Hrček."
+          }
+        }
+      }
+    },
+    "Something went wrong. Try again." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nekaj je šlo narobe. Poskusite znova."
+          }
+        }
+      }
+    },
+    "That doesn't look like a web address." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To ni videti kot spletni naslov."
+          }
+        }
+      }
+    },
+    "The address must start with https://." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naslov se mora začeti s https://."
+          }
+        }
+      }
+    },
+    "The server is having trouble. Try again later." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strežnik ima težave. Poskusite znova pozneje."
+          }
+        }
+      }
+    },
+    "The server took too long to answer. Try again." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strežnik se ni odzval dovolj hitro. Poskusite znova."
+          }
+        }
+      }
+    },
+    "The server's answer wasn't understood. Is this a Hrček address?" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odgovora strežnika ni mogoče razumeti. Je to naslov strežnika Hrček?"
+          }
+        }
+      }
+    },
+    "Too many attempts. Wait a while and try again." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preveč poskusov. Počakajte nekaj časa in poskusite znova."
+          }
+        }
+      }
+    },
+    "You're offline. Connect to the internet and try again." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niste povezani z internetom. Povežite se in poskusite znova."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
