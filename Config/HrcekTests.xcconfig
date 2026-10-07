@@ -1,0 +1,8 @@
+#include "Shared.xcconfig"
+
+// Hosted by the app, so tests run with its entitlements (the Keychain group).
+PRODUCT_BUNDLE_IDENTIFIER = $(HRCEK_BUNDLE_PREFIX).HrcekTests
+GENERATE_INFOPLIST_FILE = YES
+TARGETED_DEVICE_FAMILY = 1
+TEST_HOST = $(BUILT_PRODUCTS_DIR)/Hrcek.app/Hrcek
+BUNDLE_LOADER = $(TEST_HOST)

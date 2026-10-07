@@ -8,7 +8,13 @@ simulator.
 |---|---|---|
 | HrcekKit unit tests | `scripts/test-kit` | On the Mac, in seconds |
 | HrcekKit in the simulator | `scripts/test-kit --simulator` | iPhone simulator; includes iOS-only tests |
-| App UI tests | `scripts/test-app` | iPhone simulator, in English and in Slovenian |
+| App tests: hosted unit tests and UI tests | `scripts/test-app` | iPhone simulator, in English and in Slovenian |
+
+`HrcekTests` holds the few unit tests that need the app around them:
+the Keychain tests. Package tests run in a bare test process with no
+entitlements, where the Keychain refuses every call; hosted by the app,
+they run with its real entitlements, so they also prove the shared
+Keychain group works.
 
 Unit tests use [Swift Testing](https://developer.apple.com/xcode/swift-testing/);
 UI tests use XCUITest.

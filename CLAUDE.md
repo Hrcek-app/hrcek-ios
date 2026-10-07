@@ -72,6 +72,7 @@ belong to. Messages are short and say why, never how. No
 ```
 Hrcek/            app (SwiftUI views only)
 HrcekShare/       share extension
+HrcekTests/       unit tests that need the app around them (Keychain)
 HrcekUITests/     XCUITest, run in English and Slovenian
 HrcekKit/         package: API client, auth, storage, view models
 Config/           xcconfig; Local.xcconfig is yours and gitignored
