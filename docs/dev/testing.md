@@ -9,6 +9,7 @@ simulator.
 | HrcekKit unit tests | `scripts/test-kit` | On the Mac, in seconds |
 | HrcekKit in the simulator | `scripts/test-kit --simulator` | iPhone simulator; includes iOS-only tests |
 | App tests: hosted unit tests and UI tests | `scripts/test-app` | iPhone simulator, in English and in Slovenian |
+| End to end | `scripts/e2e` | A real Hrček backend, the app and Safari's share sheet in the simulator |
 
 `HrcekTests` holds the few unit tests that need the app around them:
 the Keychain tests. Package tests run in a bare test process with no
@@ -82,3 +83,34 @@ When the real server and the stub disagree, fix the stub.
   `tapWhenHittable` waits until the element can take the tap.
 - A confirmation dialog exposes its button twice, nested, under one
   identifier; query it with `firstMatch`.
+
+## End to end
+
+`scripts/e2e` exercises the whole thing the way a person uses it:
+
+1. It starts a real Hrček from `../hrcek` (or `$HRCEK_BACKEND_DIR`, or a
+   fresh clone of `Hrcek-app/hrcek`) on port 8766 with a throwaway
+   database, and creates a confirmed user with a random password.
+2. It serves a small page, `scripts/e2e-page/`, on port 8767.
+3. It runs the contract test against the real backend.
+4. It runs `E2E.xctestplan`: `ShareE2ETests` signs in through the app,
+   opens the page in Safari, shares it to Hrček and expects **Saved**,
+   then shares it again and expects **Already saved**.
+5. It asks the API for the entry and checks it was saved with the
+   page's title.
+
+The test reaches its credentials through `TEST_RUNNER_`-prefixed
+environment variables, which xcodebuild hands to the test runner.
+
+Safari's controls move between iOS versions. On iOS 27, Share lives in
+the page menu (`MoreMenuButton`), the menu item is `ShareButton`, and
+the extension's cell in the sheet is a cell labelled "Hrček". When a
+query stops matching, the test attaches Safari's element tree and a
+screenshot to the result bundle; export them with
+`xcrun xcresulttool export attachments`.
+
+The test plan runs in English. The share sheet uses the device's
+language rather than the app's, so checking the extension in Slovenian
+means switching the simulator's language
+(`xcrun simctl spawn booted defaults write -g AppleLanguages -array sl`
+and rebooting it).

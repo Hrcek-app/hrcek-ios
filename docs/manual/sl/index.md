@@ -8,7 +8,7 @@ kjer družina hrani povezave do zanimivih stvari s spleta.
 Same aplikacije ne boste veliko uporabljali. Strani shranjujete iz
 brskalnika: odprite stran, tapnite **Deli** in izberite **Hrček**.
 
-Preden lahko kaj shranite, se v aplikaciji [prijavite](sign-in.md).
-
-To je zgodnja različica: shranjevanje strani iz menija Deli pride
-naslednje, priročnik pa bo rasel z njim.
+- [Prijava](sign-in.md) — enkrat, v aplikaciji.
+- [Shranjevanje strani](saving-pages.md) — iz Safarija ali drugega
+  brskalnika.
+- [Odpravljanje težav](troubleshooting.md) — kaj pomenijo sporočila.

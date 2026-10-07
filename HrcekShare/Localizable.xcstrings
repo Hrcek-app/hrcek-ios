@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Already saved" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Že shranjeno"
+          }
+        }
+      }
+    },
     "Done" : {
       "localizations" : {
         "sl" : {
@@ -17,6 +27,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hrček"
+          }
+        }
+      }
+    },
+    "Open the Hrček app and sign in first." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Najprej odprite aplikacijo Hrček in se prijavite."
+          }
+        }
+      }
+    },
+    "Saved" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shranjeno"
+          }
+        }
+      }
+    },
+    "Saving…" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shranjujem …"
+          }
+        }
+      }
+    },
+    "Try again" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poskusi znova"
           }
         }
       }

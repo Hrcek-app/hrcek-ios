@@ -19,6 +19,7 @@ thin. String Catalogs for English and Slovenian.
 | Package tests (fast) | `scripts/test-kit` |
 | Package tests in the simulator (Keychain too) | `scripts/test-kit --simulator` |
 | App UI tests, English and Slovenian | `scripts/test-app` |
+| End-to-end against a real backend | `scripts/e2e` |
 | Format / lint | `scripts/format` / `scripts/lint` |
 | All hooks | `prek run --all-files` |
 | Sync catalogues | `scripts/translations` |
@@ -41,7 +42,7 @@ the share extension that means sharing from Safari.
 
 **Done means:** hooks pass, `scripts/test-kit`,
 `scripts/test-kit --simulator` and `scripts/test-app` pass with no
-warnings, docs are updated.
+warnings, `scripts/e2e` passes when a flow changed, docs are updated.
 
 **Commits.** One logical change per commit, one PR per commit, stacked
 with `gh stack` when dependent. Fixes are amended into the commit they
@@ -73,7 +74,7 @@ belong to. Messages are short and say why, never how. No
 Hrcek/            app (SwiftUI views only)
 HrcekShare/       share extension
 HrcekTests/       unit tests that need the app around them (Keychain)
-HrcekUITests/     XCUITest, run in English and Slovenian
+HrcekUITests/     XCUITest: UI tests and the E2E share test
 HrcekKit/         package: API client, auth, storage, view models
 Config/           xcconfig; Local.xcconfig is yours and gitignored
 Support/          Info.plists and entitlements

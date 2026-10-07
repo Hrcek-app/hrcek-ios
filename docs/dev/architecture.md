@@ -78,3 +78,19 @@ phone's first unlock and never leaves the device.
 **Signing out only forgets the token on this phone.** The API cannot
 revoke a token — by design, a token cannot manage tokens — so the
 person removes it on the website's clients page, and the app says so.
+
+## The share extension
+
+`ShareViewController` hands the shared items to `SharedPage`, which
+finds the address — a URL item, or the first web address in shared text
+— and the title when the browser provides one. `ShareModel` then saves
+it with `EntrySaver` and the sheet shows the outcome.
+
+`EntrySaver` looks the address up first (`POST /api/entries/lookup`)
+and saves only when the server answers `HRC-CORE-0003`, not found. The
+API replaces an existing entry wholesale, so saving an address again
+would wipe its notes and tags; the sheet says "Already saved" instead.
+If the lookup fails for any other reason, nothing is written.
+
+A revoked token (`HRC-AUTH-0004`) clears the stored credentials, and
+the sheet asks the person to open the app and sign in.
