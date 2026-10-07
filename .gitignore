@@ -74,3 +74,6 @@ docs/superpowers/
 .superpowers/
 REVIEW_GUIDE.md
 .DS_Store
+
+# Python bytecode from the stub server and its contract test
+__pycache__/
