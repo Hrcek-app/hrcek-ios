@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Fails when a result bundle recorded any build warning: warnings are errors here.
+set -euo pipefail
+result=$1
+summary=$(xcrun xcresulttool get build-results --path "$result")
+count=$(jq '.warningCount' <<<"$summary")
+if [[ "$count" != 0 ]]; then
+  jq -r '.warnings[] | "warning: \(.message) \(.sourceURL // "")"' <<<"$summary" >&2
+  exit 1
+fi

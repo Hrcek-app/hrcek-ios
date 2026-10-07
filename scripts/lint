@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+xcrun swift-format lint --strict --recursive --parallel \
+  Hrcek HrcekShare HrcekUITests HrcekKit/Sources HrcekKit/Tests HrcekKit/Package.swift
+swiftlint lint --strict --quiet

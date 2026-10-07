@@ -1,0 +1,6 @@
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Obviously fake fixtures used by tests and the stub server"
+regexes = ['''hrcek_(stub|test)[A-Za-z0-9_-]*''']

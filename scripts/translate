@@ -1,0 +1,42 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.13"
+# ///
+"""Set a Slovenian translation in a String Catalog.
+
+  scripts/translate CATALOG KEY VALUE
+  scripts/translate CATALOG KEY --plural one=.. two=.. few=.. other=..
+"""
+
+import json
+import sys
+from pathlib import Path
+
+
+def unit(value):
+    return {"stringUnit": {"state": "translated", "value": value}}
+
+
+def main(argv):
+    catalog, key, *rest = argv
+    path = Path(catalog)
+    data = json.loads(path.read_text())
+    if key not in data["strings"]:
+        sys.exit(f"{key!r} is not in {catalog}; run scripts/translations first")
+    entry = data["strings"][key]
+    if rest and rest[0] == "--plural":
+        forms = dict(arg.split("=", 1) for arg in rest[1:])
+        missing = {"one", "two", "few", "other"} - forms.keys()
+        if missing:
+            sys.exit(f"Slovenian needs all four plural forms; missing {sorted(missing)}")
+        sl = {"variations": {"plural": {form: unit(text) for form, text in forms.items()}}}
+    else:
+        (value,) = rest
+        sl = unit(value)
+    entry.setdefault("localizations", {})["sl"] = sl
+    text = json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True, separators=(",", " : "))
+    path.write_text(text + "\n")
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

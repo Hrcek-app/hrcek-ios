@@ -1,0 +1,66 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.13"
+# ///
+"""Counts untranslated, unreviewed and stale strings per catalogue. Never fails."""
+
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+CATALOGUES = [
+    "Hrcek/Localizable.xcstrings",
+    "HrcekShare/Localizable.xcstrings",
+    "HrcekKit/Sources/HrcekKit/Resources/Localizable.xcstrings",
+]
+LANGUAGES = ["sl"]
+
+
+def units(localization):
+    if "stringUnit" in localization:
+        yield localization["stringUnit"]
+    for variants in localization.get("variations", {}).values():
+        for variant in variants.values():
+            yield from units(variant)
+
+
+def status(path):
+    data = json.loads(path.read_text())
+    found = {lang: {"untranslated": [], "unreviewed": []} for lang in LANGUAGES}
+    stale = []
+    for key, entry in data["strings"].items():
+        if entry.get("shouldTranslate") is False:
+            continue
+        if entry.get("extractionState") == "stale":
+            stale.append(key)
+            continue
+        for lang in LANGUAGES:
+            loc = entry.get("localizations", {}).get(lang)
+            states = [u.get("state") for u in units(loc)] if loc else []
+            if not states or any(s in (None, "new") for s in states):
+                found[lang]["untranslated"].append(key)
+            elif any(s == "needs_review" for s in states):
+                found[lang]["unreviewed"].append(key)
+    return found, stale
+
+
+def main():
+    github = "--github" in sys.argv
+    for name in CATALOGUES:
+        path = ROOT / name
+        if not path.exists():
+            continue
+        found, stale = status(path)
+        for lang, groups in found.items():
+            for kind, keys in groups.items():
+                for key in keys:
+                    line = f"{name}: [{lang}] {kind}: {key!r}"
+                    print(f"::warning file={name}::{line}" if github else line)
+        for key in stale:
+            print(f"{name}: stale (no longer in source): {key!r}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
