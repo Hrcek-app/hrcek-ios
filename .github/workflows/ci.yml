@@ -63,3 +63,27 @@ jobs:
         with:
           name: app-results
           path: .build/results/
+
+  e2e:
+    name: End to end (real backend, Safari share sheet)
+    needs: [hooks, kit, app]
+    runs-on: xcode-27
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          repository: Hrcek-app/hrcek
+          path: .build/e2e/hrcek
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7  # v10.2.0
+      - run: scripts/e2e
+        env:
+          HRCEK_BACKEND_DIR: ${{ github.workspace }}/.build/e2e/hrcek
+      - name: Keep the result bundle and server log
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        with:
+          name: e2e-results
+          path: |
+            .build/results/
+            .build/e2e/run/backend.log
+            .build/e2e/run/page.log
