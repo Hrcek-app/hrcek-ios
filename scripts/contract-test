@@ -1,0 +1,99 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.13"
+# ///
+"""Checks the parts of the API the app relies on. Run with --fake against
+the stub, or --url/--identifier/--password against a real Hrček (it
+writes one entry under https://contract.example.com/)."""
+
+import argparse
+import json
+import sys
+import threading
+import urllib.error
+import urllib.request
+import uuid
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+
+def call(base, method, path, body=None, token=None, language="en"):
+    request = urllib.request.Request(base + path, method=method)
+    request.add_header("Accept-Language", language)
+    if token:
+        request.add_header("Authorization", f"Bearer {token}")
+    data = None
+    if body is not None:
+        data = json.dumps(body).encode()
+        request.add_header("Content-Type", "application/json")
+    try:
+        with urllib.request.urlopen(request, data) as response:
+            return response.status, json.loads(response.read() or b"{}")
+    except urllib.error.HTTPError as error:
+        return error.code, json.loads(error.read() or b"{}")
+
+
+def expect(label, condition):
+    print(("ok   " if condition else "FAIL ") + label)
+    return condition
+
+
+def error_code(body):
+    return body.get("error", {}).get("code")
+
+
+def run(base, identifier, password):
+    results = []
+    wrong = {"name": "contract test", "identifier": identifier, "password": "wrong"}
+    status, body = call(base, "POST", "/api/auth/tokens/exchange", wrong)
+    results.append(expect("wrong password is 401 HRC-AUTH-0001",
+                          status == 401 and error_code(body) == "HRC-AUTH-0001"))
+    status, body = call(base, "POST", "/api/auth/tokens/exchange", wrong, language="sl")
+    results.append(expect("errors are translated",
+                          body.get("error", {}).get("message", "").startswith("E-pošt")))
+    right = {"name": "contract test", "identifier": identifier, "password": password}
+    status, body = call(base, "POST", "/api/auth/tokens/exchange", right)
+    results.append(expect("exchange is 201 with an hrcek_ token",
+                          status == 201 and body.get("token", "").startswith("hrcek_")))
+    token = body.get("token")
+    status, body = call(base, "GET", "/api/auth/me", token=token)
+    results.append(expect("me is 200 with email and display_name",
+                          status == 200 and "email" in body and "display_name" in body))
+    status, body = call(base, "GET", "/api/auth/me", token="hrcek_test_invalid")
+    results.append(expect("unknown token is 401 HRC-AUTH-0004",
+                          status == 401 and error_code(body) == "HRC-AUTH-0004"))
+    url = f"https://contract.example.com/{uuid.uuid4()}"
+    status, body = call(base, "POST", "/api/entries/lookup", {"url": url}, token=token)
+    results.append(expect("lookup of an unsaved address is 404 HRC-CORE-0003",
+                          status == 404 and error_code(body) == "HRC-CORE-0003"))
+    status, body = call(base, "POST", "/api/entries/", {"url": url, "title": "Contract"},
+                        token=token)
+    results.append(expect("saving a new address is 201",
+                          status == 201 and body.get("url") == url))
+    status, body = call(base, "POST", "/api/entries/lookup", {"url": url}, token=token)
+    results.append(expect("lookup finds it", status == 200 and body.get("title") == "Contract"))
+    return all(results)
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--fake", action="store_true")
+    parser.add_argument("--url")
+    parser.add_argument("--identifier")
+    parser.add_argument("--password")
+    args = parser.parse_args()
+    if args.fake:
+        from hrcek_stub import PASSWORD, serve
+
+        server = serve(0)
+        threading.Thread(target=server.serve_forever, daemon=True).start()
+        ok = run(f"http://127.0.0.1:{server.server_address[1]}", "nina@example.com", PASSWORD)
+        server.shutdown()
+    else:
+        ok = run(args.url.rstrip("/"), args.identifier, args.password)
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

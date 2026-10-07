@@ -130,6 +130,16 @@
           }
         }
       }
+    },
+    "Your sign-in has expired or was revoked. Sign in again." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaša prijava je potekla ali je bila preklicana. Prijavite se znova."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

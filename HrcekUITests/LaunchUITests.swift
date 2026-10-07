@@ -2,13 +2,9 @@ import XCTest
 
 final class LaunchUITests: XCTestCase {
     @MainActor
-    func testShowsIntroductionInTheDeviceLanguage() {
-        continueAfterFailure = false
+    func testOpensOnTheSignInForm() {
         let app = launchApp()
-        let expected = TestLanguage.text(
-            en: "Save pages to Hrček with your browser's Share button.",
-            sl: "Strani shranite v Hrček z gumbom Deli v brskalniku.")
-        XCTAssertTrue(app.staticTexts["introduction"].waitForExistence(timeout: 10))
-        XCTAssertEqual(app.staticTexts["introduction"].label, expected)
+        let title = TestLanguage.text(en: "Sign in to Hrček", sl: "Prijava v Hrček")
+        XCTAssertTrue(app.navigationBars[title].waitForExistence(timeout: 10))
     }
 }
