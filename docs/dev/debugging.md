@@ -34,3 +34,17 @@ Values that could carry them are logged with `privacy: .private`.
 Run the **Hrcek** scheme from Xcode as usual. To debug the share
 extension, run the extension's scheme and choose Safari when Xcode asks
 which app to run, then share a page to Hrček.
+
+## Requests
+
+Every request logs one line in the `api` category:
+
+```
+POST /api/auth/tokens/exchange → 201 in 0.084 seconds
+```
+
+A transport failure logs the `URLError` code instead, and a refusal
+logs the server's error code. Debug builds also log request and
+response bodies, after `LogRedaction` has replaced passwords, tokens,
+identifiers and email addresses with `‹redacted›`. Release builds never
+log bodies.
