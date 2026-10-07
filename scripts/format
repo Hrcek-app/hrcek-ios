@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+xcrun swift-format format --in-place --recursive --parallel \
+  Hrcek HrcekShare HrcekUITests HrcekKit/Sources HrcekKit/Tests HrcekKit/Package.swift

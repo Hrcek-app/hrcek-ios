@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DEVELOPER_DIR: /Applications/Xcode_27.0.app/Contents/Developer
+
+jobs:
+  hooks:
+    name: Hooks (format, lint, secrets, translations)
+    runs-on: xcode-27
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Install tools
+        run: brew bundle
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7  # v10.2.0
+      - name: Install prek
+        run: uv tool install prek
+      - name: Run commit-stage hooks
+        run: prek run --all-files --show-diff-on-failure
+      - name: Scan the whole history for secrets
+        run: gitleaks git --redact --no-banner
+      # Gaps annotate the run and never fail it.
+      - name: Report translation status
+        run: scripts/translation-status --github
+
+  kit:
+    name: HrcekKit tests (Mac and simulator)
+    runs-on: xcode-27
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - run: scripts/test-kit
+      - run: scripts/test-kit --simulator
+      - name: Keep the result bundle
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        with:
+          name: kit-results
+          path: .build/results/
+
+  app:
+    name: App UI tests (English and Slovenian)
+    runs-on: xcode-27
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7  # v10.2.0
+      - run: scripts/test-app
+      - name: Keep the result bundle
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        with:
+          name: app-results
+          path: .build/results/

@@ -60,3 +60,17 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# Build output
+.build/
+DerivedData/
+*.xcresult
+
+# Personal signing settings; see Config/Local.xcconfig.example
+Config/Local.xcconfig
+
+# Working documents
+docs/superpowers/
+.superpowers/
+REVIEW_GUIDE.md
+.DS_Store

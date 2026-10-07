@@ -1,0 +1,577 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		36077EC45396ACA89F0C19A5 /* HrcekShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C9B5CB078D92C67B1AA6AA74 /* HrcekShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		73F8C0172724C06ABC651F47 /* HrcekKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3FB60BD273682868DAB10C43 /* HrcekKit */; };
+		D0B0A57D49160B638D1FA2C9 /* HrcekKit in Frameworks */ = {isa = PBXBuildFile; productRef = 497BD7E38772586BF5671D90 /* HrcekKit */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		49D0E5E979210512FE053B17 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6321CCF6FD0493B98FD7D226 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 70C662AF5180900143494D47;
+			remoteInfo = HrcekShare;
+		};
+		519C37EA7C768D2D5FB881F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6321CCF6FD0493B98FD7D226 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 734A80398ACCC53E5A1D275E;
+			remoteInfo = Hrcek;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		387749A06787D6697F255F1D /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				36077EC45396ACA89F0C19A5 /* HrcekShare.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3C3B1AE1AE6436CD811F18F2 /* HrcekKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HrcekKit; path = HrcekKit; sourceTree = SOURCE_ROOT; };
+		535CA4AC73531E89134C0CAB /* HrcekShare.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = HrcekShare.xcconfig; sourceTree = "<group>"; };
+		577E317D0BEF04EFF21F6A85 /* HrcekUITests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = HrcekUITests.xcconfig; sourceTree = "<group>"; };
+		83CE2AB6977CC62497FF5F59 /* HrcekUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = HrcekUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A77C8A32091B617C02F1EBD9 /* Hrcek.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Hrcek.xcconfig; sourceTree = "<group>"; };
+		A8069F538C12EC5D3FA2DBA5 /* Hrcek.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Hrcek.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B255180A86457A4E258F350B /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
+		C9B5CB078D92C67B1AA6AA74 /* HrcekShare.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = HrcekShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		39664C5B215FA268A1D1CD9A /* HrcekShare */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = HrcekShare;
+			sourceTree = "<group>";
+		};
+		43F8868CEA8AEF863B1FFC9C /* Hrcek */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Hrcek;
+			sourceTree = "<group>";
+		};
+		F330FD5139D999DAF8C0E98B /* HrcekUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = HrcekUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		99C5BB3078A91510D147D425 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73F8C0172724C06ABC651F47 /* HrcekKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9FA48AE0E8740CB961B0BC80 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0B0A57D49160B638D1FA2C9 /* HrcekKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1D1ACC00FB5F5D24C12B0209 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				A77C8A32091B617C02F1EBD9 /* Hrcek.xcconfig */,
+				535CA4AC73531E89134C0CAB /* HrcekShare.xcconfig */,
+				577E317D0BEF04EFF21F6A85 /* HrcekUITests.xcconfig */,
+				B255180A86457A4E258F350B /* Shared.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		1F17DF19BD3EB183038E7CA5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A8069F538C12EC5D3FA2DBA5 /* Hrcek.app */,
+				C9B5CB078D92C67B1AA6AA74 /* HrcekShare.appex */,
+				83CE2AB6977CC62497FF5F59 /* HrcekUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		36A8356E664319DCBA9EC196 = {
+			isa = PBXGroup;
+			children = (
+				1D1ACC00FB5F5D24C12B0209 /* Config */,
+				43F8868CEA8AEF863B1FFC9C /* Hrcek */,
+				39664C5B215FA268A1D1CD9A /* HrcekShare */,
+				F330FD5139D999DAF8C0E98B /* HrcekUITests */,
+				39B6E8BD10CC05D1EB70D623 /* Packages */,
+				1F17DF19BD3EB183038E7CA5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		39B6E8BD10CC05D1EB70D623 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				3C3B1AE1AE6436CD811F18F2 /* HrcekKit */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		70C662AF5180900143494D47 /* HrcekShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A353D021A111CB9E10913CE0 /* Build configuration list for PBXNativeTarget "HrcekShare" */;
+			buildPhases = (
+				23030007C7CD3E8854DAEC7A /* Sources */,
+				2EC8282C48C527CC5DC65A53 /* Resources */,
+				9FA48AE0E8740CB961B0BC80 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				39664C5B215FA268A1D1CD9A /* HrcekShare */,
+			);
+			name = HrcekShare;
+			packageProductDependencies = (
+				497BD7E38772586BF5671D90 /* HrcekKit */,
+			);
+			productName = HrcekShare;
+			productReference = C9B5CB078D92C67B1AA6AA74 /* HrcekShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		734A80398ACCC53E5A1D275E /* Hrcek */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 37DB9B67A17FD74992262791 /* Build configuration list for PBXNativeTarget "Hrcek" */;
+			buildPhases = (
+				0DDB8AAB4CB61EF7C18DF88D /* Sources */,
+				01AF3DC9FA6844BDC37FB180 /* Resources */,
+				99C5BB3078A91510D147D425 /* Frameworks */,
+				387749A06787D6697F255F1D /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5207EC60926AE93251D0E0DF /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				43F8868CEA8AEF863B1FFC9C /* Hrcek */,
+			);
+			name = Hrcek;
+			packageProductDependencies = (
+				3FB60BD273682868DAB10C43 /* HrcekKit */,
+			);
+			productName = Hrcek;
+			productReference = A8069F538C12EC5D3FA2DBA5 /* Hrcek.app */;
+			productType = "com.apple.product-type.application";
+		};
+		853915A884B6A0DC7C0DD458 /* HrcekUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6CCC43D2D7710C9DD7D376C6 /* Build configuration list for PBXNativeTarget "HrcekUITests" */;
+			buildPhases = (
+				682C2F7EADB4BEADC7D43A5D /* Sources */,
+				381F61616151ACFFEB03044C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				26411235F6475698622118C9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				F330FD5139D999DAF8C0E98B /* HrcekUITests */,
+			);
+			name = HrcekUITests;
+			packageProductDependencies = (
+			);
+			productName = HrcekUITests;
+			productReference = 83CE2AB6977CC62497FF5F59 /* HrcekUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6321CCF6FD0493B98FD7D226 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 285E48F281FE86CA47230C70 /* Build configuration list for PBXProject "Hrcek" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 36A8356E664319DCBA9EC196;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				F82CD14E25CE4D794FD20D9A /* XCLocalSwiftPackageReference "HrcekKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 1F17DF19BD3EB183038E7CA5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				734A80398ACCC53E5A1D275E /* Hrcek */,
+				70C662AF5180900143494D47 /* HrcekShare */,
+				853915A884B6A0DC7C0DD458 /* HrcekUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		01AF3DC9FA6844BDC37FB180 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2EC8282C48C527CC5DC65A53 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		381F61616151ACFFEB03044C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0DDB8AAB4CB61EF7C18DF88D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23030007C7CD3E8854DAEC7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		682C2F7EADB4BEADC7D43A5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		26411235F6475698622118C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 734A80398ACCC53E5A1D275E /* Hrcek */;
+			targetProxy = 519C37EA7C768D2D5FB881F2 /* PBXContainerItemProxy */;
+		};
+		5207EC60926AE93251D0E0DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 70C662AF5180900143494D47 /* HrcekShare */;
+			targetProxy = 49D0E5E979210512FE053B17 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0F8A810DD66D671C3A0898DF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 535CA4AC73531E89134C0CAB /* HrcekShare.xcconfig */;
+			buildSettings = {
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		10FD7B8A60131C15AE96A682 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B255180A86457A4E258F350B /* Shared.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2A20EEC6091FE50C11CEC24F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B255180A86457A4E258F350B /* Shared.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		3EFB6F31C0261F26239D8FC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A77C8A32091B617C02F1EBD9 /* Hrcek.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4B1FF543FCF0C689EF8EA0A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 577E317D0BEF04EFF21F6A85 /* HrcekUITests.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		7C23B3F71CE16BD7E88D175C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 577E317D0BEF04EFF21F6A85 /* HrcekUITests.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		87FFA25EBB615BD26A0AA4BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A77C8A32091B617C02F1EBD9 /* Hrcek.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		932F49211DA04029A95728A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 535CA4AC73531E89134C0CAB /* HrcekShare.xcconfig */;
+			buildSettings = {
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		285E48F281FE86CA47230C70 /* Build configuration list for PBXProject "Hrcek" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10FD7B8A60131C15AE96A682 /* Debug */,
+				2A20EEC6091FE50C11CEC24F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		37DB9B67A17FD74992262791 /* Build configuration list for PBXNativeTarget "Hrcek" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3EFB6F31C0261F26239D8FC4 /* Debug */,
+				87FFA25EBB615BD26A0AA4BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		6CCC43D2D7710C9DD7D376C6 /* Build configuration list for PBXNativeTarget "HrcekUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4B1FF543FCF0C689EF8EA0A8 /* Debug */,
+				7C23B3F71CE16BD7E88D175C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A353D021A111CB9E10913CE0 /* Build configuration list for PBXNativeTarget "HrcekShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				932F49211DA04029A95728A4 /* Debug */,
+				0F8A810DD66D671C3A0898DF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		F82CD14E25CE4D794FD20D9A /* XCLocalSwiftPackageReference "HrcekKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = HrcekKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3FB60BD273682868DAB10C43 /* HrcekKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HrcekKit;
+		};
+		497BD7E38772586BF5671D90 /* HrcekKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HrcekKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 6321CCF6FD0493B98FD7D226 /* Project object */;
+}

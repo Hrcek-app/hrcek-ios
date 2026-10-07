@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Prints an xcodebuild destination: $HRCEK_SIMULATOR by name, or the newest iPhone.
+set -euo pipefail
+if [[ -n "${HRCEK_SIMULATOR:-}" ]]; then
+  echo "platform=iOS Simulator,name=$HRCEK_SIMULATOR"
+  exit 0
+fi
+udid=$(xcrun simctl list devices available --json | jq -r '
+  [.devices | to_entries[] | select(.key | test("iOS")) | .key as $runtime
+   | .value[] | select(.name | startswith("iPhone")) | {runtime: $runtime, udid}]
+  | sort_by(.runtime) | last | .udid // empty')
+if [[ -z "$udid" ]]; then
+  echo "No iPhone simulator found. Install one in Xcode > Settings > Components." >&2
+  exit 1
+fi
+echo "platform=iOS Simulator,id=$udid"

@@ -1,0 +1,10 @@
+#include "Shared.xcconfig"
+
+PRODUCT_NAME = HrcekShare
+// An extension's identifier must extend its app's.
+PRODUCT_BUNDLE_IDENTIFIER = $(HRCEK_BUNDLE_PREFIX).Hrcek.Share
+INFOPLIST_FILE = Support/HrcekShare-Info.plist
+GENERATE_INFOPLIST_FILE = YES
+INFOPLIST_KEY_CFBundleDisplayName = Hrček
+TARGETED_DEVICE_FAMILY = 1
+APPLICATION_EXTENSION_API_ONLY = YES
