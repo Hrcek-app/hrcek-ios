@@ -15,6 +15,8 @@ repos:
       - id: check-merge-conflict
       - id: mixed-line-ending
       - id: check-added-large-files
+        # A 1024 px app icon is about 1 MB; anything larger is still caught.
+        args: [--maxkb=1024]
 
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: 745eface02aef23e168a8afb6b5737818efbea95  # frozen: v0.11.0.1
