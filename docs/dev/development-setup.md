@@ -61,3 +61,12 @@ one setting in the file inspector.
 Info.plists live in `Support/`, outside the synchronized folders: a
 plist inside one would be copied into the app as a resource and collide
 with the processed one.
+
+## The app icon
+
+`Hrcek/Assets.xcassets/AppIcon.appiconset/app-icon.png` is the only
+size: Xcode derives the rest. It must be 1024 × 1024 and fully opaque.
+iOS draws transparent pixels as black and applies its own rounded
+mask, and App Store Connect rejects an icon with an alpha channel. So
+replace it with full-bleed artwork, not a picture that is already
+rounded. The share extension uses the app's icon.
