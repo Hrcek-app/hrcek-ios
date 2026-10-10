@@ -1,5 +1,9 @@
 # Hrček for iOS
 
+<p align="center">
+  <img src="Hrcek/Assets.xcassets/AppIcon.appiconset/app-icon.png" alt="" width="160">
+</p>
+
 Save the web page you are reading to your
 [Hrček](https://github.com/Hrcek-app/hrcek) with your browser's Share
 button.
