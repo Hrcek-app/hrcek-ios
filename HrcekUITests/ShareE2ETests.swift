@@ -37,6 +37,8 @@ final class ShareE2ETests: XCTestCase {
         openShareSheet(from: safari)
         let notes = safari.descendants(matching: .any)["notes"].firstMatch
         XCTAssertTrue(notes.waitForExistence(timeout: patience), safari.debugDescription)
+        let title = safari.descendants(matching: .any)["title"].firstMatch
+        XCTAssertEqual(title.value as? String, "Hrček E2E page", "the title comes from the page")
         tapWhenHittable(notes)
         notes.typeText("Kept by E2E")
         let tagField = safari.textFields["tagField"].firstMatch

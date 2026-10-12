@@ -63,6 +63,12 @@ when Xcode asks which app to run. Then share a page to Hrček;
 breakpoints in `HrcekShare/` and in HrcekKit's `ShareModel` and
 `EntryService` are hit.
 
+`Preprocess.js` runs inside the page, not in the extension. Its errors
+show in the page's console: in Safari on the Mac, Develop › Simulator ›
+the page. When it fails, Safari hands the extension nothing it can
+read and the sheet says there is no web address to save. To see what
+it handed over, set a breakpoint in `SharedPage.preprocessed(from:)`.
+
 The extension and the app share nothing but the Keychain item. If the
 extension says to sign in while the app shows you signed in, the two
 are not using the same Keychain group: compare `HrcekKeychainGroup` in

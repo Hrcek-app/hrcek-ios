@@ -81,9 +81,16 @@ person removes it on the website's clients page, and the app says so.
 
 ## The share extension
 
-`ShareViewController` hands the shared items to `SharedPage`, which
-finds the address — a URL item, or the first web address in shared text
-— and the title when the browser provides one. `ShareModel` drives the
+`ShareViewController` hands the shared items to `SharedPage`. Safari
+first runs `HrcekShare/Preprocess.js` in the page
+(`NSExtensionJavaScriptPreprocessingFile`) and hands over only its
+answer: the address, the title and every picture the page names in its
+head or shows in its body. Other browsers hand over a URL item, or text
+with an address in it, and sometimes a title; for those, `PagePictures`
+reads the page's head for the pictures it names. Either way
+`PageCandidate` ranks the pictures: the head's first, then the largest
+images; SVG, anything under 100 points a side and duplicates are
+dropped, and no more than 60 are kept. `ShareModel` drives the
 sheet: it looks the address up, fills `EntryDraft` from the page or
 from the entry already saved, and saves the draft through
 `EntryService`.
