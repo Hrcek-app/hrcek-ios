@@ -101,12 +101,18 @@ class Handler(BaseHTTPRequestHandler):
             self.fail("HRC-CORE-0003")
 
     def save(self, body):
-        url = body["url"]
-        existed = url in self.entries
-        entry = {"id": len(self.entries) + 1, "url": url, "title": body.get("title", ""),
-                 "notes": "", "tags": [], "fields": {}}
+        # Like the server: title, notes and tags are replaced; fields and
+        # the picture are kept unless named.
+        url = body["url"].strip()
+        held = self.entries.get(url)
+        entry = {"id": held["id"] if held else len(self.entries) + 1, "url": url,
+                 "title": body.get("title", ""), "notes": body.get("notes", ""),
+                 "tags": sorted(set(body.get("tags", [])), key=str.lower),
+                 "fields": held["fields"] if held else {},
+                 "image": held["image"] if held else None,
+                 "created_at": "2026-10-05T10:00:00Z", "updated_at": "2026-10-05T10:00:00Z"}
         self.entries[url] = entry
-        self.reply(200 if existed else 201, entry)
+        self.reply(200 if held else 201, entry)
 
 
 def serve(port=8765):

@@ -83,14 +83,18 @@ person removes it on the website's clients page, and the app says so.
 
 `ShareViewController` hands the shared items to `SharedPage`, which
 finds the address — a URL item, or the first web address in shared text
-— and the title when the browser provides one. `ShareModel` then saves
-it with `EntrySaver` and the sheet shows the outcome.
+— and the title when the browser provides one. `ShareModel` drives the
+sheet: it looks the address up, fills `EntryDraft` from the page or
+from the entry already saved, and saves the draft through
+`EntryService`.
 
-`EntrySaver` looks the address up first (`POST /api/entries/lookup`)
-and saves only when the server answers `HRC-CORE-0003`, not found. The
-API replaces an existing entry wholesale, so saving an address again
-would wipe its notes and tags; the sheet says "Already saved" instead.
-If the lookup fails for any other reason, nothing is written.
+Saving (`POST /api/entries/`) replaces an entry's title, notes and tags,
+so the sheet always looks first (`POST /api/entries/lookup`) and shows
+what it would replace, and always sends all three in full. `fields` and
+`image_url` are left out, which the server reads as "leave as it is".
+If the opening lookup failed for any reason other than `HRC-CORE-0003`,
+not found, saving looks again first: an entry found then is shown
+instead of written over.
 
 A revoked token (`HRC-AUTH-0004`) clears the stored credentials, and
 the sheet asks the person to open the app and sign in.

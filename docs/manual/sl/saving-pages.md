@@ -13,9 +13,18 @@ Strani shranjujete iz brskalnika. Najprej se v aplikaciji
    vrstici.
 3. V vrstici aplikacij tapnite **Hrček**.
 
-Hrček stran shrani takoj: njen naslov in, če ga brskalnik posreduje,
-tudi naslov strani. Okno pokaže **Shranjeno** in se po trenutku samo
-zapre. Če ga želite zapreti prej, tapnite **Končano**.
+Odpre se okno Hrček z naslovom strani, njenim naslovom, če ga brskalnik
+posreduje, ter prostorom za opombe in oznake. Spremenite, kar želite,
+in tapnite **Shrani**. Okno pokaže **Shranjeno** in se po trenutku samo
+zapre. **Prekliči** okno zapre, ne da bi kar koli shranili.
+
+### Oznake
+
+Oznako dodate tako, da jo vtipkate in tapnete tipko za vnos ali
+vtipkate vejico. Oznako odstranite tako, da jo tapnete. Velike črke ne
+naredijo nove oznake: če že imate `ure`, dodajanje `Ure` ne spremeni
+ničesar. Oznako, ki ste jo vtipkali, a je še niste dodali, Hrček doda,
+ko tapnete Shrani.
 
 Drugi brskalniki delujejo enako: poiščite njihov gumb Deli in izberite
 Hrček.
@@ -29,12 +38,13 @@ hitro našli.
 ## Stran, ki ste jo že shranili
 
 Če delite stran, ki je v vašem Hrčku že shranjena, okno pokaže **Že
-shranjeno** in vnos pusti natanko takšen, kot je — naslov, opombe in
-oznake ostanejo nespremenjeni. Urejanje vnosa iz menija Deli bo na
-voljo v eni od naslednjih različic; do takrat uporabite spletno stran.
+shranjeno** in vnos, kakršen je: njegov naslov, opombe in oznake.
+Spremenite, kar želite, in tapnite **Posodobi**; okno pokaže
+**Posodobljeno**. Kar pustite pri miru, ostane, kot je bilo.
 
 ## Ko shranjevanje ne uspe
 
-Okno pove, kaj je šlo narobe, in ponudi **Poskusi znova**. Dokler
-poskus ne uspe, se ne shrani nič. Glejte
+Okno ostane odprto, ohrani, kar ste vtipkali, in pod obrazcem pove, kaj
+je šlo narobe. Ko je težava odpravljena, znova tapnite **Shrani**.
+Dokler poskus ne uspe, se ne shrani nič. Glejte
 [odpravljanje težav](troubleshooting.md).

@@ -21,17 +21,64 @@ public struct LookupIn: Encodable, Sendable {
     public let url: String
 }
 
-/// A new entry. The API replaces an existing one wholesale, so this is
-/// only ever sent for an address the lookup said is not saved yet.
+/// An entry to save. Posting replaces what the server holds, except that
+/// `fields` and `imageUrl` change nothing when left out.
 public struct EntryIn: Encodable, Sendable {
     public let url: String
     public let title: String
+    public let notes: String
+    public let tags: [String]
+    public let fields: [String: String]?
+    public let imageUrl: String?
+
+    public init(
+        url: String, title: String, notes: String, tags: [String],
+        fields: [String: String]? = nil, imageUrl: String? = nil
+    ) {
+        self.url = url
+        self.title = title
+        self.notes = notes
+        self.tags = tags
+        self.fields = fields
+        self.imageUrl = imageUrl
+    }
+}
+
+/// The picture an entry holds. `url` is server-relative and answers only
+/// to the entry's owner.
+public struct ImageOut: Decodable, Equatable, Sendable {
+    public let url: String
+    public let width: Int
+    public let height: Int
+
+    public init(url: String, width: Int, height: Int) {
+        self.url = url
+        self.width = width
+        self.height = height
+    }
 }
 
 public struct EntryOut: Decodable, Equatable, Sendable {
     public let id: Int
     public let url: String
     public let title: String
+    public let notes: String
+    public let tags: [String]
+    public let fields: [String: String]
+    public let image: ImageOut?
+
+    public init(
+        id: Int, url: String, title: String, notes: String = "", tags: [String] = [],
+        fields: [String: String] = [:], image: ImageOut? = nil
+    ) {
+        self.id = id
+        self.url = url
+        self.title = title
+        self.notes = notes
+        self.tags = tags
+        self.fields = fields
+        self.image = image
+    }
 }
 
 struct ErrorEnvelope: Decodable {

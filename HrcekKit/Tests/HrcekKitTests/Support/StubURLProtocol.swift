@@ -66,6 +66,14 @@ extension URLRequest {
         return data
     }
 
+    func jsonObject() throws -> [String: Any] {
+        try Self.jsonObject(bodyData)
+    }
+
+    static func jsonObject(_ data: Data) throws -> [String: Any] {
+        try JSONSerialization.jsonObject(with: data) as? [String: Any] ?? [:]
+    }
+
     func jsonBody() throws -> [String: String] {
         try JSONDecoder().decode([String: String].self, from: bodyData)
     }

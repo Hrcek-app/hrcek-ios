@@ -91,13 +91,15 @@ When the real server and the stub disagree, fix the stub.
 1. It starts a real Hrček from `../hrcek` (or `$HRCEK_BACKEND_DIR`, or a
    fresh clone of `Hrcek-app/hrcek`) on port 8766 with a throwaway
    database, and creates a confirmed user with a random password.
-2. It serves a small page, `scripts/e2e-page/`, on port 8767.
+2. It serves a small page, `scripts/e2e-page/`, on port 8767, at an
+   address unique to the run so Safari cannot show a cached copy.
 3. It runs the contract test against the real backend.
 4. It runs `E2E.xctestplan`: `ShareE2ETests` signs in through the app,
-   opens the page in Safari, shares it to Hrček and expects **Saved**,
-   then shares it again and expects **Already saved**.
-5. It asks the API for the entry and checks it was saved with the
-   page's title.
+   opens the page in Safari, shares it to Hrček, adds notes and a tag
+   and expects **Saved**; then shares it again, expects **Already
+   saved** with those notes, changes the title and expects **Updated**.
+5. It asks the API for the entry and checks the new title, and that the
+   notes and tag survived the update.
 
 The test reaches its credentials through `TEST_RUNNER_`-prefixed
 environment variables, which xcodebuild hands to the test runner.

@@ -10,8 +10,13 @@ aplikacijo Hrček in poskusite znova.
 še ne pozna. Odprite aplikacijo in se [prijavite](sign-in.md), nato
 stran delite znova.
 
-**»Niste povezani z internetom.«** Povežite se z internetom in tapnite
-**Poskusi znova**.
+**»Hrček ne sprejema več prijave s tega telefona.«** Žeton za dostop
+tega telefona je bil na spletni strani odstranjen ali pa je potekel.
+Odprite aplikacijo, se znova [prijavite](sign-in.md) in stran delite
+znova.
+
+**»Niste povezani z internetom.«** Povežite se z internetom in znova
+tapnite **Shrani**.
 
 **»Strežnika ni mogoče doseči.«** Strežnik morda ne deluje ali pa se je
 naslov, s katerim ste se prijavili, spremenil. Preverite tako, da Hrček
@@ -25,6 +30,12 @@ Znova se prijavite.
 **»Odgovora strežnika ni mogoče razumeti.«** Naslov verjetno kaže na
 spletno stran, ki ni Hrček. Preverite ga v aplikaciji.
 
-**Kaj drugega.** Tapnite **Poskusi znova**. Če težava ostane,
+**»Ta stran je že shranjena. Preverite, kaj vsebuje, nato znova
+shranite.«** Ko se je okno odprlo, Hrček strani ni mogel preveriti,
+zato jo je preveril pred shranjevanjem in ugotovil, da je že shranjena.
+Obrazec zdaj kaže, kaj je shranjeno; spremembe vnesite znova in tapnite
+**Posodobi**.
+
+**Kaj drugega.** Znova tapnite **Shrani**. Če težava ostane,
 zapišite, kaj piše v sporočilu, in se obrnite na osebo, ki skrbi za vaš
 Hrček.

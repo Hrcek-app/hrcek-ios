@@ -17,14 +17,7 @@ final class ShareViewController: UIViewController {
         host.didMove(toParent: self)
 
         let items = extensionContext?.inputItems.compactMap { $0 as? NSExtensionItem } ?? []
-        Task {
-            await model.save(await SharedPage.from(items))
-            if [.saved, .alreadySaved].contains(model.state) {
-                // Long enough to read the confirmation; Done closes sooner.
-                try? await Task.sleep(for: .seconds(2))
-                finish()
-            }
-        }
+        Task { await model.start(await SharedPage.from(items)) }
     }
 
     private func finish() {

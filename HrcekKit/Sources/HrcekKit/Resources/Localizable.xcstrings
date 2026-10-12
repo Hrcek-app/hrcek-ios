@@ -121,6 +121,16 @@
         }
       }
     },
+    "This page is already saved. Check what it holds, then save again." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta stran je že shranjena. Preverite, kaj vsebuje, nato znova shranite."
+          }
+        }
+      }
+    },
     "Too many attempts. Wait a while and try again." : {
       "localizations" : {
         "sl" : {

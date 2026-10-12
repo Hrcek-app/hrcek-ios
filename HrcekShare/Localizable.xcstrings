@@ -1,12 +1,32 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Add a tag" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj oznako"
+          }
+        }
+      }
+    },
     "Already saved" : {
       "localizations" : {
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Že shranjeno"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prekliči"
           }
         }
       }
@@ -31,12 +51,52 @@
         }
       }
     },
+    "Hrček no longer accepts this phone's sign-in. Open the Hrček app and sign in again." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hrček ne sprejema več prijave s tega telefona. Odprite aplikacijo Hrček in se znova prijavite."
+          }
+        }
+      }
+    },
+    "Notes" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opombe"
+          }
+        }
+      }
+    },
     "Open the Hrček app and sign in first." : {
       "localizations" : {
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Najprej odprite aplikacijo Hrček in se prijavite."
+          }
+        }
+      }
+    },
+    "Remove %@" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odstrani %@"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shrani"
           }
         }
       }
@@ -51,22 +111,42 @@
         }
       }
     },
-    "Saving…" : {
+    "Tags" : {
       "localizations" : {
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Shranjujem …"
+            "value" : "Oznake"
           }
         }
       }
     },
-    "Try again" : {
+    "Title" : {
       "localizations" : {
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Poskusi znova"
+            "value" : "Naslov"
+          }
+        }
+      }
+    },
+    "Update" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posodobi"
+          }
+        }
+      }
+    },
+    "Updated" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posodobljeno"
           }
         }
       }
