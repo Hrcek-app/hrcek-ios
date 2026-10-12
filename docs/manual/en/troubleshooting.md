@@ -10,7 +10,11 @@ open the Hrček app once, then try again.
 know you yet. Open the app and [sign in](sign-in.md), then share the
 page again.
 
-**"You're offline."** Connect to the internet and tap **Try again**.
+**"Hrček no longer accepts this phone's sign-in."** The access token
+for this phone was removed on the website, or it expired. Open the app
+and [sign in](sign-in.md) again, then share the page again.
+
+**"You're offline."** Connect to the internet and tap **Save** again.
 
 **"Can't reach the server."** The server may be down, or the address
 you signed in with may have changed. Open your Hrček in the browser to
@@ -23,5 +27,10 @@ this phone was removed on the website, or it expired. Sign in again.
 **"The server's answer wasn't understood."** The address probably
 points at a website that is not a Hrček. Check it in the app.
 
-**Something else.** Tap **Try again**. If it keeps failing, note what
+**"This page is already saved. Check what it holds, then save
+again."** Hrček could not check the page when the sheet opened, so it
+checked again before saving and found the page already saved. The form
+now shows what is saved; make your changes again and tap **Update**.
+
+**Something else.** Tap **Save** again. If it keeps failing, note what
 the message says and ask whoever runs your Hrček.

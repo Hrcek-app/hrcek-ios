@@ -19,7 +19,11 @@ import Testing
             #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
             let body = try request.jsonBody()
             #expect(body == ["url": "https://example.com/a"])
-            return (200, Data(#"{"id":7,"url":"https://example.com/a","title":"A"}"#.utf8))
+            let entry = #"""
+                {"id":7,"url":"https://example.com/a","title":"A","notes":"","tags":[],
+                 "fields":{},"image":null}
+                """#
+            return (200, Data(entry.utf8))
         }
         let client = APIClient(
             server: server, token: "hrcek_test1", language: "sl", session: session)

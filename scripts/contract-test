@@ -67,12 +67,20 @@ def run(base, identifier, password):
     status, body = call(base, "POST", "/api/entries/lookup", {"url": url}, token=token)
     results.append(expect("lookup of an unsaved address is 404 HRC-CORE-0003",
                           status == 404 and error_code(body) == "HRC-CORE-0003"))
-    status, body = call(base, "POST", "/api/entries/", {"url": url, "title": "Contract"},
-                        token=token)
+    full = {"url": url, "title": "Contract", "notes": "Kept", "tags": ["b", "A"]}
+    status, body = call(base, "POST", "/api/entries/", full, token=token)
     results.append(expect("saving a new address is 201",
                           status == 201 and body.get("url") == url))
     status, body = call(base, "POST", "/api/entries/lookup", {"url": url}, token=token)
-    results.append(expect("lookup finds it", status == 200 and body.get("title") == "Contract"))
+    results.append(expect("lookup finds it, with notes, tags, fields and image",
+                          status == 200 and body.get("title") == "Contract"
+                          and body.get("notes") == "Kept" and body.get("tags") == ["A", "b"]
+                          and body.get("fields") == {} and body.get("image") is None))
+    status, body = call(base, "POST", "/api/entries/", {"url": url, "title": "Again"},
+                        token=token)
+    results.append(expect("saving it again is 200 and replaces notes and tags",
+                          status == 200 and body.get("title") == "Again"
+                          and body.get("notes") == "" and body.get("tags") == []))
     return all(results)
 
 

@@ -61,7 +61,7 @@ xcrun simctl spawn booted log stream --level debug \
 To debug it in Xcode, run the extension's target and choose Safari
 when Xcode asks which app to run. Then share a page to Hrček;
 breakpoints in `HrcekShare/` and in HrcekKit's `ShareModel` and
-`EntrySaver` are hit.
+`EntryService` are hit.
 
 The extension and the app share nothing but the Keychain item. If the
 extension says to sign in while the app shows you signed in, the two
