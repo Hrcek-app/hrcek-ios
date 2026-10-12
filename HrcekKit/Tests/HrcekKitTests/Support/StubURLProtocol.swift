@@ -1,6 +1,9 @@
 import Foundation
 import Synchronization
 
+/// What the server answers for an address nobody saved.
+let notFound = Data(#"{"error":{"code":"HRC-CORE-0003","message":"No.","details":{}}}"#.utf8)
+
 /// Answers requests of one URLSession with a handler, so tests run in
 /// parallel without sharing state.
 final class StubURLProtocol: URLProtocol, @unchecked Sendable {

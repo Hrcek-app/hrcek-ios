@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@ (no longer offered)" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (ni več na voljo)"
+          }
+        }
+      }
+    },
     "Add a tag" : {
       "localizations" : {
         "sl" : {
@@ -147,6 +157,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Posodobljeno"
+          }
+        }
+      }
+    },
+    "Your fields" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaša polja"
+          }
+        }
+      }
+    },
+    "Your fields could not be loaded — saving will not change them." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaših polj ni bilo mogoče naložiti — shranjevanje jih ne bo spremenilo."
           }
         }
       }

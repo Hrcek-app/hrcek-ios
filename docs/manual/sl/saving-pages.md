@@ -30,6 +30,17 @@ Med tipkanjem okno ponudi oznake, ki jih že uporabljate in se začnejo
 s tem, kar ste vtipkali. Tapnite eno, da jo dodate. Oznak, ki jih
 stran že ima, ne ponudi.
 
+### Vaša polja
+
+Polja, ki ste jih za svoje vnose določili na spletni strani — na
+začetku je to Priority —, so zložena pod **Vaša polja**. Tapnite, da
+jih odprete. Polje, ki ga pustite prazno, se shrani prazno.
+
+Če polje z izbiro hrani vrednost, ki je ne ponuja več, jo okno pokaže
+z oznako **(ni več na voljo)** in jo ob shranjevanju ohrani. Če okno
+vaših polj ne more prebrati, to pove in pokaže le polja, ki jih vnos že
+ima; shranjevanje drugih ne spremeni.
+
 Drugi brskalniki delujejo enako: poiščite njihov gumb Deli in izberite
 Hrček.
 

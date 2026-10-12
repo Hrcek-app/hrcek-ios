@@ -23,12 +23,16 @@ public final class ShareModel {
     public var suggestionDelay = Duration.milliseconds(200)
     /// Whether the address is already saved, so saving updates it.
     public private(set) var isExisting = false
+    /// The account's fields could not be read; the form shows the entry's
+    /// own instead, so saving changes none of the others.
+    public private(set) var fieldsUnavailable = false
     /// Why the last attempt failed, shown under the form.
     public private(set) var message: String?
 
     private let store: any CredentialStore
     private let makeService: @Sendable (Credentials) -> EntryService
     private var service: EntryService?
+    private var definitions: [FieldOut]?
     /// The opening lookup failed for a reason other than "not saved", so
     /// the form may be about to replace an entry it never showed.
     private var mustLookAgain = false
@@ -55,9 +59,18 @@ public final class ShareModel {
         }
         let service = makeService(credentials)
         self.service = service
-        draft = EntryDraft(page: page)
+        async let definitions = Self.definitions(from: service)
+        let found: Result<EntryOut?, any Error>
         do {
-            if let entry = try await service.lookup(draft.url) { show(entry) }
+            found = .success(try await service.lookup(page.url.absoluteString))
+        } catch {
+            found = .failure(error)
+        }
+        self.definitions = await definitions
+        fieldsUnavailable = self.definitions == nil
+        draft = EntryDraft(page: page, definitions: self.definitions)
+        do {
+            if let entry = try found.get() { show(entry) }
         } catch {
             guard !signOutIfRevoked(error) else { return }
             mustLookAgain = true
@@ -135,8 +148,17 @@ public final class ShareModel {
         }
     }
 
+    private static func definitions(from service: EntryService) async -> [FieldOut]? {
+        do {
+            return try await service.fields()
+        } catch {
+            Log.share.notice("No fields: \(String(describing: error), privacy: .public)")
+            return nil
+        }
+    }
+
     private func show(_ entry: EntryOut) {
-        draft = EntryDraft(entry: entry)
+        draft = EntryDraft(entry: entry, definitions: definitions)
         isExisting = true
     }
 

@@ -43,6 +43,7 @@ final class ShareE2ETests: XCTestCase {
         scrollToHittable(tagField, in: safari)
         tagField.tap()
         tagField.typeText("e2e\n")
+        choosePriority("high", in: safari)
         save(in: safari, expecting: "saved")
     }
 
@@ -70,6 +71,21 @@ final class ShareE2ETests: XCTestCase {
         suggestion.tap()
         XCTAssertTrue(chip.waitForExistence(timeout: patience))
         save(in: safari, expecting: "updated")
+    }
+
+    /// Priority is the field every new account starts with.
+    @MainActor
+    private func choosePriority(_ value: String, in safari: XCUIApplication) {
+        let fields = safari.descendants(matching: .any)["yourFields"].firstMatch
+        scrollToHittable(fields, in: safari)
+        fields.tap()
+        let priority = safari.buttons["field-Priority"].firstMatch
+        XCTAssertTrue(priority.waitForExistence(timeout: patience), safari.debugDescription)
+        scrollToHittable(priority, in: safari)
+        priority.tap()
+        let option = safari.buttons[value].firstMatch
+        XCTAssertTrue(option.waitForExistence(timeout: patience), safari.debugDescription)
+        option.tap()
     }
 
     @MainActor
