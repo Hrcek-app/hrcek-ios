@@ -28,6 +28,12 @@ final class ShareE2ETests: XCTestCase {
             safari.staticTexts["Hrček E2E page"].waitForExistence(timeout: patience),
             "page did not load:\n\(safari.debugDescription)")
         // Sharing the same open page twice, as a person would.
+        saveWithNotesAndATag(from: safari)
+        updateTheTitleAndTags(from: safari)
+    }
+
+    @MainActor
+    private func saveWithNotesAndATag(from safari: XCUIApplication) {
         openShareSheet(from: safari)
         let notes = safari.descendants(matching: .any)["notes"].firstMatch
         XCTAssertTrue(notes.waitForExistence(timeout: patience), safari.debugDescription)
@@ -38,13 +44,31 @@ final class ShareE2ETests: XCTestCase {
         tagField.tap()
         tagField.typeText("e2e\n")
         save(in: safari, expecting: "saved")
+    }
 
+    @MainActor
+    private func updateTheTitleAndTags(from safari: XCUIApplication) {
         openShareSheet(from: safari)
         XCTAssertTrue(
             safari.descendants(matching: .any)["alreadySaved"].waitForExistence(timeout: patience))
+        let notes = safari.descendants(matching: .any)["notes"].firstMatch
         XCTAssertEqual(notes.value as? String, "Kept by E2E")
         replaceText(
             of: safari.descendants(matching: .any)["title"].firstMatch, with: "Edited by E2E")
+        // Taken off, then put back from the account's own labels.
+        let chip = safari.buttons["tag-e2e"].firstMatch
+        scrollToHittable(chip, in: safari)
+        chip.tap()
+        XCTAssertTrue(chip.waitForNonExistence(timeout: patience))
+        let tagField = safari.textFields["tagField"].firstMatch
+        scrollToHittable(tagField, in: safari)
+        tagField.tap()
+        tagField.typeText("E2")
+        let suggestion = safari.buttons["suggestion-e2e"].firstMatch
+        XCTAssertTrue(suggestion.waitForExistence(timeout: patience), safari.debugDescription)
+        scrollToHittable(suggestion, in: safari)
+        suggestion.tap()
+        XCTAssertTrue(chip.waitForExistence(timeout: patience))
         save(in: safari, expecting: "updated")
     }
 
@@ -64,6 +88,12 @@ final class ShareE2ETests: XCTestCase {
     private func scrollToHittable(_ element: XCUIElement, in app: XCUIApplication) {
         for _ in 0..<4 where !element.isHittable { app.swipeUp() }
         XCTAssertTrue(element.isHittable, app.debugDescription)
+        // A tap while the form still glides after a swipe lands elsewhere.
+        var frame = CGRect.null
+        for _ in 0..<10 where element.frame != frame {
+            frame = element.frame
+            Thread.sleep(forTimeInterval: 0.3)
+        }
     }
 
     @MainActor

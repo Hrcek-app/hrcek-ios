@@ -76,6 +76,11 @@ def run(base, identifier, password):
                           status == 200 and body.get("title") == "Contract"
                           and body.get("notes") == "Kept" and body.get("tags") == ["A", "b"]
                           and body.get("fields") == {} and body.get("image") is None))
+    status, body = call(base, "GET", "/api/labels/?starts_with=a", token=token)
+    names = [label.get("name") for label in body.get("items", [])]
+    results.append(expect("labels in use are listed by prefix, ignoring capitals",
+                          status == 200 and "A" in names and "b" not in names
+                          and body.get("count") == len(names)))
     status, body = call(base, "POST", "/api/entries/", {"url": url, "title": "Again"},
                         token=token)
     results.append(expect("saving it again is 200 and replaces notes and tags",

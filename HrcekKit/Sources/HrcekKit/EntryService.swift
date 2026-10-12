@@ -1,6 +1,7 @@
 import Foundation
 
-/// Reads and writes the person's entries.
+/// Reads and writes the person's entries, and reads what their account
+/// defines for them.
 public struct EntryService: Sendable {
     private let client: APIClient
 
@@ -23,6 +24,13 @@ public struct EntryService: Sendable {
         } catch let error as APIError where error.code == "HRC-CORE-0003" {
             return nil
         }
+    }
+
+    /// The account's labels starting with `prefix`, alphabetically.
+    public func labels(startingWith prefix: String) async throws -> [String] {
+        let query = [URLQueryItem(name: "starts_with", value: prefix)]
+        return try await client.get("/api/labels/", query: query, as: Page<LabelOut>.self)
+            .value.items.map(\.name)
     }
 
     public func save(_ entry: EntryIn) async throws -> (entry: EntryOut, created: Bool) {

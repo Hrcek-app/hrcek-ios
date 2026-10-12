@@ -26,6 +26,10 @@ naredijo nove oznake: če že imate `ure`, dodajanje `Ure` ne spremeni
 ničesar. Oznako, ki ste jo vtipkali, a je še niste dodali, Hrček doda,
 ko tapnete Shrani.
 
+Med tipkanjem okno ponudi oznake, ki jih že uporabljate in se začnejo
+s tem, kar ste vtipkali. Tapnite eno, da jo dodate. Oznak, ki jih
+stran že ima, ne ponudi.
+
 Drugi brskalniki delujejo enako: poiščite njihov gumb Deli in izberite
 Hrček.
 

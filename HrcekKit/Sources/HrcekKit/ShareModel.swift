@@ -16,6 +16,11 @@ public final class ShareModel {
     public var draft = EntryDraft(url: "")
     /// A tag being typed, not yet added.
     public var tagText = ""
+    /// The account's labels that fit what is being typed.
+    public private(set) var suggestions: [String] = []
+    /// How long typing must pause before labels are asked for, so a word
+    /// typed costs one request rather than one per letter.
+    public var suggestionDelay = Duration.milliseconds(200)
     /// Whether the address is already saved, so saving updates it.
     public private(set) var isExisting = false
     /// Why the last attempt failed, shown under the form.
@@ -65,6 +70,42 @@ public final class ShareModel {
     public func commitTagText() {
         for tag in tagText.split(separator: ",") { draft.addTag(String(tag)) }
         tagText = ""
+        suggestions = []
+    }
+
+    public func choose(_ suggestion: String) {
+        draft.addTag(suggestion)
+        tagText = ""
+        suggestions = []
+    }
+
+    /// Call whenever `tagText` changes; cancelling the call drops it.
+    public func updateSuggestions() async {
+        let prefix = tagText.trimmingCharacters(in: .whitespaces)
+        guard let service, !prefix.isEmpty else {
+            suggestions = []
+            return
+        }
+        do {
+            try await Task.sleep(for: suggestionDelay)
+            let labels = try await service.labels(startingWith: prefix)
+            // The person may have typed on, or added the tag, while it was asked.
+            guard !Task.isCancelled, tagText.trimmingCharacters(in: .whitespaces) == prefix
+            else { return }
+            // Offering a tag already there would only invite a duplicate.
+            let fresh = labels.filter { label in
+                !draft.tags.contains { EntryDraft.same($0, label) }
+            }
+            suggestions = Array(fresh.prefix(8))
+        } catch is CancellationError {
+            return
+        } catch {
+            // Typing on cancels the request, which then fails as a transport error.
+            if Task.isCancelled { return }
+            // A convenience whose absence explains itself; not worth an error.
+            Log.share.notice("No suggestions: \(String(describing: error), privacy: .public)")
+            suggestions = []
+        }
     }
 
     /// Answers whether the entry was saved.

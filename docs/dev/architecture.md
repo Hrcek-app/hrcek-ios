@@ -92,6 +92,11 @@ Saving (`POST /api/entries/`) replaces an entry's title, notes and tags,
 so the sheet always looks first (`POST /api/entries/lookup`) and shows
 what it would replace, and always sends all three in full. `fields` and
 `image_url` are left out, which the server reads as "leave as it is".
+Tag suggestions come from `GET /api/labels/?starts_with=`, asked
+200 ms after typing pauses: the view runs `updateSuggestions()` in a
+`.task(id:)` keyed on the text, so each keystroke cancels the previous
+wait or request. A failed request shows no suggestions and no error.
+
 If the opening lookup failed for any reason other than `HRC-CORE-0003`,
 not found, saving looks again first: an entry found then is shown
 instead of written over.

@@ -6,6 +6,8 @@ struct TagEditor: View {
     @Bindable var model: ShareModel
     @FocusState private var typing: Bool
 
+    static let fieldID = "tagField"
+
     var body: some View {
         if !model.draft.tags.isEmpty {
             FlowLayout(spacing: 8) {
@@ -33,7 +35,19 @@ struct TagEditor: View {
             .onChange(of: model.tagText) { _, text in
                 if text.contains(",") { model.commitTagText() }
             }
+            // A new keystroke cancels the previous lookup.
+            .task(id: model.tagText) { await model.updateSuggestions() }
             .accessibilityIdentifier("tagField")
+            .id(Self.fieldID)
+        ForEach(model.suggestions, id: \.self) { label in
+            Button {
+                model.choose(label)
+                typing = true
+            } label: {
+                Label(label, systemImage: "plus.circle")
+            }
+            .accessibilityIdentifier("suggestion-\(label)")
+        }
     }
 }
 

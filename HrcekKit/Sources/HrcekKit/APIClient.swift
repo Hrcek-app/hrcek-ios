@@ -28,9 +28,9 @@ public struct APIClient: Sendable {
     }
 
     public func get<Value: Decodable & Sendable>(
-        _ path: String, as type: Value.Type
+        _ path: String, query: [URLQueryItem] = [], as type: Value.Type
     ) async throws -> APIResponse<Value> {
-        try await send(request("GET", path, body: nil))
+        try await send(request("GET", path, query: query, body: nil))
     }
 
     public func post<Body: Encodable & Sendable, Value: Decodable & Sendable>(
@@ -41,8 +41,11 @@ public struct APIClient: Sendable {
         return try await send(request("POST", path, body: try encoder.encode(body)))
     }
 
-    private func request(_ method: String, _ path: String, body: Data?) -> URLRequest {
-        var request = URLRequest(url: server.endpoint(path))
+    private func request(
+        _ method: String, _ path: String, query: [URLQueryItem] = [], body: Data?
+    ) -> URLRequest {
+        let url = server.endpoint(path)
+        var request = URLRequest(url: query.isEmpty ? url : url.appending(queryItems: query))
         request.httpMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(language, forHTTPHeaderField: "Accept-Language")
