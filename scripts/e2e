@@ -54,8 +54,8 @@ token=$(curl -fs "$server/api/auth/tokens/exchange" -H 'Content-Type: applicatio
 entry=$(curl -fs "$server/api/entries/lookup" -H "Authorization: Bearer $token" \
   -H 'Content-Type: application/json' -d "{\"url\":\"$page\"}")
 echo "Saved entry: $entry"
-expected='{"title":"Edited by E2E","notes":"Kept by E2E","tags":["e2e"]}'
-if [[ $(jq -c '{title, notes, tags}' <<<"$entry") != "$expected" ]]; then
-  echo "Expected the page saved, then updated without losing its notes and tags" >&2
+expected='{"title":"Edited by E2E","notes":"Kept by E2E","tags":["e2e"],"fields":{"Priority":"high"}}'
+if [[ $(jq -c '{title, notes, tags, fields}' <<<"$entry") != "$expected" ]]; then
+  echo "Expected the page saved, then updated without losing its notes, tags and fields" >&2
   exit 1
 fi

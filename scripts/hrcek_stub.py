@@ -19,9 +19,16 @@ MESSAGES = {
     "HRC-AUTH-0004": ("This API token is invalid or has expired.",
                       "Ta API-žeton ni veljaven ali je potekel."),
     "HRC-CORE-0003": ("The requested resource does not exist.", "Zahtevani vir ne obstaja."),
+    "HRC-CORE-0002": ("The submitted data is not valid.", "Poslani podatki niso veljavni."),
+    "HRC-FIELD-0001": ("There is no field with that name.", "Polja s tem imenom ni."),
 }
 STATUS = {"HRC-AUTH-0001": 401, "HRC-AUTH-0002": 403, "HRC-AUTH-0003": 401,
-          "HRC-AUTH-0004": 401, "HRC-CORE-0003": 404}
+          "HRC-AUTH-0004": 401, "HRC-CORE-0003": 404, "HRC-CORE-0002": 422,
+          "HRC-FIELD-0001": 422}
+# What a fresh account starts with, plus one of each other kind.
+FIELDS = [{"name": "Priority", "kind": "choice", "options": ["high", "medium", "low"]},
+          {"name": "Price", "kind": "number", "options": []},
+          {"name": "Shop", "kind": "text", "options": []}]
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -62,7 +69,10 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):  # noqa: N802 - the name http.server dispatches to
         path = urlsplit(self.path).path
-        if path == "/api/labels/":
+        if path == "/api/fields/":
+            if self.authorised():
+                self.reply(200, {"items": FIELDS, "count": len(FIELDS)})
+        elif path == "/api/labels/":
             if self.authorised():
                 self.labels(parse_qs(urlsplit(self.path).query))
         elif self.path == "/api/health":
@@ -112,15 +122,41 @@ class Handler(BaseHTTPRequestHandler):
         matching = sorted((n for n in names if n.lower().startswith(prefix)), key=str.lower)
         self.reply(200, {"items": [{"name": n} for n in matching], "count": len(matching)})
 
+    @staticmethod
+    def patched(fields, patch):
+        """The server's rules: names match ignoring case, "" clears, the
+        rest is kept. Answers the fields, or the error code."""
+        fields = dict(fields)
+        for sent, value in patch.items():
+            field = next((f for f in FIELDS if f["name"].lower() == sent.lower()), None)
+            if field is None:
+                return "HRC-FIELD-0001"
+            value = str(value).strip()
+            if value == "":
+                fields.pop(field["name"], None)
+                continue
+            if field["kind"] == "choice" and value not in field["options"]:
+                return "HRC-CORE-0002"
+            if field["kind"] == "number":
+                try:
+                    float(value)
+                except ValueError:
+                    return "HRC-CORE-0002"
+            fields[field["name"]] = value
+        return fields
+
     def save(self, body):
         # Like the server: title, notes and tags are replaced; fields and
         # the picture are kept unless named.
         url = body["url"].strip()
         held = self.entries.get(url)
+        fields = self.patched(held["fields"] if held else {}, body.get("fields") or {})
+        if isinstance(fields, str):
+            return self.fail(fields)
         entry = {"id": held["id"] if held else len(self.entries) + 1, "url": url,
                  "title": body.get("title", ""), "notes": body.get("notes", ""),
                  "tags": sorted(set(body.get("tags", [])), key=str.lower),
-                 "fields": held["fields"] if held else {},
+                 "fields": fields,
                  "image": held["image"] if held else None,
                  "created_at": "2026-10-05T10:00:00Z", "updated_at": "2026-10-05T10:00:00Z"}
         self.entries[url] = entry

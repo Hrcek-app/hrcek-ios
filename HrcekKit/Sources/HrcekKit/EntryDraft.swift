@@ -7,20 +7,29 @@ public struct EntryDraft: Equatable, Sendable {
     public var title: String
     public var notes: String
     public private(set) var tags: [String]
+    public var fields: [FieldInput]
 
-    public init(url: String, title: String = "", notes: String = "", tags: [String] = []) {
+    public init(
+        url: String, title: String = "", notes: String = "", tags: [String] = [],
+        fields: [FieldInput] = []
+    ) {
         self.url = url
         self.title = title
         self.notes = notes
         self.tags = tags
+        self.fields = fields
     }
 
-    public init(page: SharedPage) {
-        self.init(url: page.url.absoluteString, title: page.title ?? "")
+    public init(page: SharedPage, definitions: [FieldOut]? = nil) {
+        self.init(
+            url: page.url.absoluteString, title: page.title ?? "",
+            fields: FieldInput.inputs(definitions: definitions, values: [:]))
     }
 
-    public init(entry: EntryOut) {
-        self.init(url: entry.url, title: entry.title, notes: entry.notes, tags: entry.tags)
+    public init(entry: EntryOut, definitions: [FieldOut]? = nil) {
+        self.init(
+            url: entry.url, title: entry.title, notes: entry.notes, tags: entry.tags,
+            fields: FieldInput.inputs(definitions: definitions, values: entry.fields))
     }
 
     /// The server cannot hold two labels differing only by case, so neither can this.
@@ -39,7 +48,8 @@ public struct EntryDraft: Equatable, Sendable {
         EntryIn(
             url: url.trimmingCharacters(in: .whitespacesAndNewlines),
             title: title.trimmingCharacters(in: .whitespacesAndNewlines),
-            notes: notes, tags: tags)
+            notes: notes, tags: tags,
+            fields: fields.isEmpty ? nil : FieldInput.patch(fields))
     }
 
     static func same(_ first: String, _ second: String) -> Bool {

@@ -29,6 +29,17 @@ As you type, the sheet offers the tags you already use that begin with
 what you typed. Tap one to add it. Tags the page already has are not
 offered.
 
+### Your fields
+
+The fields you defined for your entries on the website — Priority, to
+begin with — are folded away under **Your fields**. Tap it to open
+them. A field you leave empty is saved empty.
+
+If a choice field holds a value it no longer offers, the sheet shows it
+marked **(no longer offered)** and saving keeps it. If the sheet cannot
+read your fields, it says so and shows only the ones the entry already
+has; saving then leaves the others as they are.
+
 Other browsers work the same way: find their Share button, then choose
 Hrček.
 

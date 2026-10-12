@@ -41,6 +41,7 @@ struct EntryForm: View {
             Section("Tags") {
                 TagEditor(model: model)
             }
+            FieldsSection(model: model)
             if let message = model.message {
                 Section {
                     Text(message).foregroundStyle(.red).accessibilityIdentifier("message")

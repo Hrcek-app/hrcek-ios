@@ -81,6 +81,30 @@ def run(base, identifier, password):
     results.append(expect("labels in use are listed by prefix, ignoring capitals",
                           status == 200 and "A" in names and "b" not in names
                           and body.get("count") == len(names)))
+    status, body = call(base, "GET", "/api/fields/", token=token)
+    priority = next((f for f in body.get("items", []) if f.get("name") == "Priority"), {})
+    results.append(expect("fields list a fresh account's Priority, a choice",
+                          status == 200 and priority.get("kind") == "choice"
+                          and priority.get("options") == ["high", "medium", "low"]))
+    status, body = call(base, "POST", "/api/entries/",
+                        dict(full, fields={"priority": "high"}), token=token)
+    results.append(expect("fields are named as their owner spells them",
+                          status == 200 and body.get("fields") == {"Priority": "high"}))
+    status, body = call(base, "POST", "/api/entries/", full, token=token)
+    results.append(expect("fields left out are kept",
+                          status == 200 and body.get("fields") == {"Priority": "high"}))
+    status, body = call(base, "POST", "/api/entries/",
+                        dict(full, fields={"Priority": "urgent"}), token=token)
+    results.append(expect("a choice not offered is 422 HRC-CORE-0002",
+                          status == 422 and error_code(body) == "HRC-CORE-0002"))
+    status, body = call(base, "POST", "/api/entries/",
+                        dict(full, fields={"colour": "red"}), token=token)
+    results.append(expect("a field nobody has is 422 HRC-FIELD-0001",
+                          status == 422 and error_code(body) == "HRC-FIELD-0001"))
+    status, body = call(base, "POST", "/api/entries/",
+                        dict(full, fields={"Priority": ""}), token=token)
+    results.append(expect("an empty value clears a field",
+                          status == 200 and body.get("fields") == {}))
     status, body = call(base, "POST", "/api/entries/", {"url": url, "title": "Again"},
                         token=token)
     results.append(expect("saving it again is 200 and replaces notes and tags",

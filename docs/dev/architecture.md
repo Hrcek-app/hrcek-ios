@@ -92,6 +92,15 @@ Saving (`POST /api/entries/`) replaces an entry's title, notes and tags,
 so the sheet always looks first (`POST /api/entries/lookup`) and shows
 what it would replace, and always sends all three in full. `fields` and
 `image_url` are left out, which the server reads as "leave as it is".
+`fields` is the exception to the replace: the server patches it. The
+form gets its fields from `GET /api/fields/` and `FieldInput` sends
+every field it showed, an emptied one as `""` to clear it, and never
+one it did not show. When the definitions cannot be read the entry's
+own keys stand in, so its values stay visible and are sent back as they
+were. A choice holding a value the field no longer offers is left out
+of the save, which keeps it; sending it would be refused, and sending
+`""` would destroy it.
+
 Tag suggestions come from `GET /api/labels/?starts_with=`, asked
 200 ms after typing pauses: the view runs `updateSuggestions()` in a
 `.task(id:)` keyed on the text, so each keystroke cancels the previous

@@ -43,6 +43,9 @@ final class FakeEntries: Sendable {
                     Data(#"{"error":{"code":"\#(code)","message":"No.","details":{}}}"#.utf8)
                 )
             }
+            if request.url?.path() == "/api/fields/" {
+                return (200, Data(#"{"items":[],"count":0}"#.utf8))
+            }
             if request.url?.path() == "/api/entries/lookup" {
                 state.lookups += 1
                 if state.failLookups > 0 {

@@ -26,6 +26,11 @@ public struct EntryService: Sendable {
         }
     }
 
+    /// The fields this account's entries may carry.
+    public func fields() async throws -> [FieldOut] {
+        try await client.get("/api/fields/", as: Page<FieldOut>.self).value.items
+    }
+
     /// The account's labels starting with `prefix`, alphabetically.
     public func labels(startingWith prefix: String) async throws -> [String] {
         let query = [URLQueryItem(name: "starts_with", value: prefix)]

@@ -26,6 +26,9 @@ final class Asked: Sendable {
     ) async throws -> ShareModel {
         let session = StubURLProtocol.session { request in
             let url = try #require(request.url)
+            if url.path() == "/api/fields/" {
+                return (200, Data(#"{"items":[],"count":0}"#.utf8))
+            }
             if url.path() == "/api/entries/lookup" {
                 let notFound = #"{"error":{"code":"HRC-CORE-0003","message":"No.","details":{}}}"#
                 return (404, Data(notFound.utf8))
