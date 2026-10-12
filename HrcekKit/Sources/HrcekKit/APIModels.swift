@@ -81,6 +81,16 @@ public struct EntryOut: Decodable, Equatable, Sendable {
     }
 }
 
+/// One page of a list the API answers in pages.
+public struct Page<Item: Decodable & Sendable>: Decodable, Sendable {
+    public let items: [Item]
+    public let count: Int
+}
+
+public struct LabelOut: Decodable, Equatable, Sendable {
+    public let name: String
+}
+
 struct ErrorEnvelope: Decodable {
     struct Body: Decodable {
         let code: String

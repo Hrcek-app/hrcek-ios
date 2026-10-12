@@ -3,6 +3,7 @@ the real server does (scripts/contract-test checks both)."""
 
 import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from urllib.parse import parse_qs, urlsplit
 
 TOKEN = "hrcek_stub"
 PASSWORD = "correct horse"
@@ -60,7 +61,11 @@ class Handler(BaseHTTPRequestHandler):
         return True
 
     def do_GET(self):  # noqa: N802 - the name http.server dispatches to
-        if self.path == "/api/health":
+        path = urlsplit(self.path).path
+        if path == "/api/labels/":
+            if self.authorised():
+                self.labels(parse_qs(urlsplit(self.path).query))
+        elif self.path == "/api/health":
             self.reply(200, {"status": "ok", "message": "Service is running."})
         elif self.path == "/api/auth/me":
             if self.authorised():
@@ -99,6 +104,13 @@ class Handler(BaseHTTPRequestHandler):
             self.reply(200, entry)
         else:
             self.fail("HRC-CORE-0003")
+
+    def labels(self, query):
+        # Labels in use, alphabetically ignoring capitals, prefix matched literally.
+        prefix = query.get("starts_with", [""])[0].strip().lower()
+        names = {tag for entry in self.entries.values() for tag in entry["tags"]}
+        matching = sorted((n for n in names if n.lower().startswith(prefix)), key=str.lower)
+        self.reply(200, {"items": [{"name": n} for n in matching], "count": len(matching)})
 
     def save(self, body):
         # Like the server: title, notes and tags are replaced; fields and

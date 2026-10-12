@@ -25,6 +25,10 @@ tag to remove it. Capitals do not make a different tag: adding
 `Watches` when `watches` is already there does nothing. A tag you typed
 but did not add yet is added when you tap Save.
 
+As you type, the sheet offers the tags you already use that begin with
+what you typed. Tap one to add it. Tags the page already has are not
+offered.
+
 Other browsers work the same way: find their Share button, then choose
 Hrček.
 

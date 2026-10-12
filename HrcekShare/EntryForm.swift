@@ -7,6 +7,17 @@ struct EntryForm: View {
     @Bindable var model: ShareModel
 
     var body: some View {
+        ScrollViewReader { proxy in
+            form
+                // Suggestions sit under the field, where the keyboard would hide them.
+                .onChange(of: model.suggestions) { _, suggestions in
+                    guard !suggestions.isEmpty else { return }
+                    withAnimation { proxy.scrollTo(TagEditor.fieldID, anchor: .top) }
+                }
+        }
+    }
+
+    private var form: some View {
         Form {
             Section {
                 Text(model.draft.url)
