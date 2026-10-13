@@ -38,3 +38,7 @@ Jobs run on GitHub's `xcode-27` macOS image, which is a preview at the
 time of writing. Xcode is selected explicitly with `DEVELOPER_DIR`.
 Every action is pinned to a commit SHA. CI needs no secrets. A failing
 test job uploads its result bundles as an artifact.
+
+Each simulator job boots its simulator with `scripts/simulator --boot`
+before testing. A runner's first boot takes minutes, and when xcodebuild
+did it, the app or the test runner often timed out on launch.
