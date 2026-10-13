@@ -26,6 +26,11 @@ sliko**, če želite vnos shraniti brez nje. Tapnite **Zamenjaj**, da
 vidite vse slike, ki jih stran ponuja, in tapnite želeno; ko ste
 izbrali, tapnite veliko sliko ali se vrnite.
 
+Ko delite iz Safarija, okno ponudi vse slike na strani, tudi tiste
+nižje spodaj, ki se še niso naložile. Drugi brskalniki in aplikacije
+posredujejo le naslov, zato okno ponudi samo slike, ki jih stran navaja
+za predoglede povezav.
+
 Pri strani, ki ste jo že shranili, okno začne s sliko, ki jo vnos že
 ima, v Zamenjaj označeno s **trenutna**. Če izklopite Vključi sliko, jo
 shranjevanje odstrani. Če vnos slike nima, je Vključi sliko izklopljeno,

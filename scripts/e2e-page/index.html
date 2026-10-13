@@ -3,5 +3,7 @@
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Hrček E2E page</title>
 <meta property="og:image" content="/hamster.png"></head>
 <body><h1>Hrček E2E page</h1><p>Shared by the end-to-end test.</p>
-<img src="hamster.png" width="120" height="120" alt="A hamster"></body>
+<img src="hamster.png" width="120" height="120" alt="A hamster">
+<!-- As a lazy-loading script leaves a picture not yet scrolled to. -->
+<img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="hamster.png?lazy" width="160" height="120" alt="Another hamster"></body>
 </html>
