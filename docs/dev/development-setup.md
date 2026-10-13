@@ -25,6 +25,7 @@ runs the UI tests; the app it built is under
 
 `scripts/simulator` picks the newest iPhone simulator installed. Set
 `HRCEK_SIMULATOR` to a device name, such as `iPhone 17`, to choose one.
+`scripts/simulator --boot` also boots it and waits until it is ready.
 
 ## Settings and your own copy
 
