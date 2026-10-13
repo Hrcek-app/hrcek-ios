@@ -104,4 +104,25 @@ final class SignInUITests: XCTestCase {
         URLSession.shared.dataTask(with: request) { _, _, _ in done.fulfill() }.resume()
         wait(for: [done], timeout: 5)
     }
+
+    @MainActor
+    func testSignInWithATokenMadeOnTheWebsite() {
+        continueAfterFailure = false
+        let app = launchApp()
+        signIn(app, token: "hrcek_stub")
+        XCTAssertTrue(app.staticTexts["signedInAs"].waitForExistence(timeout: 10))
+    }
+
+    @MainActor
+    func testARefusedTokenShowsTheServersMessage() {
+        let app = launchApp()
+        signIn(app, token: "hrcek_revoked")
+        let error = app.staticTexts["error"]
+        XCTAssertTrue(error.waitForExistence(timeout: 10))
+        XCTAssertEqual(
+            error.label,
+            TestLanguage.text(
+                en: "This API token is invalid or has expired.",
+                sl: "Ta API-žeton ni veljaven ali je potekel."))
+    }
 }

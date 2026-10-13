@@ -45,6 +45,16 @@ public struct AuthService: Sendable {
         return credentials
     }
 
+    /// Signs in with a token the person made on the website.
+    public func signIn(server: ServerAddress, token: String) async throws -> Credentials {
+        Log.auth.info("Signing in to \(server.host, privacy: .public) with a token")
+        let credentials = try await credentials(
+            server: server, token: token.trimmingCharacters(in: .whitespacesAndNewlines))
+        try store.save(credentials)
+        Log.auth.info("Signed in")
+        return credentials
+    }
+
     /// Re-reads who the stored token belongs to. Throws the server's
     /// refusal, so callers can tell a revoked token from being offline.
     public func refresh() async throws -> Credentials? {

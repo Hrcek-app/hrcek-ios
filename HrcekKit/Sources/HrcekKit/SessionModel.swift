@@ -5,10 +5,20 @@ import Observation
 @MainActor
 @Observable
 public final class SessionModel {
+    /// How the person proves who they are.
+    public enum Method: Hashable, Sendable {
+        /// Traded once for a token, then forgotten.
+        case password
+        /// Made on the website and pasted here.
+        case token
+    }
+
     public private(set) var credentials: Credentials?
+    public var method = Method.password
     public var serverText = ""
     public var email = ""
     public var password = ""
+    public var token = ""
     public private(set) var isWorking = false
     public private(set) var errorMessage: String?
 
@@ -20,10 +30,9 @@ public final class SessionModel {
     }
 
     public var canSignIn: Bool {
-        !isWorking
-            && ![serverText, email, password].contains {
-                $0.trimmingCharacters(in: .whitespaces).isEmpty
-            }
+        let needed = method == .password ? [serverText, email, password] : [serverText, token]
+        return !isWorking
+            && !needed.contains { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
     }
 
     public func signIn() async {
@@ -33,8 +42,15 @@ public final class SessionModel {
         defer { isWorking = false }
         do {
             let server = try ServerAddress(serverText)
-            credentials = try await auth.signIn(server: server, email: email, password: password)
+            switch method {
+            case .password:
+                credentials = try await auth.signIn(
+                    server: server, email: email, password: password)
+            case .token:
+                credentials = try await auth.signIn(server: server, token: token)
+            }
             password = ""
+            token = ""
         } catch {
             Log.ui.notice("Sign-in failed: \(String(describing: error), privacy: .public)")
             errorMessage = UserFacingError.message(for: error)

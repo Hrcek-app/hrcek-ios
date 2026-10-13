@@ -49,6 +49,20 @@ func signIn(
     app.buttons["signIn"].tap()
 }
 
+/// Signs in by pasting a token, the way a person would.
+@MainActor
+func signIn(_ app: XCUIApplication, token: String, server: String = stubServer) {
+    let field = app.textFields["server"]
+    XCTAssertTrue(field.waitForExistence(timeout: 10))
+    field.tap()
+    field.typeText(server)
+    // The second segment, whatever the language calls it.
+    app.segmentedControls["method"].buttons.element(boundBy: 1).tap()
+    app.secureTextFields["token"].tap()
+    app.secureTextFields["token"].typeText(token)
+    app.buttons["signIn"].tap()
+}
+
 /// iOS offers to save the password after a sign-in; a person would decline.
 @MainActor
 func declineSavingThePassword(_ app: XCUIApplication) {

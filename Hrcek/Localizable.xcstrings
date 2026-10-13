@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "API token" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API-žeton"
+          }
+        }
+      }
+    },
     "Choose Hrček. If it isn't in the row, tap More and add it." : {
       "localizations" : {
         "sl" : {
@@ -11,12 +21,12 @@
         }
       }
     },
-    "Email" : {
+    "Email or display name" : {
       "localizations" : {
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "E-pošta"
+            "value" : "E-pošta ali prikazno ime"
           }
         }
       }
@@ -37,6 +47,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hrček"
+          }
+        }
+      }
+    },
+    "Make one on the website, on your account's clients page, and paste it here." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naredite ga na spletni strani, na strani odjemalcev svojega računa, in ga prilepite sem."
           }
         }
       }
@@ -97,6 +117,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prijava v Hrček"
+          }
+        }
+      }
+    },
+    "Sign in with" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prijava z"
           }
         }
       }
@@ -163,6 +193,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Telefon pozabi vašo prijavo. Njegov žeton za dostop deluje, dokler ga ne odstranite na strani odjemalcev na spletni strani."
+          }
+        }
+      }
+    },
+    "Your password is used once to make a token for this phone, and never kept." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geslo se uporabi enkrat, da se za ta telefon naredi žeton, in se nikoli ne shrani."
           }
         }
       }
