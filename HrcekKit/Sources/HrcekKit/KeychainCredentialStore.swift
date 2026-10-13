@@ -5,21 +5,16 @@ public struct KeychainError: Error, Equatable {
     public let status: OSStatus
 }
 
-/// One Keychain item holding the credentials, in an access group the
-/// share extension can read too.
-public struct KeychainCredentialStore: CredentialStore {
-    /// The store app and extension share. The group name comes from the
+/// One generic-password item, in an access group the share extension can
+/// read too.
+struct KeychainItem: Sendable {
+    let service: String
+    let accessGroup: String?
+
+    /// The group app and extension share. Its name comes from the
     /// Info.plist, which the build fills with the team's identifier prefix.
-    public static let shared = KeychainCredentialStore(
-        accessGroup: Bundle.main.object(forInfoDictionaryKey: "HrcekKeychainGroup") as? String)
-
-    private let service: String
-    private let accessGroup: String?
-
-    public init(service: String = "app.hrcek.credentials", accessGroup: String?) {
-        self.service = service
-        self.accessGroup = accessGroup
-    }
+    static let sharedGroup =
+        Bundle.main.object(forInfoDictionaryKey: "HrcekKeychainGroup") as? String
 
     private var query: [String: Any] {
         var query: [String: Any] = [
@@ -32,7 +27,7 @@ public struct KeychainCredentialStore: CredentialStore {
         return query
     }
 
-    public func load() throws -> Credentials? {
+    func read() throws -> Data? {
         var search = query
         search[kSecReturnData as String] = true
         search[kSecMatchLimit as String] = kSecMatchLimitOne
@@ -43,11 +38,10 @@ public struct KeychainCredentialStore: CredentialStore {
             Log.auth.error("Keychain read failed: \(status)")
             throw KeychainError(status: status)
         }
-        return try JSONDecoder().decode(Credentials.self, from: data)
+        return data
     }
 
-    public func save(_ credentials: Credentials) throws {
-        let data = try JSONEncoder().encode(credentials)
+    func write(_ data: Data) throws {
         let attributes: [String: Any] = [
             kSecValueData as String: data,
             // The extension runs while the phone is in use; never after a restart before unlock.
@@ -63,10 +57,34 @@ public struct KeychainCredentialStore: CredentialStore {
         }
     }
 
-    public func delete() throws {
+    func delete() throws {
         let status = SecItemDelete(query as CFDictionary)
         guard status == errSecSuccess || status == errSecItemNotFound else {
             throw KeychainError(status: status)
         }
+    }
+}
+
+/// The credentials, as one Keychain item app and extension share.
+public struct KeychainCredentialStore: CredentialStore {
+    public static let shared = KeychainCredentialStore(accessGroup: KeychainItem.sharedGroup)
+
+    private let item: KeychainItem
+
+    public init(service: String = "app.hrcek.credentials", accessGroup: String?) {
+        item = KeychainItem(service: service, accessGroup: accessGroup)
+    }
+
+    public func load() throws -> Credentials? {
+        guard let data = try item.read() else { return nil }
+        return try JSONDecoder().decode(Credentials.self, from: data)
+    }
+
+    public func save(_ credentials: Credentials) throws {
+        try item.write(try JSONEncoder().encode(credentials))
+    }
+
+    public func delete() throws {
+        try item.delete()
     }
 }

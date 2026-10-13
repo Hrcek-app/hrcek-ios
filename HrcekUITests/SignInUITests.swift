@@ -125,4 +125,32 @@ final class SignInUITests: XCTestCase {
                 en: "This API token is invalid or has expired.",
                 sl: "Ta API-žeton ni veljaven ali je potekel."))
     }
+
+    @MainActor
+    func testChoosingALanguageChangesTheAppsWordsAndIsKept() {
+        continueAfterFailure = false
+        let app = launchApp()
+        // The other language from the one the phone speaks in this run.
+        let slovenian = TestLanguage.current == "sl"
+        let other = slovenian ? "English" : "Slovenščina"
+        let title = slovenian ? "Sign in to Hrček" : "Prijava v Hrček"
+        let picker = app.buttons["language"].firstMatch
+        XCTAssertTrue(picker.waitForExistence(timeout: 10))
+        for _ in 0..<3 where !picker.isHittable { app.swipeUp() }
+        picker.tap()
+        tapWhenHittable(app.buttons[other].firstMatch)
+        XCTAssertTrue(app.navigationBars[title].waitForExistence(timeout: 10))
+        // The server's messages follow at once too.
+        signIn(app, email: "nina@example.com", password: "wrong")
+        let error = app.staticTexts["error"]
+        XCTAssertTrue(error.waitForExistence(timeout: 10))
+        XCTAssertEqual(
+            error.label,
+            slovenian
+                ? "The email address or password is not correct."
+                : "E-poštni naslov ali geslo ni pravilno.")
+        app.terminate()
+        let again = launchApp(resetting: false)
+        XCTAssertTrue(again.navigationBars[title].waitForExistence(timeout: 10))
+    }
 }

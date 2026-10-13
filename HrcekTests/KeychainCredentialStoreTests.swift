@@ -43,3 +43,16 @@ import Testing
         #expect(try store.load() == credentials)
     }
 }
+
+@Suite struct KeychainLanguageStoreTests {
+    @Test func keepsAndForgetsAChoice() throws {
+        let store = KeychainLanguageStore(
+            service: "app.hrcek.tests.\(UUID().uuidString)", accessGroup: nil)
+        defer { try? store.save(nil) }
+        #expect(try store.load() == nil)
+        try store.save("sl")
+        #expect(try store.load() == "sl")
+        try store.save(nil)
+        #expect(try store.load() == nil)
+    }
+}

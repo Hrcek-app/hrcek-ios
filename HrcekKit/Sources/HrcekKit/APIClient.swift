@@ -7,10 +7,8 @@ public struct APIResponse<Value: Sendable>: Sendable {
 
 /// Talks JSON to one Hrček server, in the app's language.
 public struct APIClient: Sendable {
-    /// The app's own localisation, so server messages match the UI.
-    public static var preferredLanguage: String {
-        Bundle.main.preferredLocalizations.first ?? "en"
-    }
+    /// The language in use, so server messages match the UI.
+    public static var preferredLanguage: String { L10n.language }
 
     private let server: ServerAddress
     private let token: String?

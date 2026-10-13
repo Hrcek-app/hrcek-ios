@@ -49,10 +49,8 @@ import Testing
         ),
     ])
     func explainsTransportProblems(error: APIError, english: String, slovenian: String) throws {
-        let en = try #require(L10n.bundle(for: "en"))
-        let sl = try #require(L10n.bundle(for: "sl"))
-        #expect(UserFacingError.message(for: error, bundle: en) == english)
-        #expect(UserFacingError.message(for: error, bundle: sl) == slovenian)
+        #expect(UserFacingError.message(for: error, language: "en") == english)
+        #expect(UserFacingError.message(for: error, language: "sl") == slovenian)
     }
 
     @Test(arguments: [
@@ -72,17 +70,14 @@ import Testing
     func explainsAddressProblems(
         problem: ServerAddress.Problem, english: String, slovenian: String
     ) throws {
-        let en = try #require(L10n.bundle(for: "en"))
-        let sl = try #require(L10n.bundle(for: "sl"))
-        #expect(UserFacingError.message(for: problem, bundle: en) == english)
-        #expect(UserFacingError.message(for: problem, bundle: sl) == slovenian)
+        #expect(UserFacingError.message(for: problem, language: "en") == english)
+        #expect(UserFacingError.message(for: problem, language: "sl") == slovenian)
     }
 
     @Test func hasAFallback() throws {
         struct Odd: Error {}
-        let sl = try #require(L10n.bundle(for: "sl"))
         #expect(
-            UserFacingError.message(for: Odd(), bundle: sl)
+            UserFacingError.message(for: Odd(), language: "sl")
                 == "Nekaj je šlo narobe. Poskusite znova.")
     }
 }

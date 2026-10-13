@@ -8,8 +8,11 @@ final class ShareViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Log.share.info("Share sheet opened")
+        // The language chosen in the app; the extension has no settings of its own.
+        L10n.choice = try? KeychainLanguageStore.shared.load()
         let host = UIHostingController(
-            rootView: ShareView(model: model) { [weak self] in self?.finish() })
+            rootView: ShareView(model: model) { [weak self] in self?.finish() }
+                .environment(\.locale, L10n.locale))
         addChild(host)
         view.addSubview(host.view)
         host.view.frame = view.bounds

@@ -44,6 +44,14 @@ you gave it on the website.
 | You're offline. | Connect to the internet and try again. |
 | This API token is invalid or has expired. | Check you copied the whole token, or make a new one on the website. |
 
+## Language
+
+The app and the Share sheet speak English or Slovenian. Under
+**Language** choose **Automatic** to follow your phone, or pick one.
+The choice also sets the language of the messages your Hrček server
+sends back. It applies to the app at once, and to the Share sheet the
+next time you share a page.
+
 ## Signing out
 
 Tap **Sign out** and confirm. The phone forgets your sign-in.

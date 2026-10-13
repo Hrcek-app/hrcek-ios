@@ -48,9 +48,7 @@ struct PictureSaver {
     static func trouble(_ error: any Error) -> String {
         Log.share.notice("Picture failed: \(String(describing: error), privacy: .public)")
         let reason = UserFacingError.message(for: error)
-        return String(
-            localized: "The entry was saved, but the picture could not be attached: \(reason)",
-            bundle: L10n.bundle)
+        return L10n.string("The entry was saved, but the picture could not be attached: \(reason)")
     }
 }
 
