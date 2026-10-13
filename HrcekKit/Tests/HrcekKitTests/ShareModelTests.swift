@@ -81,7 +81,7 @@ final class FakeEntries: Sendable {
     func model(_ fake: FakeEntries, stored: Credentials?) -> (ShareModel, InMemoryCredentialStore) {
         let store = InMemoryCredentialStore(stored)
         let session = StubURLProtocol.session { try fake.handle($0) }
-        let model = ShareModel(store: store) {
+        let model = ShareModel(store: store, pages: .offline) {
             EntryService(credentials: $0, language: "en", session: session)
         }
         return (model, store)

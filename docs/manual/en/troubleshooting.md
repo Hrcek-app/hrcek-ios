@@ -14,6 +14,11 @@ page again.
 for this phone was removed on the website, or it expired. Open the app
 and [sign in](sign-in.md) again, then share the page again.
 
+**"The entry was saved, but the picture could not be attached."** The
+rest of the message says why: often the picture is in a format Hrček
+cannot read, or too large. Share the page again and choose another
+picture under **Change**, or switch **Include picture** off.
+
 **"You're offline."** Connect to the internet and tap **Save** again.
 
 **"Can't reach the server."** The server may be down, or the address

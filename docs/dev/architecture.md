@@ -108,6 +108,31 @@ were. A choice holding a value the field no longer offers is left out
 of the save, which keeps it; sending it would be refused, and sending
 `""` would destroy it.
 
+`PictureState` holds the picture choice: the held picture first, then
+the page's; whether one is included; which. An entry saved without a
+picture starts with none included, so reopening it does not add one.
+`PictureSaver` turns the choice into requests. It reads the chosen
+picture's bytes from the web itself (`PictureBytes`, no cookies) and
+uploads them after the save, because the server will not fetch from
+private addresses and signed or referer-checked ones do not answer it.
+Only when the bytes cannot be had — over 10 MB, SVG, not a picture, a
+failed fetch — does the save carry `image_url` instead. If the server
+refuses that address (`HRC-IMAGE-*`) the entry is saved again without
+it. Removing a picture is `DELETE /api/entries/{id}/image`, since a
+save cannot do it. A picture never fails the entry: its trouble is
+reported beside **Saved**.
+
+The picture an entry holds is fetched with the token from its
+`image.url` to be shown. The server currently answers that address
+only to a signed-in browser and sends a token to its sign-in page; the
+sheet then says it has a picture it cannot show. Pictures are decoded
+no larger than they are drawn (`PictureLoader`), and nothing is read
+from the web further than needed — a page's first megabyte, a
+picture's first 10 MB — since a share extension is given little
+memory. Reading a page for its pictures happens after the form is
+open, so a slow page never keeps it closed. Errors from the web are
+logged by code only: their description carries the address.
+
 Tag suggestions come from `GET /api/labels/?starts_with=`, asked
 200 ms after typing pauses: the view runs `updateSuggestions()` in a
 `.task(id:)` keyed on the text, so each keystroke cancels the previous

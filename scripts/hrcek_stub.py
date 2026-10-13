@@ -2,6 +2,7 @@
 the real server does (scripts/contract-test checks both)."""
 
 import json
+import re
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlsplit
 
@@ -21,10 +22,12 @@ MESSAGES = {
     "HRC-CORE-0003": ("The requested resource does not exist.", "Zahtevani vir ne obstaja."),
     "HRC-CORE-0002": ("The submitted data is not valid.", "Poslani podatki niso veljavni."),
     "HRC-FIELD-0001": ("There is no field with that name.", "Polja s tem imenom ni."),
+    "HRC-IMAGE-0005": ("That address points somewhere Hrček will not go.",
+                       "Ta naslov kaže nekam, kamor Hrček ne gre."),
 }
 STATUS = {"HRC-AUTH-0001": 401, "HRC-AUTH-0002": 403, "HRC-AUTH-0003": 401,
           "HRC-AUTH-0004": 401, "HRC-CORE-0003": 404, "HRC-CORE-0002": 422,
-          "HRC-FIELD-0001": 422}
+          "HRC-FIELD-0001": 422, "HRC-IMAGE-0005": 422}
 # What a fresh account starts with, plus one of each other kind.
 FIELDS = [{"name": "Priority", "kind": "choice", "options": ["high", "medium", "low"]},
           {"name": "Price", "kind": "number", "options": []},
@@ -33,6 +36,8 @@ FIELDS = [{"name": "Priority", "kind": "choice", "options": ["high", "medium", "
 
 class Handler(BaseHTTPRequestHandler):
     entries: dict[str, dict] = {}
+    # Picture bytes by entry id.
+    pictures: dict[int, tuple[bytes, str]] = {}
     # Lets a UI test revoke the token the way a person would on the website.
     revoked = False
 
@@ -75,6 +80,9 @@ class Handler(BaseHTTPRequestHandler):
         elif path == "/api/labels/":
             if self.authorised():
                 self.labels(parse_qs(urlsplit(self.path).query))
+        elif re.fullmatch(r"/entries/\d+/image/", path):
+            if self.authorised():
+                self.picture(int(path.split("/")[2]))
         elif self.path == "/api/health":
             self.reply(200, {"status": "ok", "message": "Service is running."})
         elif self.path == "/api/auth/me":
@@ -95,8 +103,49 @@ class Handler(BaseHTTPRequestHandler):
         elif self.path == "/api/entries/":
             if self.authorised():
                 self.save(self.body())
+        elif re.fullmatch(r"/api/entries/\d+/image", self.path):
+            if self.authorised():
+                self.upload(int(self.path.split("/")[3]))
         else:
             self.fail("HRC-CORE-0003")
+
+    def do_DELETE(self):  # noqa: N802 - the name http.server dispatches to
+        if not re.fullmatch(r"/api/entries/\d+/image", self.path):
+            return self.fail("HRC-CORE-0003")
+        if not self.authorised():
+            return None
+        entry = self.entry(int(self.path.split("/")[3]))
+        if entry is None or entry["image"] is None:
+            return self.fail("HRC-CORE-0003")
+        entry["image"] = None
+        self.pictures.pop(entry["id"], None)
+        self.send_response(204)
+        self.end_headers()
+        return None
+
+    def entry(self, pk):
+        return next((e for e in self.entries.values() if e["id"] == pk), None)
+
+    def upload(self, pk):
+        entry = self.entry(pk)
+        length = int(self.headers.get("Content-Length", 0))
+        data = self.rfile.read(length)
+        if entry is None or "multipart/form-data" not in self.headers.get("Content-Type", ""):
+            return self.fail("HRC-CORE-0003")
+        # Not a real multipart parser: the stub only keeps what came.
+        self.pictures[pk] = (data, "image/png")
+        entry["image"] = {"url": f"/entries/{pk}/image/", "width": 1, "height": 1}
+        self.reply(200, entry)
+
+    def picture(self, pk):
+        if pk not in self.pictures:
+            return self.fail("HRC-CORE-0003")
+        data, kind = self.pictures[pk]
+        self.send_response(200)
+        self.send_header("Content-Type", kind)
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
 
     def exchange(self, body):
         identifier = body.get("identifier", "").strip().lower()
@@ -153,12 +202,20 @@ class Handler(BaseHTTPRequestHandler):
         fields = self.patched(held["fields"] if held else {}, body.get("fields") or {})
         if isinstance(fields, str):
             return self.fail(fields)
+        image = held["image"] if held else None
+        if body.get("image_url"):
+            # Like the server, it will not fetch from this machine.
+            if urlsplit(body["image_url"]).hostname in ("localhost", "127.0.0.1", "::1"):
+                return self.fail("HRC-IMAGE-0005")
+            image = {"url": "/entries/0/image/", "width": 1, "height": 1}
         entry = {"id": held["id"] if held else len(self.entries) + 1, "url": url,
                  "title": body.get("title", ""), "notes": body.get("notes", ""),
                  "tags": sorted(set(body.get("tags", [])), key=str.lower),
                  "fields": fields,
-                 "image": held["image"] if held else None,
+                 "image": image,
                  "created_at": "2026-10-05T10:00:00Z", "updated_at": "2026-10-05T10:00:00Z"}
+        if image is not None:
+            image["url"] = f"/entries/{entry['id']}/image/"
         self.entries[url] = entry
         self.reply(200 if held else 201, entry)
 

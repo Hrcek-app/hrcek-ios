@@ -41,6 +41,26 @@
         }
       }
     },
+    "Change" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zamenjaj"
+          }
+        }
+      }
+    },
+    "Choose a picture" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Izberi sliko"
+          }
+        }
+      }
+    },
     "Done" : {
       "localizations" : {
         "sl" : {
@@ -71,6 +91,26 @@
         }
       }
     },
+    "Include picture" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vključi sliko"
+          }
+        }
+      }
+    },
+    "It has a picture that cannot be shown here" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ima sliko, ki je tu ni mogoče pokazati"
+          }
+        }
+      }
+    },
     "Notes" : {
       "localizations" : {
         "sl" : {
@@ -87,6 +127,32 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Najprej odprite aplikacijo Hrček in se prijavite."
+          }
+        }
+      }
+    },
+    "Picture" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slika"
+          }
+        }
+      }
+    },
+    "Picture %lld of %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Picture %1$lld of %2$lld"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slika %1$lld od %2$lld"
           }
         }
       }
@@ -121,12 +187,32 @@
         }
       }
     },
+    "Selected" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Izbrano"
+          }
+        }
+      }
+    },
     "Tags" : {
       "localizations" : {
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Oznake"
+          }
+        }
+      }
+    },
+    "The picture it has" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slika, ki jo ima"
           }
         }
       }
@@ -161,6 +247,16 @@
         }
       }
     },
+    "Use this picture" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uporabi to sliko"
+          }
+        }
+      }
+    },
     "Your fields" : {
       "localizations" : {
         "sl" : {
@@ -177,6 +273,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vaših polj ni bilo mogoče naložiti — shranjevanje jih ne bo spremenilo."
+          }
+        }
+      }
+    },
+    "current" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "trenutna"
           }
         }
       }

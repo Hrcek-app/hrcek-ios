@@ -17,7 +17,7 @@ public enum PagePictures {
         request.setValue("text/html", forHTTPHeaderField: "Accept")
         do {
             // The head is near the top; the rest of a long page is not needed.
-            let (head, _) = try await session.data(for: request, upTo: 1_000_000)
+            let head = try await session.data(for: request, upTo: 1_000_000).data
             // Not every page is UTF-8; Latin-1 reads any byte, enough for addresses.
             let html =
                 String(bytes: head, encoding: .utf8) ?? String(bytes: head, encoding: .isoLatin1)

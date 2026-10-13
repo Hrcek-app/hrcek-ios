@@ -98,8 +98,10 @@ When the real server and the stub disagree, fix the stub.
    opens the page in Safari, shares it to Hrček, adds notes and a tag
    and expects **Saved**; then shares it again, expects **Already
    saved** with those notes, changes the title and expects **Updated**.
+   The page offers a picture on `localhost`, which the server refuses
+   to fetch, so the picture arriving proves the sheet uploaded it.
 5. It asks the API for the entry and checks the new title, and that the
-   notes and tag survived the update.
+   notes, tag, field and picture survived the update.
 
 The test reaches its credentials through `TEST_RUNNER_`-prefixed
 environment variables, which xcodebuild hands to the test runner.

@@ -81,6 +81,16 @@
         }
       }
     },
+    "The entry was saved, but the picture could not be attached: %@" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vnos je shranjen, slike pa ni bilo mogoče priložiti: %@"
+          }
+        }
+      }
+    },
     "The server is having trouble. Try again later." : {
       "localizations" : {
         "sl" : {
