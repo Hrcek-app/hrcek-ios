@@ -38,6 +38,7 @@ struct EntryForm: View {
                     .lineLimit(3...10)
                     .accessibilityIdentifier("notes")
             }
+            PictureSection(model: model)
             Section("Tags") {
                 TagEditor(model: model)
             }

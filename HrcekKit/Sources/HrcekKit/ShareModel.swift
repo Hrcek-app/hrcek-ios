@@ -23,6 +23,10 @@ public final class ShareModel {
     public var suggestionDelay = Duration.milliseconds(200)
     /// Whether the address is already saved, so saving updates it.
     public private(set) var isExisting = false
+    /// Whether a picture is saved with the entry, and which.
+    public var pictures = PictureState.none
+    /// Why the picture was not saved with an entry that was.
+    public private(set) var pictureTrouble: String?
     /// The account's fields could not be read; the form shows the entry's
     /// own instead, so saving changes none of the others.
     public private(set) var fieldsUnavailable = false
@@ -30,20 +34,23 @@ public final class ShareModel {
     public private(set) var message: String?
 
     private let store: any CredentialStore
+    private let pages: PageAccess
     private let makeService: @Sendable (Credentials) -> EntryService
     private var service: EntryService?
     private var definitions: [FieldOut]?
+    private var offered: [URL] = []
     /// The opening lookup failed for a reason other than "not saved", so
     /// the form may be about to replace an entry it never showed.
     private var mustLookAgain = false
 
     public init(
-        store: any CredentialStore,
+        store: any CredentialStore, pages: PageAccess = .live,
         makeService: @escaping @Sendable (Credentials) -> EntryService = {
             EntryService(credentials: $0)
         }
     ) {
         self.store = store
+        self.pages = pages
         self.makeService = makeService
     }
 
@@ -67,16 +74,20 @@ public final class ShareModel {
             found = .failure(error)
         }
         self.definitions = await definitions
+        offered = page.pictures ?? []
         fieldsUnavailable = self.definitions == nil
         draft = EntryDraft(page: page, definitions: self.definitions)
+        pictures = PictureState(candidates: offered, held: nil, existing: false)
         do {
-            if let entry = try found.get() { show(entry) }
+            if let entry = try found.get() { await show(entry) }
         } catch {
             guard !signOutIfRevoked(error) else { return }
             mustLookAgain = true
             report(error)
         }
         phase = .editing
+        // Reading the page can be slow; the form need not wait for it.
+        if page.pictures == nil { await readPictures(of: page.url) }
     }
 
     /// Adds what was typed as tags, one per comma.
@@ -132,20 +143,28 @@ public final class ShareModel {
         do {
             if mustLookAgain, let entry = try await service.lookup(draft.url) {
                 mustLookAgain = false
-                show(entry)
+                await show(entry)
                 message = String(
                     localized: "This page is already saved. Check what it holds, then save again.",
                     bundle: L10n.bundle)
                 return false
             }
             mustLookAgain = false
-            let (_, created) = try await service.save(draft.request())
+            let saver = PictureSaver(service: service, pages: pages)
+            let (created, trouble) = try await saver.save(draft.request(), choice: pictures.choice)
+            pictureTrouble = trouble
             phase = .saved(created: created)
             return true
         } catch {
             if !signOutIfRevoked(error) { report(error) }
             return false
         }
+    }
+
+    private func readPictures(of page: URL) async {
+        let found = await pages.pictures(page)
+        offered = found
+        pictures.offer(found)
     }
 
     private static func definitions(from service: EntryService) async -> [FieldOut]? {
@@ -157,9 +176,17 @@ public final class ShareModel {
         }
     }
 
-    private func show(_ entry: EntryOut) {
+    private func show(_ entry: EntryOut) async {
+        let held = await heldPicture(entry)
         draft = EntryDraft(entry: entry, definitions: definitions)
+        pictures = PictureState(candidates: offered, held: held, existing: true)
         isExisting = true
+    }
+
+    private func heldPicture(_ entry: EntryOut) async -> HeldPicture? {
+        guard let image = entry.image else { return nil }
+        guard let data = try? await service?.picture(image) else { return .unshowable }
+        return .shown(data)
     }
 
     private func report(_ error: any Error) {

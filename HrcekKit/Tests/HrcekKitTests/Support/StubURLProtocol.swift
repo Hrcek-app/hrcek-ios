@@ -1,6 +1,13 @@
 import Foundation
 import Synchronization
 
+@testable import HrcekKit
+
+extension PageAccess {
+    /// Never reaches the web: tests must not depend on it.
+    static let offline = PageAccess(pictures: { _ in [] }, bytes: { _ in nil })
+}
+
 /// What the server answers for an address nobody saved.
 let notFound = Data(#"{"error":{"code":"HRC-CORE-0003","message":"No.","details":{}}}"#.utf8)
 
@@ -8,11 +15,26 @@ let notFound = Data(#"{"error":{"code":"HRC-CORE-0003","message":"No.","details"
 /// parallel without sharing state.
 final class StubURLProtocol: URLProtocol, @unchecked Sendable {
     typealias Handler = @Sendable (URLRequest) throws -> (Int, Data)
+    /// An answer whose content type matters.
+    struct Reply {
+        let status: Int
+        let body: Data
+        var type = "application/json"
+    }
 
-    private static let handlers = Mutex<[String: Handler]>([:])
+    typealias TypedHandler = @Sendable (URLRequest) throws -> Reply
+
+    private static let handlers = Mutex<[String: TypedHandler]>([:])
     private static let header = "X-Stub-Session"
 
     static func session(_ handler: @escaping Handler) -> URLSession {
+        typedSession { request in
+            let (status, data) = try handler(request)
+            return Reply(status: status, body: data)
+        }
+    }
+
+    static func typedSession(_ handler: @escaping TypedHandler) -> URLSession {
         let id = UUID().uuidString
         handlers.withLock { $0[id] = handler }
         let configuration = URLSessionConfiguration.ephemeral
@@ -37,14 +59,14 @@ final class StubURLProtocol: URLProtocol, @unchecked Sendable {
             return
         }
         do {
-            let (status, data) = try handler(request)
+            let reply = try handler(request)
             let response = HTTPURLResponse(
-                url: url, statusCode: status, httpVersion: "HTTP/1.1",
-                headerFields: ["Content-Type": "application/json"])
+                url: url, statusCode: reply.status, httpVersion: "HTTP/1.1",
+                headerFields: ["Content-Type": reply.type])
             if let response {
                 client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
             }
-            client?.urlProtocol(self, didLoad: data)
+            client?.urlProtocol(self, didLoad: reply.body)
             client?.urlProtocolDidFinishLoading(self)
         } catch {
             client?.urlProtocol(self, didFailWithError: error)

@@ -39,6 +39,9 @@ final class ShareE2ETests: XCTestCase {
         XCTAssertTrue(notes.waitForExistence(timeout: patience), safari.debugDescription)
         let title = safari.descendants(matching: .any)["title"].firstMatch
         XCTAssertEqual(title.value as? String, "Hrček E2E page", "the title comes from the page")
+        XCTAssertTrue(
+            safari.descendants(matching: .any)["selectedPicture"].waitForExistence(
+                timeout: patience), "the page's picture is offered")
         tapWhenHittable(notes)
         notes.typeText("Kept by E2E")
         let tagField = safari.textFields["tagField"].firstMatch
@@ -104,8 +107,15 @@ final class ShareE2ETests: XCTestCase {
     /// The keyboard covers the lower half of the form, as it would for a person.
     @MainActor
     private func scrollToHittable(_ element: XCUIElement, in app: XCUIApplication) {
-        for _ in 0..<4 where !element.isHittable { app.swipeUp() }
-        XCTAssertTrue(element.isHittable, app.debugDescription)
+        // isHittable can be true for an element still under the keyboard.
+        func covered() -> Bool {
+            let keyboard = app.keyboards.firstMatch
+            let bottom =
+                keyboard.exists ? keyboard.frame.minY : app.windows.firstMatch.frame.maxY
+            return !element.isHittable || element.frame.maxY > bottom
+        }
+        for _ in 0..<6 where covered() { app.swipeUp() }
+        XCTAssertFalse(covered(), app.debugDescription)
         // A tap while the form still glides after a swipe lands elsewhere.
         var frame = CGRect.null
         for _ in 0..<10 where element.frame != frame {

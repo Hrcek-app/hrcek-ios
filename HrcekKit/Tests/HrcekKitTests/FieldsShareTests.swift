@@ -33,7 +33,9 @@ import Testing
                 return (held == nil ? 201 : 200, Data((held ?? Self.held).utf8))
             }
         }
-        return ShareModel(store: InMemoryCredentialStore(try sampleCredentials())) {
+        return ShareModel(
+            store: InMemoryCredentialStore(try sampleCredentials()), pages: .offline
+        ) {
             EntryService(credentials: $0, language: "en", session: session)
         }
     }

@@ -18,6 +18,26 @@ browser provides one, and room for notes and tags. Change what you like,
 then tap **Save**. The sheet says **Saved** and closes by itself after a
 moment. **Cancel** closes it without saving anything.
 
+### Picture
+
+When the page has pictures, the sheet offers one to save with the
+entry: the one the page names as its own, or else its largest. Switch
+**Include picture** off to save the entry without one. Tap **Change**
+to see every picture the page offers, and tap the one you want; tap the
+large picture, or go back, when you have chosen.
+
+For a page you saved before, the sheet starts with the picture the
+entry already has, marked **current** in Change. Switching Include
+picture off removes it when you save. If the entry has no picture,
+Include picture starts off, so fixing a typo does not add one.
+
+Sometimes the sheet cannot show the picture an entry already has and
+says so instead. Saving leaves it as it is.
+
+If the picture cannot be saved, the entry is saved anyway and the
+sheet says why the picture was not. It then stays open until you tap
+**Done**.
+
 ### Tags
 
 Type a tag and tap the return key, or type a comma, to add it. Tap a

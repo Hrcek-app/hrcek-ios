@@ -1,10 +1,18 @@
 import Foundation
 
+/// The start of an answer, no longer than was asked for.
+struct BoundedData {
+    let data: Data
+    let response: URLResponse
+    /// Whether that was all of it.
+    let complete: Bool
+}
+
 extension URLSession {
-    /// At most `limit` bytes of the answer, and whether that was all of it.
-    /// The share extension is given little memory; a shared link can lead
-    /// to a video, and a picture to its full-size original.
-    func data(for request: URLRequest, upTo limit: Int) async throws -> (Data, Bool) {
+    /// At most `limit` bytes of the answer. The share extension is given
+    /// little memory; a shared link can lead to a video, and a picture to
+    /// its full-size original.
+    func data(for request: URLRequest, upTo limit: Int) async throws -> BoundedData {
         let (bytes, response) = try await bytes(for: request)
         guard let status = (response as? HTTPURLResponse)?.statusCode,
             (200..<300).contains(status)
@@ -17,11 +25,11 @@ extension URLSession {
         for try await byte in bytes {
             if data.count == limit {
                 bytes.task.cancel()
-                return (data, false)
+                return BoundedData(data: data, response: response, complete: false)
             }
             data.append(byte)
         }
-        return (data, true)
+        return BoundedData(data: data, response: response, complete: true)
     }
 }
 

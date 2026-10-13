@@ -18,7 +18,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 
-def call(base, method, path, body=None, token=None, language="en"):
+# A real picture: the server decodes what it is given and refuses a toy one.
+PICTURE = (Path(__file__).resolve().parent / "e2e-page" / "hamster.png").read_bytes()
+
+
+def call(base, method, path, body=None, token=None, language="en", picture=None):
     request = urllib.request.Request(base + path, method=method)
     request.add_header("Accept-Language", language)
     if token:
@@ -27,6 +31,12 @@ def call(base, method, path, body=None, token=None, language="en"):
     if body is not None:
         data = json.dumps(body).encode()
         request.add_header("Content-Type", "application/json")
+    if picture is not None:
+        boundary = "contract"
+        data = (f"--{boundary}\r\nContent-Disposition: form-data; name=\"file\"; "
+                f"filename=\"hamster.png\"\r\nContent-Type: image/png\r\n\r\n").encode()
+        data += picture + f"\r\n--{boundary}--\r\n".encode()
+        request.add_header("Content-Type", f"multipart/form-data; boundary={boundary}")
     try:
         with urllib.request.urlopen(request, data) as response:
             return response.status, json.loads(response.read() or b"{}")
@@ -105,6 +115,20 @@ def run(base, identifier, password):
                         dict(full, fields={"Priority": ""}), token=token)
     results.append(expect("an empty value clears a field",
                           status == 200 and body.get("fields") == {}))
+    entry_id = body.get("id")
+    status, body = call(base, "POST", f"/api/entries/{entry_id}/image", token=token,
+                        picture=PICTURE)
+    results.append(expect("a picture uploads as multipart and comes back on the entry",
+                          status == 200 and (body.get("image") or {}).get("url")))
+    status, body = call(base, "DELETE", f"/api/entries/{entry_id}/image", token=token)
+    results.append(expect("removing the picture is 204", status == 204))
+    status, body = call(base, "DELETE", f"/api/entries/{entry_id}/image", token=token)
+    results.append(expect("removing it again is 404 HRC-CORE-0003",
+                          status == 404 and error_code(body) == "HRC-CORE-0003"))
+    status, body = call(base, "POST", "/api/entries/",
+                        dict(full, image_url="http://127.0.0.1/hamster.png"), token=token)
+    results.append(expect("a picture address on this machine is 422 HRC-IMAGE-0005",
+                          status == 422 and error_code(body) == "HRC-IMAGE-0005"))
     status, body = call(base, "POST", "/api/entries/", {"url": url, "title": "Again"},
                         token=token)
     results.append(expect("saving it again is 200 and replaces notes and tags",

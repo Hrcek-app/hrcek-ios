@@ -15,6 +15,11 @@ tega telefona je bil na spletni strani odstranjen ali pa je potekel.
 Odprite aplikacijo, se znova [prijavite](sign-in.md) in stran delite
 znova.
 
+**»Vnos je shranjen, slike pa ni bilo mogoče priložiti.«** Preostanek
+sporočila pove, zakaj: pogosto je slika v obliki, ki je Hrček ne zna
+prebrati, ali pa je prevelika. Stran delite znova in pod **Zamenjaj**
+izberite drugo sliko ali izklopite **Vključi sliko**.
+
 **»Niste povezani z internetom.«** Povežite se z internetom in znova
 tapnite **Shrani**.
 

@@ -57,14 +57,12 @@ import Testing
 
     @Test func readsNoMoreThanItNeeds() async throws {
         let session = StubURLProtocol.session { _ in (200, Data(count: 3_000_000)) }
-        let (data, complete) = try await session.data(
-            for: URLRequest(url: try #require(base)), upTo: 1_000)
-        #expect(data.count == 1_000)
-        #expect(complete == false)
+        let start = try await session.data(for: URLRequest(url: try #require(base)), upTo: 1_000)
+        #expect(start.data.count == 1_000)
+        #expect(start.complete == false)
         let small = StubURLProtocol.session { _ in (200, Data(count: 10)) }
-        let (all, whole) = try await small.data(
-            for: URLRequest(url: try #require(base)), upTo: 1_000)
-        #expect(all.count == 10)
-        #expect(whole)
+        let all = try await small.data(for: URLRequest(url: try #require(base)), upTo: 1_000)
+        #expect(all.data.count == 10)
+        #expect(all.complete)
     }
 }

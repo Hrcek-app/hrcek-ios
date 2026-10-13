@@ -18,6 +18,26 @@ posreduje, ter prostorom za opombe in oznake. Spremenite, kar želite,
 in tapnite **Shrani**. Okno pokaže **Shranjeno** in se po trenutku samo
 zapre. **Prekliči** okno zapre, ne da bi kar koli shranili.
 
+### Slika
+
+Če ima stran slike, okno ponudi eno, ki jo shrani z vnosom: tisto, ki
+jo stran navaja kot svojo, sicer pa največjo. Izklopite **Vključi
+sliko**, če želite vnos shraniti brez nje. Tapnite **Zamenjaj**, da
+vidite vse slike, ki jih stran ponuja, in tapnite želeno; ko ste
+izbrali, tapnite veliko sliko ali se vrnite.
+
+Pri strani, ki ste jo že shranili, okno začne s sliko, ki jo vnos že
+ima, v Zamenjaj označeno s **trenutna**. Če izklopite Vključi sliko, jo
+shranjevanje odstrani. Če vnos slike nima, je Vključi sliko izklopljeno,
+da popravek tipkarske napake ne doda slike.
+
+Včasih okno slike, ki jo vnos že ima, ne more pokazati in to pove.
+Shranjevanje jo pusti, kakršna je.
+
+Če slike ni mogoče shraniti, se vnos vseeno shrani, okno pa pove, zakaj
+slike ni bilo mogoče priložiti. Nato ostane odprto, dokler ne tapnete
+**Končano**.
+
 ### Oznake
 
 Oznako dodate tako, da jo vtipkate in tapnete tipko za vnos ali

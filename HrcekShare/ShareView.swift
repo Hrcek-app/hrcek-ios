@@ -25,6 +25,9 @@ struct ShareView: View {
             notice {
                 Label(created ? "Saved" : "Updated", systemImage: "checkmark.circle.fill")
                     .font(.title2).accessibilityIdentifier(created ? "saved" : "updated")
+                if let trouble = model.pictureTrouble {
+                    Text(trouble).padding(.top).accessibilityIdentifier("pictureTrouble")
+                }
             }
         case .signedOut:
             notice {
@@ -47,7 +50,7 @@ struct ShareView: View {
 
     // The sheet often opens at half height; centred content would sit off-screen.
     private func notice(@ViewBuilder _ content: () -> some View) -> some View {
-        content()
+        VStack { content() }
             .multilineTextAlignment(.center)
             .padding(.top, 48)
             .padding(.horizontal)
@@ -77,7 +80,8 @@ struct ShareView: View {
         } else {
             Button(model.isExisting ? "Update" : "Save") {
                 Task {
-                    guard await model.save() else { return }
+                    // A picture that failed is worth reading; Done closes then.
+                    guard await model.save(), model.pictureTrouble == nil else { return }
                     // Long enough to read the confirmation; Done closes sooner.
                     try? await Task.sleep(for: .seconds(2))
                     done()
