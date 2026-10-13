@@ -86,7 +86,10 @@ person removes it on the website's clients page, and the app says so.
 first runs `HrcekShare/Preprocess.js` in the page
 (`NSExtensionJavaScriptPreprocessingFile`) and hands over only its
 answer: the address, the title and every picture the page names in its
-head or shows in its body. Other browsers hand over a URL item, or text
+head or shows in its body. A picture a lazy loader is still holding
+back (an inline or 1×1 placeholder) is read from `data-src` and its
+usual variants, the rule the browser extension's harvest follows. Other
+browsers hand over a URL item, or text
 with an address in it, and sometimes a title; for those, `PagePictures`
 reads the page's head for the pictures it names. Either way
 `PageCandidate` ranks the pictures: the head's first, then the largest

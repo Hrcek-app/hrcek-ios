@@ -26,6 +26,11 @@ entry: the one the page names as its own, or else its largest. Switch
 to see every picture the page offers, and tap the one you want; tap the
 large picture, or go back, when you have chosen.
 
+Shared from Safari, the sheet offers every picture on the page,
+including those further down that have not loaded yet. Other browsers
+and apps pass on only the address, so the sheet offers just the
+pictures a page names for its link previews.
+
 For a page you saved before, the sheet starts with the picture the
 entry already has, marked **current** in Change. Switching Include
 picture off removes it when you save. If the entry has no picture,

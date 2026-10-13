@@ -42,6 +42,7 @@ final class ShareE2ETests: XCTestCase {
         XCTAssertTrue(
             safari.descendants(matching: .any)["selectedPicture"].waitForExistence(
                 timeout: patience), "the page's picture is offered")
+        offersTheLazyPicture(in: safari)
         tapWhenHittable(notes)
         notes.typeText("Kept by E2E")
         let tagField = safari.textFields["tagField"].firstMatch
@@ -50,6 +51,18 @@ final class ShareE2ETests: XCTestCase {
         tagField.typeText("e2e\n")
         choosePriority("high", in: safari)
         save(in: safari, expecting: "saved")
+    }
+
+    /// The page's second picture is held back by a lazy loader, as on many sites.
+    @MainActor
+    private func offersTheLazyPicture(in safari: XCUIApplication) {
+        // Change appears only when there is more than one picture to choose.
+        let change = safari.descendants(matching: .any)["changePicture"].firstMatch
+        XCTAssertTrue(change.waitForExistence(timeout: patience), "the lazy picture is offered")
+        tapWhenHittable(change)
+        XCTAssertTrue(
+            safari.descendants(matching: .any)["picture-2"].waitForExistence(timeout: patience))
+        safari.descendants(matching: .any)["chooserPreview"].firstMatch.tap()
     }
 
     @MainActor
