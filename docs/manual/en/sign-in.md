@@ -12,7 +12,8 @@ sheet then remember you.
 for example `hrcek.example.com`. You can leave out `https://`; the app
 adds it.
 
-**Email** and **Password** — the same ones you use on the website.
+**Email or display name** and **Password** — the same ones you use on
+the website.
 
 Tap **Sign in**. When it works, the app shows who you are signed in as
 and on which server.
@@ -22,6 +23,14 @@ access token, which is what it keeps. On the website, the token shows
 up on your clients page as "Hrček for iOS (iPhone)". iOS does not tell
 apps the name you gave your phone, so if you sign in on two phones,
 tell them apart by when the token was created.
+
+## Signing in with a token instead
+
+If you would rather not type your password on the phone, make an access
+token on the website — on your clients page, `/accounts/me/clients/` on
+your server — and copy it. In the app, choose **API token** above the
+fields, paste the token and tap **Sign in**. The token keeps the name
+you gave it on the website.
 
 ## When signing in fails
 
@@ -33,6 +42,7 @@ tell them apart by when the token was created.
 | That doesn't look like a web address. | Check the server address for typing mistakes. |
 | Can't reach the server. Check the address. | The address may be wrong, or the server may be down. Try opening it in your browser. |
 | You're offline. | Connect to the internet and try again. |
+| This API token is invalid or has expired. | Check you copied the whole token, or make a new one on the website. |
 
 ## Signing out
 

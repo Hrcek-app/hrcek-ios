@@ -12,7 +12,8 @@ vas nato zapomnita.
 na primer `hrcek.example.com`. Predpono `https://` lahko izpustite;
 aplikacija jo doda sama.
 
-**E-pošta** in **Geslo** — enaka kot na spletni strani.
+**E-pošta ali prikazno ime** in **Geslo** — enaka kot na spletni
+strani.
 
 Tapnite **Prijava**. Ko uspe, aplikacija pokaže, kot kdo in na katerem
 strežniku ste prijavljeni.
@@ -22,6 +23,14 @@ dostop, ki ga obdrži namesto gesla. Na spletni strani je žeton na
 strani odjemalcev viden kot »Hrček za iOS (iPhone)«. iOS aplikacijam
 ne pove imena, ki ste ga dali telefonu, zato žetona dveh telefonov
 ločite po času, ko sta bila ustvarjena.
+
+## Prijava z žetonom
+
+Če gesla na telefonu raje ne bi tipkali, na spletni strani naredite
+žeton za dostop — na strani odjemalcev, `/accounts/me/clients/` na
+vašem strežniku — in ga kopirajte. V aplikaciji nad polji izberite
+**API-žeton**, žeton prilepite in tapnite **Prijava**. Žeton obdrži ime,
+ki ste mu ga dali na spletni strani.
 
 ## Ko prijava ne uspe
 
@@ -33,6 +42,7 @@ ločite po času, ko sta bila ustvarjena.
 | To ni videti kot spletni naslov. | Preverite, ali je v naslovu strežnika tipkarska napaka. |
 | Strežnika ni mogoče doseči. Preverite naslov. | Naslov je morda napačen ali pa strežnik ne deluje. Poskusite ga odpreti v brskalniku. |
 | Niste povezani z internetom. | Povežite se z internetom in poskusite znova. |
+| Ta API-žeton ni veljaven ali je potekel. | Preverite, ali ste kopirali cel žeton, ali pa na spletni strani naredite novega. |
 
 ## Odjava
 

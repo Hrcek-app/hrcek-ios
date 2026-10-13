@@ -62,7 +62,8 @@ an API token (`POST /api/auth/tokens/exchange`), then asks who the
 token belongs to (`GET /api/auth/me`). The token is named
 "Hrček for iOS (<device name>)" in the person's language, which is how
 they recognise this phone on the website's clients page. The password
-is never stored.
+is never stored. A person may instead paste a token they made on the
+website; it is checked with `GET /api/auth/me` and stored the same way.
 
 Server address, token and display name are stored together, as one
 Keychain item, by `KeychainCredentialStore`. The item lives in a

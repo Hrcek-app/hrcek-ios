@@ -120,4 +120,48 @@ import Testing
         #expect(model.credentials != nil)
         #expect(model.errorMessage == nil)
     }
+
+    @Test func signsInWithAPastedToken() async {
+        let session = StubURLProtocol.session { request in
+            #expect(request.url?.path() == "/api/auth/me", "a token needs no exchange")
+            #expect(request.value(forHTTPHeaderField: "Authorization") == "Bearer hrcek_pasted")
+            return (200, Data(#"{"email":"nina@example.com","display_name":"Nina"}"#.utf8))
+        }
+        let (model, store) = model(session)
+        model.method = .token
+        model.serverText = "hrcek.example.com"
+        model.token = "  hrcek_pasted \n"
+        #expect(model.canSignIn)
+        await model.signIn()
+        #expect(model.credentials?.token == "hrcek_pasted")
+        #expect(model.token.isEmpty)
+        #expect((try? store.load())?.displayName == "Nina")
+    }
+
+    @Test func aTokenNeedsNoPassword() {
+        let (model, _) = model(StubURLProtocol.session(status: 500, json: "{}"))
+        model.serverText = "hrcek.example.com"
+        model.method = .token
+        #expect(model.canSignIn == false)
+        model.token = "hrcek_x"
+        #expect(model.canSignIn)
+        model.method = .password
+        #expect(model.canSignIn == false)
+    }
+
+    @Test func showsWhyATokenWasRefused() async {
+        let (model, store) = model(
+            StubURLProtocol.session(
+                status: 401,
+                json: #"""
+                    {"error":{"code":"HRC-AUTH-0004","message":"Invalid token.","details":{}}}
+                    """#))
+        model.method = .token
+        model.serverText = "hrcek.example.com"
+        model.token = "hrcek_wrong"
+        await model.signIn()
+        #expect(model.credentials == nil)
+        #expect(model.errorMessage == "Invalid token.")
+        #expect((try? store.load()) == nil)
+    }
 }
