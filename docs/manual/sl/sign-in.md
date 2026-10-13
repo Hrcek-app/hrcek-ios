@@ -44,6 +44,14 @@ ki ste mu ga dali na spletni strani.
 | Niste povezani z internetom. | Povežite se z internetom in poskusite znova. |
 | Ta API-žeton ni veljaven ali je potekel. | Preverite, ali ste kopirali cel žeton, ali pa na spletni strani naredite novega. |
 
+## Jezik
+
+Aplikacija in meni Deli govorita angleško ali slovensko. Pod **Jezik**
+izberite **Samodejno**, da sledita telefonu, ali izberite enega od
+jezikov. Izbira določa tudi jezik sporočil, ki jih pošilja strežnik
+Hrček. V aplikaciji velja takoj, v meniju Deli pa, ko naslednjič delite
+stran.
+
 ## Odjava
 
 Tapnite **Odjava** in potrdite. Telefon pozabi vašo prijavo.

@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Automatic (%@)" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Samodejno (%@)"
+          }
+        }
+      }
+    },
     "Can't make a secure connection to the server." : {
       "localizations" : {
         "sl" : {

@@ -2,63 +2,62 @@ import Foundation
 
 /// What to tell a person about a failure, in their language.
 public enum UserFacingError {
-    public static func message(for error: any Error, bundle: Bundle = L10n.bundle) -> String {
-        if let error = error as? APIError { return message(for: error, bundle: bundle) }
+    public static func message(for error: any Error, language: String? = nil) -> String {
+        if let error = error as? APIError { return message(for: error, language: language) }
         if let problem = error as? ServerAddress.Problem {
-            return message(for: problem, bundle: bundle)
+            return message(for: problem, language: language)
         }
-        return String(localized: "Something went wrong. Try again.", bundle: bundle)
+        return L10n.string("Something went wrong. Try again.", language: language)
     }
 
-    private static func message(for error: APIError, bundle: Bundle) -> String {
+    private static func message(for error: APIError, language: String?) -> String {
         switch error {
         case .server(_, _, let message):
             message
         case .transport(let code):
-            message(for: code, bundle: bundle)
+            message(for: code, language: language)
         case .unexpectedResponse(let status):
-            message(forUnexpected: status, bundle: bundle)
+            message(forUnexpected: status, language: language)
         }
     }
 
     // Rate limits and proxy errors arrive without the error envelope;
     // blaming the address for them would send the person the wrong way.
-    private static func message(forUnexpected status: Int, bundle: Bundle) -> String {
+    private static func message(forUnexpected status: Int, language: String?) -> String {
         switch status {
         case 429:
-            String(localized: "Too many attempts. Wait a while and try again.", bundle: bundle)
+            L10n.string("Too many attempts. Wait a while and try again.", language: language)
         case 500...599:
-            String(localized: "The server is having trouble. Try again later.", bundle: bundle)
+            L10n.string("The server is having trouble. Try again later.", language: language)
         default:
-            String(
-                localized: "The server's answer wasn't understood. Is this a Hrček address?",
-                bundle: bundle)
+            L10n.string(
+                "The server's answer wasn't understood. Is this a Hrček address?",
+                language: language)
         }
     }
 
-    private static func message(for code: URLError.Code, bundle: Bundle) -> String {
+    private static func message(for code: URLError.Code, language: String?) -> String {
         switch code {
         case .notConnectedToInternet, .dataNotAllowed:
-            String(
-                localized: "You're offline. Connect to the internet and try again.",
-                bundle: bundle)
+            L10n.string(
+                "You're offline. Connect to the internet and try again.", language: language)
         case .timedOut:
-            String(localized: "The server took too long to answer. Try again.", bundle: bundle)
+            L10n.string("The server took too long to answer. Try again.", language: language)
         case .cannotFindHost, .cannotConnectToHost, .dnsLookupFailed:
-            String(localized: "Can't reach the server. Check the address.", bundle: bundle)
+            L10n.string("Can't reach the server. Check the address.", language: language)
         case .secureConnectionFailed, .serverCertificateUntrusted, .serverCertificateHasBadDate,
             .serverCertificateNotYetValid, .serverCertificateHasUnknownRoot:
-            String(localized: "Can't make a secure connection to the server.", bundle: bundle)
+            L10n.string("Can't make a secure connection to the server.", language: language)
         default:
-            String(localized: "Can't reach the server. Try again.", bundle: bundle)
+            L10n.string("Can't reach the server. Try again.", language: language)
         }
     }
 
-    private static func message(for problem: ServerAddress.Problem, bundle: Bundle) -> String {
+    private static func message(for problem: ServerAddress.Problem, language: String?) -> String {
         switch problem {
-        case .empty: String(localized: "Enter the address of your Hrček server.", bundle: bundle)
-        case .invalid: String(localized: "That doesn't look like a web address.", bundle: bundle)
-        case .insecure: String(localized: "The address must start with https://.", bundle: bundle)
+        case .empty: L10n.string("Enter the address of your Hrček server.", language: language)
+        case .invalid: L10n.string("That doesn't look like a web address.", language: language)
+        case .insecure: L10n.string("The address must start with https://.", language: language)
         }
     }
 }

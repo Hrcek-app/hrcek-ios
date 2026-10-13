@@ -3,6 +3,7 @@ import SwiftUI
 
 struct SignInView: View {
     @Environment(SessionModel.self) private var session
+    @Environment(\.locale) private var locale
 
     var body: some View {
         NavigationStack {
@@ -25,8 +26,9 @@ struct SignInView: View {
                     .disabled(!session.canSignIn)
                     .accessibilityIdentifier("signIn")
                 }
+                LanguageSection()
             }
-            .navigationTitle("Sign in to Hrček")
+            .navigationTitle(locale.string("Sign in to Hrček"))
         }
     }
 

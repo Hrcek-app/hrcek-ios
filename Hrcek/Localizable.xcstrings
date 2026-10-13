@@ -11,6 +11,16 @@
         }
       }
     },
+    "Also the language of the Share sheet and of the server's messages." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tudi jezik menija Deli in sporočil strežnika."
+          }
+        }
+      }
+    },
     "Choose Hrček. If it isn't in the row, tap More and add it." : {
       "localizations" : {
         "sl" : {
@@ -47,6 +57,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hrček"
+          }
+        }
+      }
+    },
+    "Language" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jezik"
           }
         }
       }

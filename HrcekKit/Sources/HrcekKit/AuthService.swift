@@ -6,16 +6,17 @@ public struct AuthService: Sendable {
     private let store: any CredentialStore
     private let deviceName: String
     private let session: URLSession
-    private let language: String
+    /// Nil asks in the language in use at the time, which can change.
+    private let fixedLanguage: String?
 
     public init(
         store: any CredentialStore, deviceName: String, session: URLSession = .shared,
-        language: String = APIClient.preferredLanguage
+        language: String? = nil
     ) {
         self.store = store
         self.deviceName = deviceName
         self.session = session
-        self.language = language
+        fixedLanguage = language
     }
 
     public func current() -> Credentials? {
@@ -33,7 +34,7 @@ public struct AuthService: Sendable {
     ) async throws -> Credentials {
         Log.auth.info("Signing in to \(server.host, privacy: .public)")
         // The token's name is how the person recognises this phone on the website.
-        let name = String(localized: "Hrček for iOS (\(deviceName))", bundle: L10n.bundle)
+        let name = L10n.string("Hrček for iOS (\(deviceName))")
         let exchange = TokenExchangeIn(
             name: name, identifier: email.trimmingCharacters(in: .whitespaces),
             password: password)
@@ -72,6 +73,8 @@ public struct AuthService: Sendable {
         try store.delete()
         Log.auth.info("Signed out")
     }
+
+    private var language: String { fixedLanguage ?? APIClient.preferredLanguage }
 
     private func credentials(server: ServerAddress, token: String) async throws -> Credentials {
         let user = try await APIClient(

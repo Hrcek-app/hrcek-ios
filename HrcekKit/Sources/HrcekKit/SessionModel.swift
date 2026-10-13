@@ -73,9 +73,7 @@ public final class SessionModel {
             credentials = try await auth.refresh()
         } catch let error as APIError where error.code == "HRC-AUTH-0004" {
             signOut()
-            errorMessage = String(
-                localized: "Your sign-in has expired or was revoked. Sign in again.",
-                bundle: L10n.bundle)
+            errorMessage = L10n.string("Your sign-in has expired or was revoked. Sign in again.")
         } catch {
             // Offline or a server hiccup: the token may still be good.
             Log.ui.notice("Refresh failed: \(String(describing: error), privacy: .public)")

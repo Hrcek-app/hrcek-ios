@@ -20,6 +20,7 @@ struct SignedInView: View {
                         "Choose Hrček. If it isn't in the row, tap More and add it.",
                         systemImage: "plus.circle")
                 }
+                LanguageSection()
                 signOutSection
             }
             .navigationTitle("Hrček")

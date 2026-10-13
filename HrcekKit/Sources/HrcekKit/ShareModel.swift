@@ -57,7 +57,7 @@ public final class ShareModel {
     public func start(_ page: SharedPage?) async {
         guard let page else {
             phase = .unavailable(
-                String(localized: "There's no web address to save here.", bundle: L10n.bundle))
+                L10n.string("There's no web address to save here."))
             return
         }
         guard let credentials = try? store.load() else {
@@ -144,9 +144,8 @@ public final class ShareModel {
             if mustLookAgain, let entry = try await service.lookup(draft.url) {
                 mustLookAgain = false
                 await show(entry)
-                message = String(
-                    localized: "This page is already saved. Check what it holds, then save again.",
-                    bundle: L10n.bundle)
+                message = L10n.string(
+                    "This page is already saved. Check what it holds, then save again.")
                 return false
             }
             mustLookAgain = false
