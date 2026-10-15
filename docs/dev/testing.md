@@ -101,8 +101,19 @@ When the real server and the stub disagree, fix the stub.
    the token, changes the title and expects **Updated**.
    The page offers a picture on `localhost`, which the server refuses
    to fetch, so the picture arriving proves the sheet uploaded it.
+   `OfflineE2ETests` plays an outage (below): it shares a page while
+   Hrček is down, expects the offline note, types notes and expects
+   **Kept for later**; then, with Hrček back, shares a second page and
+   expects the sync's summary after **Saved**.
 5. It asks the API for the entry and checks the new title, and that the
-   notes, tag, field and picture survived the update.
+   notes, tag, field and picture survived the update; and for the page
+   kept during the outage, which must have reached Hrček with its notes.
+
+The app reaches Hrček through `scripts/e2e-proxy` on port 8768, which
+passes requests through to the backend. `POST /proxy/outage` makes it
+answer 503 to everything, as a reverse proxy does for a stopped Hrček;
+`POST /proxy/restore` passes requests through again. The tests call
+them with `setOutage`. The contract test talks to the backend directly.
 
 The test reaches its credentials through `TEST_RUNNER_`-prefixed
 environment variables, which xcodebuild hands to the test runner.

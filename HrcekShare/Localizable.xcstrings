@@ -81,6 +81,16 @@
         }
       }
     },
+    "Hrček can't be reached. Saving keeps this entry on this phone until it can." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hrčka ni mogoče doseči. Ob shranjevanju vnos ostane na tem telefonu, dokler ga ne bo mogoče doseči."
+          }
+        }
+      }
+    },
     "Hrček no longer accepts this phone's sign-in. Open the Hrček app and sign in again." : {
       "localizations" : {
         "sl" : {
@@ -107,6 +117,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ima sliko, ki je tu ni mogoče pokazati"
+          }
+        }
+      }
+    },
+    "It will be saved to Hrček once it can be reached." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "V Hrček bo shranjeno, ko bo dosegljiv."
+          }
+        }
+      }
+    },
+    "Kept for later" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shranjeno za pozneje"
           }
         }
       }
@@ -177,6 +207,16 @@
         }
       }
     },
+    "Save for later" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shrani za pozneje"
+          }
+        }
+      }
+    },
     "Saved" : {
       "localizations" : {
         "sl" : {
@@ -193,6 +233,58 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Izbrano"
+          }
+        }
+      }
+    },
+    "Sending %lld waiting pages…" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Sending %lld waiting page…"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Sending %lld waiting pages…"
+                }
+              }
+            }
+          }
+        },
+        "sl" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Pošiljam %lld čakajoče strani …"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Pošiljam %lld čakajočo stran …"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Pošiljam %lld čakajočih strani …"
+                }
+              },
+              "two" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Pošiljam %lld čakajoči strani …"
+                }
+              }
+            }
           }
         }
       }
@@ -253,6 +345,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uporabi to sliko"
+          }
+        }
+      }
+    },
+    "Waiting to be saved to Hrček." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Čaka na shranjevanje v Hrček."
+          }
+        }
+      }
+    },
+    "You also have an unsynced copy of this page. Saving here replaces it." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Te strani imate tudi nesinhronizirano kopijo. Shranjevanje tukaj jo nadomesti."
           }
         }
       }

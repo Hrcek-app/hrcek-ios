@@ -12,7 +12,8 @@ final class FakeEntries: Sendable {
         var lookups = 0
         var failLookups = 0
         var refuse: (Int, String)?
-        var offline = false
+        /// A failure waiting will not fix, so nothing is kept for later.
+        var untrusted = false
     }
 
     let state: Mutex<State>
@@ -36,7 +37,7 @@ final class FakeEntries: Sendable {
 
     func handle(_ request: URLRequest) throws -> (Int, Data) {
         try state.withLock { state in
-            if state.offline { throw URLError(.notConnectedToInternet) }
+            if state.untrusted { throw URLError(.serverCertificateUntrusted) }
             if let (status, code) = state.refuse {
                 return (
                     status,
@@ -50,7 +51,8 @@ final class FakeEntries: Sendable {
                 state.lookups += 1
                 if state.failLookups > 0 {
                     state.failLookups -= 1
-                    throw URLError(.timedOut)
+                    // Not an outage, which would keep the entry for later.
+                    return (500, Data("<html>trouble</html>".utf8))
                 }
                 guard let held = state.held else {
                     return (
@@ -81,7 +83,7 @@ final class FakeEntries: Sendable {
     func model(_ fake: FakeEntries, stored: Credentials?) -> (ShareModel, InMemoryCredentialStore) {
         let store = InMemoryCredentialStore(stored)
         let session = StubURLProtocol.session { try fake.handle($0) }
-        let model = ShareModel(store: store, pages: .offline) {
+        let model = ShareModel(store: store, queue: temporaryQueue(), pages: .offline) {
             EntryService(credentials: $0, language: "en", session: session)
         }
         return (model, store)
@@ -174,11 +176,11 @@ final class FakeEntries: Sendable {
         let (model, _) = model(fake, stored: try sampleCredentials())
         await model.start(page)
         model.draft.notes = "Typed"
-        fake.state.withLock { $0.offline = true }
+        fake.state.withLock { $0.untrusted = true }
         #expect(await model.save() == false)
         #expect(model.phase == .editing)
         #expect(model.draft.notes == "Typed")
-        #expect(model.message == "You're offline. Connect to the internet and try again.")
+        #expect(model.message == "Can't make a secure connection to the server.")
     }
 
     @Test func looksAgainBeforeWritingWhenTheFirstLookFailed() async throws {
@@ -188,7 +190,7 @@ final class FakeEntries: Sendable {
         await model.start(page)
         #expect(model.phase == .editing)
         #expect(model.isExisting == false)
-        #expect(model.message == "The server took too long to answer. Try again.")
+        #expect(model.message == "The server is having trouble. Try again later.")
 
         #expect(await model.save() == false)
         #expect(fake.state.withLock { $0.posts.count } == 0, "must not replace what it never saw")

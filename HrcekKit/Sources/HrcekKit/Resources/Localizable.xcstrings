@@ -1,6 +1,120 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%lld already on Hrček; choose which to keep." : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld already on Hrček; choose which to keep."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld already on Hrček; choose which to keep."
+                }
+              }
+            }
+          }
+        },
+        "sl" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld vnosi so že v Hrčku; izberite, katere obdržite."
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld vnos je že v Hrčku; izberite, katerega obdržite."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld vnosov je že v Hrčku; izberite, katere obdržite."
+                }
+              },
+              "two" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld vnosa sta že v Hrčku; izberite, katera obdržite."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld entries saved." : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld entry saved."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld entries saved."
+                }
+              }
+            }
+          }
+        },
+        "sl" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Shranjeni so %lld vnosi."
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Shranjen je %lld vnos."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Shranjenih je %lld vnosov."
+                }
+              },
+              "two" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Shranjena sta %lld vnosa."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "100 entries are already waiting to be saved. Sync or delete some first." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na shranjevanje že čaka 100 vnosov. Najprej jih sinhronizirajte ali nekaj izbrišite."
+          }
+        }
+      }
+    },
     "Automatic (%@)" : {
       "localizations" : {
         "sl" : {
@@ -51,12 +165,114 @@
         }
       }
     },
+    "Hrček can't be reached." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hrčka ni mogoče doseči."
+          }
+        }
+      }
+    },
+    "Hrček couldn't be asked. Try again later." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hrčka ni bilo mogoče vprašati. Poskusite znova pozneje."
+          }
+        }
+      }
+    },
     "Hrček for iOS (%@)" : {
       "localizations" : {
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hrček za iOS (%@)"
+          }
+        }
+      }
+    },
+    "Hrček no longer accepts this phone's sign-in." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hrček ne sprejema več prijave tega telefona."
+          }
+        }
+      }
+    },
+    "Hrček refused %lld entries." : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Hrček refused %lld entry."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Hrček refused %lld entries."
+                }
+              }
+            }
+          }
+        },
+        "sl" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Hrček je zavrnil %lld vnose."
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Hrček je zavrnil %lld vnos."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Hrček je zavrnil %lld vnosov."
+                }
+              },
+              "two" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Hrček je zavrnil %lld vnosa."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Not finished. The rest will be sent later." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ni končano. Ostalo bo poslano pozneje."
+          }
+        }
+      }
+    },
+    "Saved without its picture: %@" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shranjeno brez slike: %@"
           }
         }
       }

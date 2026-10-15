@@ -157,6 +157,50 @@ instead of written over.
 A revoked token (`HRC-AUTH-0004`) clears the stored credentials, and
 the sheet asks the person to open the app and sign in.
 
+### When Hrček can't be reached
+
+`ShareModel` decides what an outage means for the sheet (see
+[Saves kept for later](#saves-kept-for-later) for the queue itself):
+
+- The opening lookup found Hrček unavailable: `isOffline`, and the form
+  says so in place of an error. Saving keeps the entry without trying
+  to send it, and the button reads **Save for later**.
+- The lookup worked but the save found Hrček unavailable, or the
+  second look before writing did: the entry is kept the same way.
+- The queue is full: the save is refused with a message and the form
+  stays as it was.
+- The queue holds a waiting or refused copy of the address for this
+  server: the form opens on it (`keptCopy`), and a refused copy shows
+  Hrček's message. A held copy (`heldCopy`) is only mentioned: the form
+  shows Hrček's entry, since the copy was held because Hrček has one.
+  So is a waiting or refused copy when the opening lookup found an
+  entry: its sync would hold it, and the sheet must not guess either.
+  When the opening lookup found Hrček unavailable, that entry cannot be
+  shown, so the held copy opens like a waiting one rather than losing
+  its edits; kept again it waits, and its sync looks first.
+  A successful save removes the copy the form showed, by its `id`, and
+  never a newer one kept meanwhile.
+
+The sheet always saves through the queue's representation: it turns
+the draft and the picture choice into a `PendingEntry` and its bytes
+(`PendingEntry.Picture.chosen`), then either sends it
+(`PendingSync.send`) or keeps it. One path, so a kept copy is later sent
+exactly as the direct save would have been, and the picture is read
+from the web once. A kept copy left with its picture unchanged keeps
+the bytes it already has.
+
+After a successful save the sheet sends what else is waiting
+(`syncWaiting`), so saving a page is also when kept pages go. It is
+given 10 seconds: `PendingSync.run(…, within:)` cancels the run when
+the time is up or when its caller is cancelled, and a cancelled run
+ends its request, reports `interrupted` and releases `.sync-lock`. The
+view runs it inside `whileAllowed`, which holds
+`ProcessInfo.performExpiringActivity` for the sync and cancels it when
+iOS says the time is up, because iOS kills a suspended extension that
+holds a lock file in the shared container. Nothing else in the
+extension runs a sync. The sheet shows "Sending N waiting pages…", then
+`SyncResult.summary`.
+
 ## Saves kept for later
 
 When Hrček cannot take a save, the share sheet keeps it on the phone

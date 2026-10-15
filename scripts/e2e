@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Signs in to a real Hrček from the app, shares a page from Safari to the
-# extension, and checks through the API that it was saved.
+# extension, and checks through the API that it was saved. The app talks to
+# Hrček through scripts/e2e-proxy, which can play an outage.
 set -euo pipefail
 root=$(cd "$(dirname "$0")/.." && pwd)
 backend=${HRCEK_BACKEND_DIR:-$root/../hrcek}
@@ -13,6 +14,7 @@ work="$root/.build/e2e/run"
 mkdir -p "$work"
 api_port=8766
 page_port=8767
+proxy_port=8768
 email="e2e-$(date +%s)@example.com"
 password=$(openssl rand -hex 16)
 HRCEK_DB_PATH="$work/db-$(date +%s).sqlite3"
@@ -33,19 +35,27 @@ pids+=($!)
 (cd "$root/scripts/e2e-page" && exec uv run --no-project python -m http.server "$page_port" \
   --bind 127.0.0.1 >"$work/page.log" 2>&1) &
 pids+=($!)
+"$root/scripts/e2e-proxy" --port "$proxy_port" --upstream "http://127.0.0.1:$api_port" \
+  >"$work/proxy.log" 2>&1 &
+pids+=($!)
 for _ in $(seq 100); do
   curl -fs "http://127.0.0.1:$api_port/api/health" >/dev/null &&
+    curl -fs "http://127.0.0.1:$proxy_port/api/health" >/dev/null &&
     curl -fs "http://127.0.0.1:$page_port/" >/dev/null && break
   sleep 0.3
 done
 
-server="http://localhost:$api_port"
+server="http://localhost:$proxy_port"
 # Unique per run, so Safari never shows a page it cached from another run.
-page="http://localhost:$page_port/?run=$(date +%s)"
-"$root/scripts/contract-test" --url "$server" --identifier "$email" --password "$password"
+run=$(date +%s)
+page="http://localhost:$page_port/?run=$run"
+offline_page="http://localhost:$page_port/?run=$run-offline"
+"$root/scripts/contract-test" --url "http://localhost:$api_port" --identifier "$email" \
+  --password "$password"
 
 TEST_RUNNER_HRCEK_E2E_SERVER=$server TEST_RUNNER_HRCEK_E2E_EMAIL=$email \
   TEST_RUNNER_HRCEK_E2E_PASSWORD=$password TEST_RUNNER_HRCEK_E2E_PAGE=$page \
+  TEST_RUNNER_HRCEK_E2E_OFFLINE_PAGE=$offline_page \
   "$root/scripts/test-app" --plan E2E
 
 token=$(curl -fs "$server/api/auth/tokens/exchange" -H 'Content-Type: application/json' \
@@ -58,5 +68,13 @@ expected='{"title":"Edited by E2E","notes":"Kept by E2E","tags":["e2e"],"fields"
 # The server will not fetch a picture from this machine, so one there was uploaded.
 if [[ $(jq -c '{title, notes, tags, fields, picture: (.image != null)}' <<<"$entry") != "$expected" ]]; then
   echo "Expected the page saved with its picture, then updated without losing anything" >&2
+  exit 1
+fi
+
+kept=$(curl -fs "$server/api/entries/lookup" -H "Authorization: Bearer $token" \
+  -H 'Content-Type: application/json' -d "{\"url\":\"$offline_page\"}")
+echo "Synced entry: $kept"
+if [[ $(jq -r .notes <<<"$kept") != "Kept while Hrček was down" ]]; then
+  echo "Expected the page kept during the outage to reach Hrček" >&2
   exit 1
 fi

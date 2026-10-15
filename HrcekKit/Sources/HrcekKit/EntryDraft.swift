@@ -32,6 +32,13 @@ public struct EntryDraft: Equatable, Sendable {
             fields: FieldInput.inputs(definitions: definitions, values: entry.fields))
     }
 
+    /// A copy kept on the phone, to edit before it is sent.
+    public init(request: EntryIn, definitions: [FieldOut]? = nil) {
+        self.init(
+            url: request.url, title: request.title, notes: request.notes, tags: request.tags,
+            fields: FieldInput.inputs(definitions: definitions, values: request.fields ?? [:]))
+    }
+
     /// The server cannot hold two labels differing only by case, so neither can this.
     public mutating func addTag(_ raw: String) {
         let tag = raw.trimmingCharacters(in: .whitespacesAndNewlines)

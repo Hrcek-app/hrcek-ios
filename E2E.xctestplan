@@ -22,6 +22,7 @@
   "testTargets" : [
     {
       "selectedTests" : [
+        "OfflineE2ETests",
         "ShareE2ETests"
       ],
       "target" : {

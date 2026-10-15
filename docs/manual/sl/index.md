@@ -11,4 +11,5 @@ brskalnika: odprite stran, tapnite **Deli** in izberite **Hrček**.
 - [Prijava](sign-in.md) — enkrat, v aplikaciji.
 - [Shranjevanje strani](saving-pages.md) — iz Safarija ali drugega
   brskalnika.
+- [Ko Hrček ni dosegljiv](offline.md) — shranjevanje strani za pozneje.
 - [Odpravljanje težav](troubleshooting.md) — kaj pomenijo sporočila.

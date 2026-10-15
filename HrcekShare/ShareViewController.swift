@@ -3,7 +3,8 @@ import SwiftUI
 import UIKit
 
 final class ShareViewController: UIViewController {
-    private let model = ShareModel(store: KeychainCredentialStore.shared)
+    private let model = ShareModel(
+        store: KeychainCredentialStore.shared, queue: PendingQueue.shared)
 
     override func viewDidLoad() {
         super.viewDidLoad()

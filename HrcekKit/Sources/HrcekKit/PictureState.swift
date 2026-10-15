@@ -62,6 +62,21 @@ public struct PictureState: Equatable, Sendable {
 
     public static let none = PictureState(candidates: [], held: nil, existing: false)
 
+    /// What a kept copy says of its picture, offered as an entry's would be:
+    /// its bytes as the held picture, else its address first.
+    init(kept picture: PendingEntry.Picture?, data: Data?, offered: [URL]) {
+        switch picture {
+        case .bytes:
+            self.init(
+                candidates: offered, held: data.map(HeldPicture.shown) ?? .unshowable,
+                existing: true)
+        case .address(let url):
+            self.init(candidates: [url] + offered, held: nil, existing: false)
+        case .remove, nil:
+            self.init(candidates: offered, held: nil, existing: true)
+        }
+    }
+
     public var included: Bool {
         get { include }
         set { include = newValue && !items.isEmpty }
