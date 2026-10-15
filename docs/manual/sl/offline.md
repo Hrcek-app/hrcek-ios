@@ -51,8 +51,10 @@ seznam prazen, pod »Nič ne čaka.«
   Aplikacija najprej vpraša, ker je stran, ki še ni v Hrčku, potem za
   vedno izgubljena.
 - Stran, ki jo Hrček že ima, pove »Hrček to stran že ima.« Čez Hrčkov
-  vnos ne bo poslana; stran znova delite, da izberete, katero obdržite.
-  Stran, ki jo je Hrček zavrnil, pokaže Hrčkov razlog.
+  vnos ne bo poslana; tapnite jo, da izberete, katero obdržite (glejte
+  spodaj).
+- Stran, ki jo je Hrček zavrnil, z rdečo pokaže Hrčkov razlog. Izbrišite
+  jo ali pa stran znova delite in popravite, kar pove razlog.
 - Stran, shranjena, ko ste bili prijavljeni v drug strežnik, pove
   »Shranjeno za …, ki ni strežnik, v katerega ste prijavljeni.« Poslana
   bo samo na tisti strežnik, zato se tja prijavite, da jo pošljete, ali
@@ -68,6 +70,30 @@ sinhronizacija, tudi če je bila kakšna stran shranjena brez slike.
 Tapnite **Končano** in aplikacija pokaže običajni zaslon, dokler spet
 ne čaka kakšna stran. Če aplikacijo namesto tega zapustite, se
 naslednjič odpre na običajnem zaslonu.
+
+## Strani, ki jih Hrček že ima
+
+Nekdo lahko isto stran shrani v Hrček, z drugega telefona ali na
+spletni strani, medtem ko vaša čaka. Vaša potem ne bo poslana čez
+njegovo: vrstica pove »Hrček to stran že ima.« Tapnite jo in videli
+boste obe, **Vaše** zgoraj in **V Hrčku** spodaj, vsako z naslovom,
+opombami, oznakami, polji in sliko.
+
+- **Obdrži, kar je v Hrčku** izbriše vašo kopijo s telefona, Hrčkov
+  vnos pa ostane, kakršen je. Tapnete ga lahko šele, ko je Hrčkov vnos
+  prikazan, tako da svoje nikoli ne zavržete, ne da bi ga videli.
+- **Nadomesti z mojim** shrani vašo kopijo čez Hrčkov vnos, skupaj s
+  sliko, in jo odstrani s telefona.
+- Če Hrček strani nima več, primerjava pove »Hrček te strani nima več.«
+  in namesto tega ponudi **Shrani moje**.
+
+Dokler Hrček ni dosegljiv, sta oba gumba siva, razlog pa je izpisan z
+rdečo; vaša kopija ostane, kakršna je. Vrnite se in jo odprite
+pozneje. Če Hrček vašo kopijo zavrne, se vrne na seznam s Hrčkovim
+razlogom.
+
+Stran, ki jo Hrček že ima, lahko primerjate le, ko ste prijavljeni v
+strežnik, za katerega je bila shranjena.
 
 ## Ponovno deljenje shranjene strani
 

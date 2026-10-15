@@ -150,3 +150,24 @@ extension XCTestCase {
         add(screen)
     }
 }
+
+/// Saves an entry through the API, as another device would have.
+func saveDirectly(url: String, title: String, server: String, email: String, password: String)
+    async throws
+{
+    func post(_ path: String, _ body: [String: Any], token: String?) async throws -> Data {
+        var request = URLRequest(url: try XCTUnwrap(URL(string: server + path)))
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if let token { request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
+        request.httpBody = try JSONSerialization.data(withJSONObject: body)
+        return try await URLSession.shared.data(for: request).0
+    }
+    let exchanged = try await post(
+        "/api/auth/tokens/exchange",
+        ["name": "e2e elsewhere", "identifier": email, "password": password], token: nil)
+    let token = try XCTUnwrap(
+        (try JSONSerialization.jsonObject(with: exchanged) as? [String: Any])?["token"] as? String)
+    _ = try await post(
+        "/api/entries/", ["url": url, "title": title, "notes": "", "tags": []], token: token)
+}

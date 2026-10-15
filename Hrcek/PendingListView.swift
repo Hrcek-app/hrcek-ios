@@ -53,16 +53,29 @@ struct PendingListView: View {
             syncSection
             Section {
                 ForEach(pending.entries) { entry in
-                    PendingRow(
-                        entry: entry, picture: PendingQueue.shared.pictureData(of: entry),
-                        elsewhere: pending.isForAnotherServer(entry, session.credentials)
-                    )
-                    .swipeActions {
-                        Button("Delete", role: .destructive) { deleting = entry }
-                            .accessibilityIdentifier("delete")
-                    }
+                    row(entry)
+                        .swipeActions {
+                            Button("Delete", role: .destructive) { deleting = entry }
+                                .accessibilityIdentifier("delete")
+                        }
                 }
             }
+        }
+    }
+
+    /// A copy Hrček already has opens the comparison, when it can be asked:
+    /// signed in to the server the copy was kept for.
+    @ViewBuilder private func row(_ entry: PendingEntry) -> some View {
+        let elsewhere = pending.isForAnotherServer(entry, session.credentials)
+        let picture = PendingQueue.shared.pictureData(of: entry)
+        if entry.state == .held, !elsewhere, let credentials = session.credentials {
+            NavigationLink {
+                HeldComparisonView(entry: entry, credentials: credentials)
+            } label: {
+                PendingRow(entry: entry, picture: picture, elsewhere: false)
+            }
+        } else {
+            PendingRow(entry: entry, picture: picture, elsewhere: elsewhere)
         }
     }
 

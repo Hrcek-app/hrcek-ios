@@ -295,3 +295,43 @@ Those syncs and **Sync now** all run through `BackgroundWork.start`
 cancels the work when the time expires and ends the background task
 exactly once. This keeps the `.sync-lock` contract above and leaves
 `PendingModel` free of UIKit.
+
+### Settling a held copy
+
+A held row on the signed-in server opens `HeldComparisonView`, which
+shows the copy beside Hrček's entry and offers **Keep what's on Hrček**
+or **Replace with mine**, as the browser extension does.
+`PendingModel.compare` looks the address up and sets `comparison`, a
+`Comparison`: `loading`, `shown` with Hrček's entry and its picture
+(`HeldPicture.unshowable` when a server too old to take a token on the
+picture view answers its sign-in page), `gone` when Hrček no longer has
+the address, or `unavailable` with the reason.
+
+- `canKeep` is true only for `shown`. Keeping deletes the only copy of
+  the person's version, so it waits until Hrček's entry has been seen;
+  with `gone`, keeping Hrček's would keep nothing.
+- `canReplace` is true for `shown` and `gone` (**Save mine**).
+- `replace` reads the copy from the queue again and goes ahead only if
+  it is still the same copy (`id`), still `held`, and for the signed-in
+  server: the list is a snapshot, and the share sheet may have replaced
+  or sent the copy since. It sends it with `PendingSync.send`, the way a
+  sync would, then removes it.
+- An answer is read as a sync reads it, by status and code: a refusal
+  with Hrček's envelope (below 500, not 429, not a refused token) marks
+  the copy `refused` with Hrček's message; anything else leaves it held
+  and shows the reason in the comparison.
+- `replace` returns true once the copy is settled, saved or refused,
+  and the view then goes back to the list, where a refused row shows
+  Hrček's reason. False means it still waits for a choice.
+- Either choice drops the last sync's line, which counted the held
+  copies; only a picture that could not be attached to a replaced
+  entry takes its place.
+- `comparison` belongs to the copy that `compare` was called for. An
+  answer that arrives after the comparison was left, and a Keep or
+  Replace for any other copy, does nothing.
+
+Neither Keep nor Replace takes `.sync-lock`, and `.lock` is only ever
+held inside synchronous `FileLock.withLock` bodies, so no lock is held
+across a network call. Replace still runs through
+`BackgroundWork.start`, because it is a write the person asked for and
+should not be cut off by leaving the app.

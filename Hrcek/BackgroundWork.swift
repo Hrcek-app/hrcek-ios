@@ -12,7 +12,8 @@ final class BackgroundWork {
     static func start(_ name: String, _ work: @escaping @MainActor () async -> Void) {
         // A sync holds a lock in the shared container, and iOS kills a
         // process suspended with one held (0xdead10cc): a cancelled sync
-        // ends and lets go of it.
+        // ends and lets go of it. Other work, such as replacing an entry,
+        // is a write the person asked for and should get to finish.
         let holder = BackgroundWork()
         holder.identifier = UIApplication.shared.beginBackgroundTask(withName: name) {
             holder.task?.cancel()

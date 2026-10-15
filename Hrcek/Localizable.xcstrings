@@ -153,12 +153,42 @@
         }
       }
     },
+    "Hrček no longer has this page." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hrček te strani nima več."
+          }
+        }
+      }
+    },
+    "It has a picture that cannot be shown here" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ima sliko, ki je tu ni mogoče pokazati"
+          }
+        }
+      }
+    },
     "It has not been saved to Hrček, and will be gone from this phone." : {
       "localizations" : {
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "V Hrček še ni shranjena in bo izginila s tega telefona."
+          }
+        }
+      }
+    },
+    "Keep what's on Hrček" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obdrži, kar je v Hrčku"
           }
         }
       }
@@ -203,6 +233,16 @@
         }
       }
     },
+    "On Hrček" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "V Hrčku"
+          }
+        }
+      }
+    },
     "Open the page in Safari or another browser." : {
       "localizations" : {
         "sl" : {
@@ -219,6 +259,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geslo"
+          }
+        }
+      }
+    },
+    "Replace with mine" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nadomesti z mojim"
+          }
+        }
+      }
+    },
+    "Save mine" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shrani moje"
           }
         }
       }
@@ -385,6 +445,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geslo se uporabi enkrat, da se za ta telefon naredi žeton, in se nikoli ne shrani."
+          }
+        }
+      }
+    },
+    "Yours" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaše"
           }
         }
       }
