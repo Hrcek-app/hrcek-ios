@@ -39,10 +39,12 @@ public struct EntryService: Sendable {
     }
 
     /// The bytes of the picture an entry holds, or nil when they are not
-    /// a picture: the server answers a sign-in page to a token it will not
-    /// take for this address.
+    /// a picture: a Hrček from before it took tokens for this address
+    /// answers a sign-in page instead. AVIF must be named to be sent;
+    /// `image/*` alone gets WebP.
     public func picture(_ image: ImageOut) async throws -> Data? {
-        let (data, type) = try await client.data(image.url, accept: "image/*, application/json")
+        let (data, type) = try await client.data(
+            image.url, accept: "image/avif, image/*, application/json")
         return type?.hasPrefix("image/") == true ? data : nil
     }
 

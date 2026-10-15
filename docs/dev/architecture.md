@@ -127,15 +127,18 @@ save cannot do it. A picture never fails the entry: its trouble is
 reported beside **Saved**.
 
 The picture an entry holds is fetched with the token from its
-`image.url` to be shown. The server currently answers that address
-only to a signed-in browser and sends a token to its sign-in page; the
-sheet then says it has a picture it cannot show. Pictures are decoded
-no larger than they are drawn (`PictureLoader`), and nothing is read
-from the web further than needed — a page's first megabyte, a
-picture's first 10 MB — since a share extension is given little
-memory. Reading a page for its pictures happens after the form is
-open, so a slow page never keeps it closed. Errors from the web are
-logged by code only: their description carries the address.
+`image.url` to be shown, asking for AVIF: the server sends it only
+when `Accept` names it, and WebP otherwise. If the bytes cannot be
+had — no network, or
+a Hrček from before that address took a token, which answers its
+sign-in page — the sheet says it has a picture it cannot show, and
+saving leaves it alone. Pictures are decoded no larger than they are
+drawn (`PictureLoader`), and nothing is read from the web further
+than needed — a page's first megabyte, a picture's first 10 MB —
+since a share extension is given little memory. Reading a page for
+its pictures happens after the form is open, so a slow page never
+keeps it closed. Errors from the web are logged by code only: their
+description carries the address.
 
 Tag suggestions come from `GET /api/labels/?starts_with=`, asked
 200 ms after typing pauses: the view runs `updateSuggestions()` in a

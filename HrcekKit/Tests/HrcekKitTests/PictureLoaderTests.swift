@@ -38,6 +38,22 @@ import UniformTypeIdentifiers
         #expect(image.width == 50)
     }
 
+    @Test func readsTheAVIFHrcekSends() throws {
+        // 4×4, made by the Pillow that Hrček renders its pictures with.
+        let avif = try #require(
+            Data(
+                base64Encoded: """
+                    AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADrbWV0YQAAAAAAAAAhaGRscgAAAAAAAAAA
+                    cGljdAAAAAAAAAAAAAAAAAAAAAAOcGl0bQAAAAAAAQAAAB5pbG9jAAAAAEQAAAEAAQAAAAEAAAETAAAA
+                    KQAAAChpaW5mAAAAAAABAAAAGmluZmUCAAAAAAEAAGF2MDFDb2xvcgAAAABqaXBycAAAAEtpcGNvAAAA
+                    FGlzcGUAAAAAAAAABAAAAAQAAAAQcGl4aQAAAAADCAgIAAAADGF2MUOBAAwAAAAAE2NvbHJuY2x4AAEA
+                    DQAGgAAAABdpcG1hAAAAAAAAAAEAAQQBAoMEAAAAMW1kYXQSAAoIGAR9ogIaDQgyGxTHh4ZlAgggnlAA
+                    AABIWtlc1jYHZLKGsCjhgA==
+                    """,
+                options: .ignoreUnknownCharacters))
+        #expect(PictureLoader.image(from: avif, side: 200)?.width == 4)
+    }
+
     @Test func notAPictureIsNothing() {
         #expect(PictureLoader.image(from: Data("<html>".utf8), side: 200) == nil)
     }

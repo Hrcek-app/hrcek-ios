@@ -46,6 +46,31 @@ import Testing
         }
     }
 
+    @Test func asksForThePictureWithTheToken() async throws {
+        let image = ImageOut(url: "/entries/1/image/", width: 10, height: 20)
+        let service = EntryService(
+            credentials: try sampleCredentials(), language: "en",
+            session: StubURLProtocol.typedSession { request in
+                #expect(request.url?.path() == "/entries/1/image/")
+                #expect(
+                    request.value(forHTTPHeaderField: "Authorization")?.hasPrefix("Bearer ") == true
+                )
+                // The server sends AVIF only when it is named; image/* gets WebP.
+                #expect(request.value(forHTTPHeaderField: "Accept")?.contains("image/avif") == true)
+                return .init(status: 200, body: Data([1, 2, 3]), type: "image/avif")
+            })
+        #expect(try await service.picture(image) == Data([1, 2, 3]))
+    }
+
+    @Test func passesARevokedTokenOnFromThePicture() async throws {
+        let image = ImageOut(url: "/entries/1/image/", width: 10, height: 20)
+        let revoked = #"{"error":{"code":"HRC-AUTH-0004","message":"No.","details":{}}}"#
+        let service = try service { _ in (401, Data(revoked.utf8)) }
+        await #expect { try await service.picture(image) } throws: {
+            ($0 as? APIError)?.code == "HRC-AUTH-0004"
+        }
+    }
+
     @Test func tellsCreatedFromUpdated() async throws {
         let status = Mutex(201)
         let service = try service { _ in (status.withLock { $0 }, Self.entry) }

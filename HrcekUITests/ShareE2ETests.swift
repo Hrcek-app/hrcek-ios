@@ -70,6 +70,11 @@ final class ShareE2ETests: XCTestCase {
         openShareSheet(from: safari)
         XCTAssertTrue(
             safari.descendants(matching: .any)["alreadySaved"].waitForExistence(timeout: patience))
+        // The picture saved the first time, fetched back with the token.
+        XCTAssertTrue(safari.descendants(matching: .any)["selectedPicture"].exists)
+        XCTAssertFalse(
+            safari.staticTexts["It has a picture that cannot be shown here"].exists,
+            safari.debugDescription)
         let notes = safari.descendants(matching: .any)["notes"].firstMatch
         XCTAssertEqual(notes.value as? String, "Kept by E2E")
         replaceText(

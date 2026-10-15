@@ -97,7 +97,8 @@ When the real server and the stub disagree, fix the stub.
 4. It runs `E2E.xctestplan`: `ShareE2ETests` signs in through the app,
    opens the page in Safari, shares it to Hrček, adds notes and a tag
    and expects **Saved**; then shares it again, expects **Already
-   saved** with those notes, changes the title and expects **Updated**.
+   saved** with those notes and the picture it saved, fetched back with
+   the token, changes the title and expects **Updated**.
    The page offers a picture on `localhost`, which the server refuses
    to fetch, so the picture arriving proves the sheet uploaded it.
 5. It asks the API for the entry and checks the new title, and that the
