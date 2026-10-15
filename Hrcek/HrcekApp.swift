@@ -5,7 +5,7 @@ import SwiftUI
 struct HrcekApp: App {
     @State private var session: SessionModel
     @State private var language: LanguageModel
-    @State private var pending = PendingModel(queue: .shared)
+    @State private var pending: PendingModel
 
     init() {
         let version =
@@ -42,6 +42,23 @@ struct HrcekApp: App {
         // First, so everything after speaks the chosen language.
         _language = State(initialValue: LanguageModel(store: KeychainLanguageStore.shared))
         _session = State(initialValue: SessionModel(auth: .live()))
+        _pending = State(initialValue: PendingModel(queue: .shared, badge: Self.badgeCenter()))
+    }
+
+    private static func badgeCenter() -> any BadgeCenter {
+        #if DEBUG
+            // iOS keeps the real answer from run to run, so UI tests fake it:
+            // `-HrcekBadgeStatus undetermined|allowed|denied`.
+            let statuses: [String: BadgeStatus] = [
+                "undetermined": .undetermined, "allowed": .allowed, "denied": .denied,
+            ]
+            if let name = UserDefaults.standard.string(forKey: "HrcekBadgeStatus"),
+                let status = statuses[name]
+            {
+                return FixedBadgeCenter(status)
+            }
+        #endif
+        return NotificationBadgeCenter()
     }
 
     var body: some Scene {

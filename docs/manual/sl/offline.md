@@ -114,6 +114,28 @@ nadomesti.« Če Hrček takrat ni dosegljiv, okno namesto tega pokaže
 vašo kopijo, kot stran, ki čaka; ko jo shranite za pozneje, ostane na
 telefonu in jo pred pošiljanjem znova primerja s Hrčkovim vnosom.
 
+## Število na ikoni aplikacije
+
+Dokler strani čakajo, Hrčkova ikona na domačem zaslonu pokaže, koliko
+jih je, tako kot aplikacija za pošto pokaže neprebrana sporočila.
+Število se spremeni takoj, ko stran shranite za pozneje v oknu Deli,
+še preden odprete aplikacijo, in izgine, ko vse pride v Hrček.
+
+iOS število pokaže le, če to dovolite. Ko se aplikacija prvič odpre,
+medtem ko strani čakajo, pove »Hrček lahko na svoji ikoni pokaže,
+koliko strani čaka. iOS vas bo vprašal, ali to dovolite.« Tapnite
+**Nadaljuj** in iOS vas vpraša, ali vam Hrček sme pošiljati obvestila;
+dovolite jih, da vidite število. Hrček to uporablja samo za število na
+svoji ikoni: nikoli ne pokaže opozoril in ne predvaja zvokov. **Ne
+zdaj** vprašanje zapre; aplikacija vpraša znova, ko se naslednjič
+odpre, medtem ko strani čakajo.
+
+Če ste izbrali, da obvestil ne dovolite, število čakajočih strani za
+zobnikom pove »Ikona aplikacije tega števila ne more pokazati. V
+Nastavitvah dovolite obvestila za Hrček.« Tapnite **Odpri Nastavitve**,
+da odprete Hrčkova obvestila v Nastavitvah iOS in jih vklopite. Število
+se pokaže, ko naslednjič odprete aplikacijo.
+
 ## Največ 100
 
 Telefon obdrži največ 100 strani. Ko jih čaka 100, okno pove »Na

@@ -25,6 +25,10 @@ final class ShareViewController: UIViewController {
     }
 
     private func finish() {
-        extensionContext?.completeRequest(returningItems: nil)
+        Task {
+            // So the icon is right before the person is back on the home screen.
+            await NotificationBadgeCenter().set(PendingQueue.shared.count())
+            extensionContext?.completeRequest(returningItems: nil)
+        }
     }
 }

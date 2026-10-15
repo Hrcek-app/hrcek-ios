@@ -85,9 +85,17 @@ builds.
 | `-HrcekResetState` | Signed out, automatic language, nothing kept for later |
 | `-HrcekSeedPending N` | Starts with N waiting pages, "Seeded 1" onwards |
 | `-HrcekSeedServer URL` | Their server; the stub on 8765 by default |
+| `-HrcekBadgeStatus S` | Badge answer: `undetermined`, `allowed`, `denied` |
 
-`launchApp(seeding: 2)` sets the last two, for the stub `scripts/test-app`
-starts, so a sync after signing in sends them to it.
+`launchApp(seeding: 2)` sets the seeding pair, for the stub
+`scripts/test-app` starts, so a sync after signing in sends them to it.
+
+`launchApp` always passes `-HrcekBadgeStatus`, `allowed` unless a test
+says otherwise (`launchApp(badge: "undetermined")`), so no other test
+meets the badge explanation. iOS keeps the real answer from run to run
+and across test configurations, and its question cannot be answered
+reliably from a test, so the app is given a `FixedBadgeCenter` instead.
+iOS's question itself is checked by hand.
 
 ## Things the UI tests have to handle
 
@@ -97,6 +105,10 @@ starts, so a sync after signing in sends them to it.
   `tapWhenHittable` waits until the element can take the tap.
 - A confirmation dialog exposes its button twice, nested, under one
   identifier; query it with `firstMatch`.
+- To make the app inactive without sending it to the background, pull
+  down Control Centre from the top right corner and swipe it away.
+  Notification Centre held open for a second or two sends the app to
+  the background.
 
 ## End to end
 

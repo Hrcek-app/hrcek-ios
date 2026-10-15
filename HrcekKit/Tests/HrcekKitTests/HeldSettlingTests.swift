@@ -14,7 +14,7 @@ import Testing
     init() throws { service = try fake.service() }
 
     func model() -> PendingModel {
-        PendingModel(queue: queue) { [service] _ in service }
+        PendingModel(queue: queue, badge: FixedBadgeCenter(.allowed)) { [service] _ in service }
     }
 
     /// Syncs a held copy, so the list says how many wait for a choice.

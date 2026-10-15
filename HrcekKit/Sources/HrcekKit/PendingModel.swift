@@ -12,26 +12,37 @@ public final class PendingModel {
     public private(set) var isSyncing = false
     /// What the last sync did, in one line.
     public private(set) var summary: String?
+    /// Whether to explain, then ask for, the badge now.
+    public internal(set) var needsBadgePermission = false
+    /// The person said no; settings says how to change that.
+    public internal(set) var badgeDenied = false
+    var askedThisLaunch = false
+    var badgeRefresh: Task<Void, Never>?
 
     private let queue: PendingQueue
+    let badge: any BadgeCenter
     private let makeService: @Sendable (Credentials) -> EntryService
 
     public init(
         queue: PendingQueue,
+        badge: any BadgeCenter,
         makeService: @escaping @Sendable (Credentials) -> EntryService = {
             EntryService(credentials: $0)
         }
     ) {
         self.queue = queue
+        self.badge = badge
         self.makeService = makeService
     }
 
     public var count: Int { entries.count }
 
     /// Reads the queue again: the share extension may have changed it.
+    /// Every change to the queue comes through here, so the badge does too.
     public func reload() {
         entries = queue.list()
         if !entries.isEmpty { isPresented = true }
+        scheduleBadgeRefresh()
     }
 
     /// Decides the screen as the app comes to the front, before it syncs:
@@ -68,6 +79,7 @@ public final class PendingModel {
             queue: queue, service: makeService(credentials), server: credentials.server)
         if let line = result.summary { summary = line }
         reload()
+        await badgeRefreshed()
         return result
     }
 
@@ -157,11 +169,13 @@ public final class PendingModel {
                 service: makeService(credentials))
             try? queue.remove(current.url, id: current.id)
             settled(trouble: trouble)
+            await badgeRefreshed()
             return true
         } catch {
             if let message = Self.refusal(error) {
                 try? queue.mark(current.url, id: current.id, .refused(message: message))
                 settled(trouble: nil)
+                await badgeRefreshed()
                 return true
             }
             if compared == entry.id {

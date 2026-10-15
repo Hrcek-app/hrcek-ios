@@ -83,6 +83,16 @@
         }
       }
     },
+    "Continue" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nadaljuj"
+          }
+        }
+      }
+    },
     "Delete" : {
       "localizations" : {
         "sl" : {
@@ -149,6 +159,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hrček to stran že ima."
+          }
+        }
+      }
+    },
+    "Hrček can show how many pages are waiting on its icon. iOS asks whether to allow it." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hrček lahko na svoji ikoni pokaže, koliko strani čaka. iOS vas bo vprašal, ali to dovolite."
           }
         }
       }
@@ -223,6 +243,16 @@
         }
       }
     },
+    "Not now" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ne zdaj"
+          }
+        }
+      }
+    },
     "Nothing is waiting." : {
       "localizations" : {
         "sl" : {
@@ -239,6 +269,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "V Hrčku"
+          }
+        }
+      }
+    },
+    "Open Settings" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odpri Nastavitve"
           }
         }
       }
@@ -415,6 +455,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Naslov, na katerem Hrček odprete v brskalniku."
+          }
+        }
+      }
+    },
+    "The app icon can't show this count. Allow notifications for Hrček in Settings." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikona aplikacije tega števila ne more pokazati. V Nastavitvah dovolite obvestila za Hrček."
           }
         }
       }
