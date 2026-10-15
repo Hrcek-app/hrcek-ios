@@ -34,7 +34,8 @@ import Testing
             }
         }
         return ShareModel(
-            store: InMemoryCredentialStore(try sampleCredentials()), pages: .offline
+            store: InMemoryCredentialStore(try sampleCredentials()), queue: temporaryQueue(),
+            pages: .offline
         ) {
             EntryService(credentials: $0, language: "en", session: session)
         }

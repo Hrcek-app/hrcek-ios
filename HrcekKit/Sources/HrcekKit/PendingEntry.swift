@@ -43,3 +43,23 @@ public struct PendingEntry: Codable, Equatable, Sendable, Identifiable {
 
     public var url: String { request.url }
 }
+
+extension PendingEntry.Picture {
+    /// The picture a choice in the form amounts to, and its bytes. Read once
+    /// here, so a kept copy and a direct save carry the same picture.
+    /// Unchanged on a kept copy is that copy's picture.
+    static func chosen(
+        _ choice: PictureChoice, kept: PendingEntry?, queue: PendingQueue, pages: PageAccess
+    ) async -> (Self?, Data?) {
+        switch choice {
+        case .unchanged:
+            guard let kept else { return (nil, nil) }
+            return (kept.picture, queue.pictureData(of: kept))
+        case .remove:
+            return (.remove, nil)
+        case .address(let url):
+            guard let bytes = await pages.bytes(url) else { return (.address(url), nil) }
+            return (.bytes(filename: bytes.filename, type: bytes.type, source: url), bytes.data)
+        }
+    }
+}

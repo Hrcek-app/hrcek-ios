@@ -39,7 +39,8 @@ final class Asked: Sendable {
             return (200, Data(try labels(parts).utf8))
         }
         let model = ShareModel(
-            store: InMemoryCredentialStore(try sampleCredentials()), pages: .offline
+            store: InMemoryCredentialStore(try sampleCredentials()), queue: temporaryQueue(),
+            pages: .offline
         ) {
             EntryService(credentials: $0, language: "en", session: session)
         }

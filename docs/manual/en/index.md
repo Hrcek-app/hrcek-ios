@@ -11,4 +11,5 @@ browser: open the page, tap **Share**, and choose **Hrček**.
 
 - [Signing in](sign-in.md) — do this once, in the app.
 - [Saving pages](saving-pages.md) — from Safari or another browser.
+- [When Hrček can't be reached](offline.md) — saving pages for later.
 - [Troubleshooting](troubleshooting.md) — what the messages mean.

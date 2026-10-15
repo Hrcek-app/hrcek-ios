@@ -3,9 +3,6 @@ import XCTest
 /// The whole flow, as a person does it: sign in in the app, then share a
 /// page from Safari to Hrček. Run by scripts/e2e against a real backend.
 final class ShareE2ETests: XCTestCase {
-    /// A freshly booted CI simulator can take most of a minute per step.
-    private let patience: TimeInterval = 60
-
     @MainActor
     func testSharingAPageFromSafariSavesItThenUpdatesIt() throws {
         continueAfterFailure = false
@@ -122,26 +119,6 @@ final class ShareE2ETests: XCTestCase {
         XCTAssertTrue(outcome.waitForNonExistence(timeout: patience))
     }
 
-    /// The keyboard covers the lower half of the form, as it would for a person.
-    @MainActor
-    private func scrollToHittable(_ element: XCUIElement, in app: XCUIApplication) {
-        // isHittable can be true for an element still under the keyboard.
-        func covered() -> Bool {
-            let keyboard = app.keyboards.firstMatch
-            let bottom =
-                keyboard.exists ? keyboard.frame.minY : app.windows.firstMatch.frame.maxY
-            return !element.isHittable || element.frame.maxY > bottom
-        }
-        for _ in 0..<6 where covered() { app.swipeUp() }
-        XCTAssertFalse(covered(), app.debugDescription)
-        // A tap while the form still glides after a swipe lands elsewhere.
-        var frame = CGRect.null
-        for _ in 0..<10 where element.frame != frame {
-            frame = element.frame
-            Thread.sleep(forTimeInterval: 0.3)
-        }
-    }
-
     @MainActor
     private func replaceText(of field: XCUIElement, with text: String) {
         XCTAssertTrue(field.waitForExistence(timeout: patience))
@@ -150,30 +127,5 @@ final class ShareE2ETests: XCTestCase {
         let old = field.value as? String ?? ""
         field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: old.count))
         field.typeText(text)
-    }
-
-    @MainActor
-    private func openShareSheet(from safari: XCUIApplication) {
-        // Safari keeps Share in the page menu.
-        tapWhenHittable(safari.buttons["MoreMenuButton"])
-        let shareItem = safari.buttons["ShareButton"].firstMatch
-        if !shareItem.waitForExistence(timeout: patience) { record(safari, "menu") }
-        tapWhenHittable(shareItem)
-        let hrcek = safari.cells["Hrček"].firstMatch
-        if !hrcek.waitForExistence(timeout: patience) { record(safari, "sheet") }
-        tapWhenHittable(hrcek)
-    }
-
-    /// Keeps what Safari showed, for working out why a step failed.
-    @MainActor
-    private func record(_ app: XCUIApplication, _ name: String) {
-        let tree = XCTAttachment(string: app.debugDescription)
-        tree.name = "\(name)-tree"
-        tree.lifetime = .keepAlways
-        add(tree)
-        let screen = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
-        screen.name = "\(name)-screen"
-        screen.lifetime = .keepAlways
-        add(screen)
     }
 }

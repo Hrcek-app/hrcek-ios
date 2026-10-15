@@ -63,6 +63,29 @@ public enum PendingSync {
         }
     }
 
+    /// `run`, given up after `limit` or when the caller is cancelled. Either
+    /// way the run is cancelled, ends its request, reports `.interrupted`
+    /// and releases the lock.
+    public static func run(
+        queue: PendingQueue, service: EntryService, server: ServerAddress,
+        within limit: Duration
+    ) async -> SyncResult {
+        let work = Task { await run(queue: queue, service: service, server: server) }
+        // Not a task group: a group waits for every child, and the point is
+        // to stop waiting.
+        let timer = Task {
+            try? await Task.sleep(for: limit)
+            work.cancel()
+        }
+        defer { timer.cancel() }
+        // An unstructured task does not inherit its caller's cancellation.
+        return await withTaskCancellationHandler {
+            await work.value
+        } onCancel: {
+            work.cancel()
+        }
+    }
+
     private static func handle(
         queue: PendingQueue, service: EntryService, server: ServerAddress
     ) async -> SyncResult {

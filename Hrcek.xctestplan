@@ -43,6 +43,7 @@
     },
     {
       "skippedTests" : [
+        "OfflineE2ETests",
         "ShareE2ETests"
       ],
       "target" : {

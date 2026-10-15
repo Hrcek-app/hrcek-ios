@@ -19,16 +19,7 @@ struct EntryForm: View {
 
     private var form: some View {
         Form {
-            Section {
-                Text(model.draft.url)
-                    .font(.footnote).foregroundStyle(.secondary)
-                    .lineLimit(1).truncationMode(.middle)
-                    .accessibilityIdentifier("address")
-                if model.isExisting {
-                    Label("Already saved", systemImage: "checkmark.circle")
-                        .accessibilityIdentifier("alreadySaved")
-                }
-            }
+            Section { heading }
             Section("Title") {
                 TextField("Title", text: $model.draft.title, axis: .vertical)
                     .accessibilityIdentifier("title")
@@ -50,5 +41,35 @@ struct EntryForm: View {
             }
         }
         .disabled(model.phase == .saving)
+    }
+
+    /// The address, and where the entry stands.
+    @ViewBuilder private var heading: some View {
+        Text(model.draft.url)
+            .font(.footnote).foregroundStyle(.secondary)
+            .lineLimit(1).truncationMode(.middle)
+            .accessibilityIdentifier("address")
+        if model.isExisting {
+            Label("Already saved", systemImage: "checkmark.circle")
+                .accessibilityIdentifier("alreadySaved")
+        }
+        if model.isOffline {
+            Label(
+                "Hrček can't be reached. Saving keeps this entry on this phone until it can.",
+                systemImage: "icloud.slash"
+            )
+            .accessibilityIdentifier("offlineNote")
+        }
+        if model.keptCopy != nil {
+            Label("Waiting to be saved to Hrček.", systemImage: "clock")
+                .accessibilityIdentifier("waitingNote")
+        }
+        if model.heldCopy != nil {
+            Label(
+                "You also have an unsynced copy of this page. Saving here replaces it.",
+                systemImage: "doc.on.doc"
+            )
+            .accessibilityIdentifier("heldNote")
+        }
     }
 }

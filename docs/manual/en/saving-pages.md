@@ -86,3 +86,7 @@ tags. Change what you like and tap **Update**; the sheet says
 The sheet stays open, keeps what you typed and says what went wrong
 under the form. Tap **Save** again once the problem is fixed. Nothing
 is saved until it succeeds. See [troubleshooting](troubleshooting.md).
+
+When Hrček can't be reached, the sheet keeps the page on the phone
+instead and sends it later. See
+[When Hrček can't be reached](offline.md).

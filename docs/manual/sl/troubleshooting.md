@@ -20,13 +20,18 @@ sporočila pove, zakaj: pogosto je slika v obliki, ki je Hrček ne zna
 prebrati, ali pa je prevelika. Stran delite znova in pod **Zamenjaj**
 izberite drugo sliko ali izklopite **Vključi sliko**.
 
-**»Niste povezani z internetom.«** Povežite se z internetom in znova
-tapnite **Shrani**.
+**»Hrčka ni mogoče doseči.«** Telefon ni povezan z internetom ali pa
+vaš Hrček ne deluje. Okno Deli stran obdrži na telefonu in jo pošlje
+pozneje; glejte [Ko Hrček ni dosegljiv](offline.md).
 
-**»Strežnika ni mogoče doseči.«** Strežnik morda ne deluje ali pa se je
-naslov, s katerim ste se prijavili, spremenil. Preverite tako, da Hrček
-odprete v brskalniku. Če se je naslov spremenil, se v aplikaciji
-odjavite in znova prijavite z novim.
+**»Niste povezani z internetom.«** Ob prijavi se povežite z internetom
+in poskusite znova. Okno Deli tega ne pove: stran namesto tega obdrži
+za pozneje.
+
+**»Strežnika ni mogoče doseči.«** Ob prijavi: strežnik morda ne deluje
+ali pa naslov ni pravi. Preverite tako, da Hrček odprete v brskalniku.
+Če se je naslov spremenil, se v aplikaciji odjavite in znova prijavite
+z novim.
 
 **»Vaša prijava je potekla ali je bila preklicana.«** Žeton za dostop
 tega telefona je bil na spletni strani odstranjen ali pa je potekel.

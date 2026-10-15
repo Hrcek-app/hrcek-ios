@@ -51,4 +51,15 @@ import Testing
         #expect(request.fields == nil)
         #expect(request.imageUrl == nil)
     }
+
+    @Test func fillsFromAKeptRequest() {
+        let request = EntryIn(
+            url: "https://example.com/a", title: "T", notes: "N", tags: ["x"],
+            fields: ["Priority": "high"])
+        let draft = EntryDraft(request: request, definitions: nil)
+        #expect(draft.title == "T")
+        #expect(draft.notes == "N")
+        #expect(draft.tags == ["x"])
+        #expect(draft.request().fields == ["Priority": "high"])
+    }
 }

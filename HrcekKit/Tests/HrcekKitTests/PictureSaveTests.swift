@@ -113,7 +113,8 @@ final class FakePictures: Sendable {
         let session = StubURLProtocol.typedSession { fake.handle($0) }
         let pages = PageAccess(pictures: { _ in [] }, bytes: { _ in bytes })
         return ShareModel(
-            store: InMemoryCredentialStore(try sampleCredentials()), pages: pages
+            store: InMemoryCredentialStore(try sampleCredentials()), queue: temporaryQueue(),
+            pages: pages
         ) { EntryService(credentials: $0, language: "en", session: session) }
     }
 
@@ -217,7 +218,8 @@ final class FakePictures: Sendable {
         let session = StubURLProtocol.typedSession { FakePictures().handle($0) }
         let pages = PageAccess(pictures: { _ in [found] }, bytes: { _ in nil })
         let model = ShareModel(
-            store: InMemoryCredentialStore(try sampleCredentials()), pages: pages
+            store: InMemoryCredentialStore(try sampleCredentials()), queue: temporaryQueue(),
+            pages: pages
         ) { EntryService(credentials: $0, language: "en", session: session) }
         await model.start(bare)
         #expect(model.pictures.items == [.candidate(found)])
@@ -234,7 +236,8 @@ final class FakePictures: Sendable {
                 return [found]
             }, bytes: { _ in nil })
         let model = ShareModel(
-            store: InMemoryCredentialStore(try sampleCredentials()), pages: pages
+            store: InMemoryCredentialStore(try sampleCredentials()), queue: temporaryQueue(),
+            pages: pages
         ) { EntryService(credentials: $0, language: "en", session: session) }
         let starting = Task { await model.start(bare) }
         for _ in 0..<500 where model.phase != .editing {

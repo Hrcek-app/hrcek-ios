@@ -88,3 +88,6 @@ Okno ostane odprto, ohrani, kar ste vtipkali, in pod obrazcem pove, kaj
 je šlo narobe. Ko je težava odpravljena, znova tapnite **Shrani**.
 Dokler poskus ne uspe, se ne shrani nič. Glejte
 [odpravljanje težav](troubleshooting.md).
+
+Ko Hrček ni dosegljiv, okno stran namesto tega obdrži na telefonu in jo
+pošlje pozneje. Glejte [Ko Hrček ni dosegljiv](offline.md).

@@ -19,12 +19,18 @@ rest of the message says why: often the picture is in a format Hrček
 cannot read, or too large. Share the page again and choose another
 picture under **Change**, or switch **Include picture** off.
 
-**"You're offline."** Connect to the internet and tap **Save** again.
+**"Hrček can't be reached."** The phone is offline, or your Hrček is
+down. The Share sheet keeps the page on the phone and sends it later;
+see [When Hrček can't be reached](offline.md).
 
-**"Can't reach the server."** The server may be down, or the address
-you signed in with may have changed. Open your Hrček in the browser to
-check. If the address changed, sign out in the app and sign in again
-with the new one.
+**"You're offline."** When signing in, connect to the internet and try
+again. The Share sheet does not say this: it keeps the page for later
+instead.
+
+**"Can't reach the server."** When signing in: the server may be down,
+or the address may be wrong. Open your Hrček in the browser to check.
+If the address changed, sign out in the app and sign in again with the
+new one.
 
 **"Your sign-in has expired or was revoked."** The access token for
 this phone was removed on the website, or it expired. Sign in again.

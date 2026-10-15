@@ -28,6 +28,18 @@ struct ShareView: View {
                 if let trouble = model.pictureTrouble {
                     Text(trouble).padding(.top).accessibilityIdentifier("pictureTrouble")
                 }
+                if let count = model.syncingCount {
+                    Text("Sending \(count) waiting pages…").padding(.top)
+                        .accessibilityIdentifier("syncing")
+                } else if let summary = model.syncSummary {
+                    Text(summary).padding(.top).accessibilityIdentifier("syncSummary")
+                }
+            }
+        case .kept:
+            notice {
+                Label("Kept for later", systemImage: "clock.fill")
+                    .font(.title2).accessibilityIdentifier("kept")
+                Text("It will be saved to Hrček once it can be reached.").padding(.top)
             }
         case .signedOut:
             notice {
@@ -78,13 +90,22 @@ struct ShareView: View {
         if model.phase == .saving {
             ProgressView().accessibilityIdentifier("saving")
         } else {
-            Button(model.isExisting ? "Update" : "Save") {
+            Button {
                 Task {
                     // A picture that failed is worth reading; Done closes then.
                     guard await model.save(), model.pictureTrouble == nil else { return }
+                    if model.phase != .kept {
+                        await whileAllowed { await model.syncWaiting() }
+                    }
                     // Long enough to read the confirmation; Done closes sooner.
                     try? await Task.sleep(for: .seconds(2))
                     done()
+                }
+            } label: {
+                if model.isOffline {
+                    Text("Save for later")
+                } else {
+                    Text(model.isExisting ? "Update" : "Save")
                 }
             }
             .accessibilityIdentifier("save")
