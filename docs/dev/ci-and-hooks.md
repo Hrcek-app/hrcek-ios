@@ -42,3 +42,8 @@ test job uploads its result bundles as an artifact.
 Each simulator job boots its simulator with `scripts/simulator --boot`
 before testing. A runner's first boot takes minutes, and when xcodebuild
 did it, the app or the test runner often timed out on launch.
+
+The runners' speed varies: a test that takes under a minute locally has
+run out of the UI test plan's three minutes there. On CI,
+`scripts/test-app` gives each test five minutes instead, while a local
+run keeps the plan's limit and still catches a test that hangs.

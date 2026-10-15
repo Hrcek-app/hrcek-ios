@@ -16,7 +16,11 @@ for _ in $(seq 50); do
   curl -fs "http://127.0.0.1:$port/api/health" >/dev/null && break
   sleep 0.2
 done
+# GitHub's macOS runners sometimes slow down for minutes, so a test there
+# gets more time than the test plan's limit; locally the limit stays tight.
+allowance=()
+if [[ -n "${CI:-}" ]]; then allowance=(-default-test-execution-time-allowance 300); fi
 xcodebuild test -project "$root/Hrcek.xcodeproj" -scheme Hrcek -testPlan "$plan" \
   -destination "$("$root/scripts/simulator")" -derivedDataPath "$root/.build/xcode" \
-  -resultBundlePath "$result" -collect-test-diagnostics never -quiet
+  -resultBundlePath "$result" -collect-test-diagnostics never -quiet ${allowance[@]+"${allowance[@]}"}
 "$root/scripts/check-warnings" "$result"
