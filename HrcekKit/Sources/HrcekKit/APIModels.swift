@@ -23,7 +23,7 @@ public struct LookupIn: Encodable, Sendable {
 
 /// An entry to save. Posting replaces what the server holds, except that
 /// `fields` and `imageUrl` change nothing when left out.
-public struct EntryIn: Encodable, Sendable {
+public struct EntryIn: Codable, Equatable, Sendable {
     public let url: String
     public let title: String
     public let notes: String

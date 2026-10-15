@@ -68,9 +68,14 @@ website; it is checked with `GET /api/auth/me` and stored the same way.
 Server address, token and display name are stored together, as one
 Keychain item, by `KeychainCredentialStore`. The item lives in a
 shared Keychain access group, so the share extension reads exactly what
-the app saved. There is no App Group: nothing else needs sharing.
+the app saved. The Keychain holds the credentials and the language. An
+App Group, `group.<bundle prefix>.Hrcek.shared`, holds the queue of
+saves kept for later (below), because those include pictures of up to
+10 MB, which do not belong in a Keychain item. The group name is
+written into both Info.plists at build time (`HrcekAppGroup`) and
+granted by both entitlements files.
 
-The group name, `<team prefix>.<bundle prefix>.Hrcek.shared`, is
+The Keychain group name, `<team prefix>.<bundle prefix>.Hrcek.shared`, is
 written into both Info.plists at build time (`HrcekKeychainGroup`) and
 granted by `Support/Hrcek.entitlements` and
 `Support/HrcekShare.entitlements`. The item is readable after the
@@ -151,3 +156,65 @@ instead of written over.
 
 A revoked token (`HRC-AUTH-0004`) clears the stored credentials, and
 the sheet asks the person to open the app and sign in.
+
+## Saves kept for later
+
+When Hrček cannot take a save, the share sheet keeps it on the phone
+and it is sent later. Only an outage is kept for: `APIError.isUnavailable`
+is true for a transport failure, or a 502, 503 or 504 answer with or
+without the error envelope (what a reverse proxy says for a stopped
+Hrček). Certificate and secure-connection failures are not included: a
+certificate the phone distrusts today it distrusts tomorrow, so waiting
+fixes nothing. A refused token or invalid data would be refused again,
+and keeping the save would only hide that.
+
+`PendingQueue` keeps the saves as files in the App Group container:
+
+```
+Pending/<sha256 of the normalised address>/entry.json
+Pending/<sha256 of the normalised address>/picture   (only with bytes)
+Pending/.incoming/<uuid>/                            (writes in progress)
+Pending/.lock  Pending/.sync-lock
+```
+
+There are at most 100, and one copy per normalised address (trimmed,
+scheme and host lowercased). A copy is identified by its `id`, not by
+its address or time: a newer copy at the same address is another copy,
+and `remove` and `mark` leave it alone. An entry is written aside in
+`.incoming` and moved into place under `.lock`, so no reader sees half
+of one. Nothing of an entry outlives its place: removing it deletes its
+whole directory, replacing it drops an old picture, and opening the
+queue sweeps staging older than a minute (a younger one may be the
+other process writing) and entries with no `entry.json` or one that
+is not an entry; a file that merely fails to be read stays. The directory
+is excluded from backup, so a restore onto another phone cannot send
+saves twice, and is protected until first unlock, the iOS default.
+
+`PendingSync.run` sends the waiting copies meant for the signed-in
+server, oldest first, one at a time, each read again just before it is
+handled. For each it looks the address up first. If Hrček has the
+address already, the copy is not sent over it: it is marked `held` for a
+person to decide, unless Hrček's entry is the copy verbatim (same
+title, notes and tags in any case or order), which means an earlier
+sync was cut off after Hrček took it, so the copy is simply removed.
+Otherwise it is sent like a direct save (`PendingSync.send`, over
+`PictureSaver`). A refusal with Hrček's error envelope marks the copy
+`refused` with Hrček's own message; held and refused copies are never
+retried. The first outage, refused token or failed lookup ends the run
+with the rest untouched, and a cancelled run reports `interrupted`.
+Only one sync runs at a time, in either process, through `.sync-lock`;
+a second one reports `busy`. A server error (status 500 and above) or
+429 does not refuse the copy: it ends the run as `failed`, the copy
+still waiting.
+
+The sync holds `.sync-lock` while it talks to the network, and iOS ends
+a process that is suspended holding a lock file in a shared container.
+So callers must run a sync under a background-time assertion
+(`UIApplication.beginBackgroundTask` in the app,
+`ProcessInfo.performExpiringActivity` in the extension) and cancel the
+sync when the assertion expires; it ends with `interrupted` and
+releases the lock.
+
+Every change posts the Darwin notification `app.hrcek.pending.changed`,
+which `PendingQueue.changes()` turns into an `AsyncStream`, so an open
+app hears what the extension kept.
