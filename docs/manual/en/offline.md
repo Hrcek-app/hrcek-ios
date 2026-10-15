@@ -24,12 +24,44 @@ could not be loaded. A kept page leaves them as they are.
 ## Where kept pages go
 
 Kept pages stay on this phone, in Hrček's own storage, until they reach
-Hrček. They are sent the next time you save a page while Hrček can be
-reached: after **Saved**, the sheet says "Sending 1 waiting page…" and
-then what happened, such as "1 entry saved."
+Hrček. They are sent the next time you open the app, or the next time
+you save a page while Hrček can be reached: after **Saved**, the sheet
+says "Sending 1 waiting page…" and then what happened, such as "1 entry
+saved."
 
 A kept page is removed from the phone as soon as it is saved to Hrček,
 or when you delete it.
+
+## The list of waiting pages
+
+While pages wait, the app opens on them: **Waiting to sync** lists each
+page with its title, site, when you kept it and its tags. Opening the
+app also sends them, so often the list is already empty by the time you
+look. A line says what the last sync did, such as "1 entry saved." or
+"Hrček can't be reached.": under the first button, or under "Nothing
+is waiting." once the list is empty.
+
+- **Sync now** sends what waits once more, for example when Hrček is
+  back. It is greyed out while nothing can be sent.
+- **Sign in to sync these.** shows instead when you are signed out. Tap
+  it to sign in; the pages are sent once you are.
+- To delete a page, swipe it to the left and tap **Delete**. The app
+  asks first, because a page that has not reached Hrček is gone for good.
+- A page Hrček already has says "Hrček already has this page." It is
+  not sent over Hrček's entry; share the page again to choose which to
+  keep. A page Hrček refused shows Hrček's reason.
+- A page kept while you were signed in to another server says "Saved
+  for …, which is not the server you're signed in to." It is only ever
+  sent to that server, so sign in there to send it, or delete it.
+
+The gear at the top left opens the usual screen: signing in or out, how
+to save a page, and the language. While pages wait, it also says how
+many, such as "2 pages waiting to sync". **Done** closes it.
+
+When nothing is left, the list says "Nothing is waiting." and what the
+sync did, including any page saved without its picture. Tap **Done**
+and the app shows its usual screen until pages wait again. If you leave
+the app instead, it opens on its usual screen next time.
 
 ## Sharing a kept page again
 

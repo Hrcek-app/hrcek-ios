@@ -75,6 +75,20 @@ scripts/contract-test --url http://127.0.0.1:8000 \
 
 When the real server and the stub disagree, fix the stub.
 
+## Launch arguments
+
+`launchApp()` passes these to the app; it reads them only in DEBUG
+builds.
+
+| Argument | Effect |
+|---|---|
+| `-HrcekResetState` | Signed out, automatic language, nothing kept for later |
+| `-HrcekSeedPending N` | Starts with N waiting pages, "Seeded 1" onwards |
+| `-HrcekSeedServer URL` | Their server; the stub on 8765 by default |
+
+`launchApp(seeding: 2)` sets the last two, for the stub `scripts/test-app`
+starts, so a sync after signing in sends them to it.
+
 ## Things the UI tests have to handle
 
 - After a successful sign-in, iOS offers to save the password.
@@ -103,8 +117,8 @@ When the real server and the stub disagree, fix the stub.
    to fetch, so the picture arriving proves the sheet uploaded it.
    `OfflineE2ETests` plays an outage (below): it shares a page while
    Hrček is down, expects the offline note, types notes and expects
-   **Kept for later**; then, with Hrček back, shares a second page and
-   expects the sync's summary after **Saved**.
+   **Kept for later**; then, with Hrček back, opens the app, whose
+   sync on becoming active leaves "Nothing is waiting."
 5. It asks the API for the entry and checks the new title, and that the
    notes, tag, field and picture survived the update; and for the page
    kept during the outage, which must have reached Hrček with its notes.

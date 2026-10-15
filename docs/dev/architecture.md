@@ -262,3 +262,36 @@ releases the lock.
 Every change posts the Darwin notification `app.hrcek.pending.changed`,
 which `PendingQueue.changes()` turns into an `AsyncStream`, so an open
 app hears what the extension kept.
+
+### The app's waiting list
+
+`PendingModel` (HrcekKit) is the app's view of the queue: `entries`,
+`isPresented`, `isSyncing`, the last sync's `summary`, and `activate`,
+`sync`, `delete` and `dismiss`. It touches only waiting copies for the
+signed-in server, through `PendingSync.run`; `canSync` says whether
+there are any. `isForAnotherServer` marks copies kept for a server
+other than the signed-in one, which are never sent elsewhere.
+
+`RootView` chooses the screen: `PendingListView` while
+`isPresented`, else `SignedInView` or `SignInView`. `reload` presents
+the list whenever something waits. Only `dismiss` (the **Done** of an
+emptied list) and `activate` with nothing queued take it away, so the
+screen never changes under a person's finger when the last page goes,
+and an emptied list does not greet them on the next opening. Taking it
+away also clears `summary`, so an old result is never shown as news;
+while the emptied list stays up, its empty state shows the summary.
+The usual screens move into the list's settings sheet, behind a gear,
+with an `onClose` button and `PendingCountSection` on top.
+
+When the scene becomes active, `RootView` calls `activate` first, so
+the screen is decided before the sync, then refreshes the session and
+syncs; a sync refused for the token refreshes again, which signs out.
+Signing in from the list's settings syncs too, since the list watches
+`session.credentials`. While the app is open it reloads on every Darwin
+notification, so a page kept from the share sheet shows at once.
+
+Those syncs and **Sync now** all run through `BackgroundWork.start`
+(app target, UIKit), which holds `UIApplication.beginBackgroundTask`,
+cancels the work when the time expires and ends the background task
+exactly once. This keeps the `.sync-lock` contract above and leaves
+`PendingModel` free of UIKit.

@@ -4,10 +4,13 @@ import SwiftUI
 struct SignInView: View {
     @Environment(SessionModel.self) private var session
     @Environment(\.locale) private var locale
+    /// Set when shown as the waiting list's settings, which it closes.
+    var onClose: (() -> Void)?
 
     var body: some View {
         NavigationStack {
             Form {
+                PendingCountSection()
                 serverSection
                 accountSection
                 if let message = session.errorMessage {
@@ -29,6 +32,13 @@ struct SignInView: View {
                 LanguageSection()
             }
             .navigationTitle(locale.string("Sign in to Hrček"))
+            .toolbar {
+                if let onClose {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Done", action: onClose).accessibilityIdentifier("closeSettings")
+                    }
+                }
+            }
         }
     }
 

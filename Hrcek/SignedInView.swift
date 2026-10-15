@@ -3,12 +3,15 @@ import SwiftUI
 
 struct SignedInView: View {
     let credentials: Credentials
+    /// Set when shown as the waiting list's settings, which it closes.
+    var onClose: (() -> Void)?
     @Environment(SessionModel.self) private var session
     @State private var confirmingSignOut = false
 
     var body: some View {
         NavigationStack {
             List {
+                PendingCountSection()
                 Section {
                     Text("Signed in as \(credentials.displayName) on \(credentials.server.host)")
                         .accessibilityIdentifier("signedInAs")
@@ -24,6 +27,13 @@ struct SignedInView: View {
                 signOutSection
             }
             .navigationTitle("Hrček")
+            .toolbar {
+                if let onClose {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Done", action: onClose).accessibilityIdentifier("closeSettings")
+                    }
+                }
+            }
         }
     }
 
