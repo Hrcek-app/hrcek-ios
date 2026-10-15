@@ -5,8 +5,8 @@
 </p>
 
 Save the web page you are reading to your
-[Hrček](https://github.com/Hrcek-app/hrcek) with your browser's Share
-button.
+[Hrček](https://github.com/Hrcek-app/hrcek) — a simple self-hosted
+bookmark manager with wish lists — with your browser's Share button.
 
 **NOTE: Like Hrček itself, this is a usable experiment and a learning
 project, without any guarantees.**
@@ -14,8 +14,10 @@ project, without any guarantees.**
 ## Status
 
 Early, but usable: sign in once in the app, then share any page from
-Safari or another browser to Hrček to save it. Editing what you save
-from the Share sheet comes later.
+Safari or another browser to Hrček to save it. Before saving you can
+edit the title, notes, tags and your own fields, and pick a picture
+from the page; a page already saved is updated rather than saved
+twice. The app speaks English and Slovenian.
 
 ## Documentation
 
