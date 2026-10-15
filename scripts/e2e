@@ -50,12 +50,16 @@ server="http://localhost:$proxy_port"
 run=$(date +%s)
 page="http://localhost:$page_port/?run=$run"
 offline_page="http://localhost:$page_port/?run=$run-offline"
+held_keep_page="http://localhost:$page_port/?run=$run-keep"
+held_replace_page="http://localhost:$page_port/?run=$run-replace"
 "$root/scripts/contract-test" --url "http://localhost:$api_port" --identifier "$email" \
   --password "$password"
 
 TEST_RUNNER_HRCEK_E2E_SERVER=$server TEST_RUNNER_HRCEK_E2E_EMAIL=$email \
   TEST_RUNNER_HRCEK_E2E_PASSWORD=$password TEST_RUNNER_HRCEK_E2E_PAGE=$page \
   TEST_RUNNER_HRCEK_E2E_OFFLINE_PAGE=$offline_page \
+  TEST_RUNNER_HRCEK_E2E_KEEP_PAGE=$held_keep_page \
+  TEST_RUNNER_HRCEK_E2E_REPLACE_PAGE=$held_replace_page \
   "$root/scripts/test-app" --plan E2E
 
 token=$(curl -fs "$server/api/auth/tokens/exchange" -H 'Content-Type: application/json' \
@@ -76,5 +80,24 @@ kept=$(curl -fs "$server/api/entries/lookup" -H "Authorization: Bearer $token" \
 echo "Synced entry: $kept"
 if [[ $(jq -r .notes <<<"$kept") != "Kept while Hrček was down" ]]; then
   echo "Expected the page kept during the outage to reach Hrček" >&2
+  exit 1
+fi
+
+# Kept offline, then saved from elsewhere: the person kept Hrček's entry for
+# one page and replaced it with their own for the other.
+lookup() {
+  curl -fs "$server/api/entries/lookup" -H "Authorization: Bearer $token" \
+    -H 'Content-Type: application/json' -d "{\"url\":\"$1\"}"
+}
+kept_theirs=$(lookup "$held_keep_page")
+echo "Kept Hrček's entry: $kept_theirs"
+if [[ $(jq -r .title <<<"$kept_theirs") != "From elsewhere" ]]; then
+  echo "Expected Hrček's entry kept for the keep page" >&2
+  exit 1
+fi
+replaced=$(lookup "$held_replace_page")
+echo "Replaced entry: $replaced"
+if [[ $(jq -r .notes <<<"$replaced") != "Mine, kept offline" ]]; then
+  echo "Expected the kept copy to replace Hrček's entry" >&2
   exit 1
 fi

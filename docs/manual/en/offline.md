@@ -48,8 +48,10 @@ is waiting." once the list is empty.
 - To delete a page, swipe it to the left and tap **Delete**. The app
   asks first, because a page that has not reached Hrček is gone for good.
 - A page Hrček already has says "Hrček already has this page." It is
-  not sent over Hrček's entry; share the page again to choose which to
-  keep. A page Hrček refused shows Hrček's reason.
+  not sent over Hrček's entry; tap it to choose which to keep (see
+  below).
+- A page Hrček refused shows Hrček's reason in red. Delete it, or share
+  the page again to fix what the reason says.
 - A page kept while you were signed in to another server says "Saved
   for …, which is not the server you're signed in to." It is only ever
   sent to that server, so sign in there to send it, or delete it.
@@ -62,6 +64,30 @@ When nothing is left, the list says "Nothing is waiting." and what the
 sync did, including any page saved without its picture. Tap **Done**
 and the app shows its usual screen until pages wait again. If you leave
 the app instead, it opens on its usual screen next time.
+
+## Pages Hrček already has
+
+Someone may save the same page to Hrček, from another phone or the
+website, while yours waits. Yours is then not sent over theirs: the row
+says "Hrček already has this page." Tap it to see both side by side,
+**Yours** above and **On Hrček** below, each with its title, notes,
+tags, fields and picture.
+
+- **Keep what's on Hrček** deletes your copy from the phone and leaves
+  Hrček's entry as it is. It can only be tapped once Hrček's entry is
+  shown, so you never throw yours away unseen.
+- **Replace with mine** saves your copy over Hrček's entry, picture
+  included, and removes it from the phone.
+- If Hrček no longer has the page, the comparison says "Hrček no longer
+  has this page." and offers **Save mine** instead.
+
+While Hrček can't be reached, both buttons are greyed out and the
+reason is shown in red; your copy stays as it is. Go back and open it
+again later. If Hrček refuses your copy, it goes back to the list with
+Hrček's reason.
+
+A page Hrček has can only be compared while you are signed in to the
+server it was kept for.
 
 ## Sharing a kept page again
 

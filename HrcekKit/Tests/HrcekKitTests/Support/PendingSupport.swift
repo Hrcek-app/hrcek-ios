@@ -37,24 +37,39 @@ final class FakeHrcek: Sendable {
         var refuseSaves: (Int, String)?
         var refuseLookups: (Int, String)?
         var refusePictures = false
+        /// What Hrček answers for an entry's picture: the bytes, or the
+        /// sign-in page an older Hrček gives a token.
+        var heldPicture: (type: String, body: Data)?
     }
 
     let state = Mutex(State())
 
     static func entry(
-        _ url: String, title: String = "Theirs", notes: String = "", tags: [String] = []
+        _ url: String, title: String = "Theirs", notes: String = "", tags: [String] = [],
+        image: Bool = false
     ) -> String {
         let tagList = tags.map { "\"\($0)\"" }.joined(separator: ",")
+        let picture = image ? #"{"url":"/entries/7/image/","width":1,"height":1}"# : "null"
         return #"""
             {"id":7,"url":"\#(url)","title":"\#(title)","notes":"\#(notes)",\#
-            "tags":[\#(tagList)],"fields":{},"image":null}
+            "tags":[\#(tagList)],"fields":{},"image":\#(picture)}
             """#
     }
 
     func service() throws -> EntryService {
         EntryService(
             credentials: try sampleCredentials(), language: "en",
-            session: StubURLProtocol.session { try self.handle($0) })
+            session: StubURLProtocol.typedSession { try self.reply($0) })
+    }
+
+    /// `handle`, and the entry's picture, whose content type matters.
+    func reply(_ request: URLRequest) throws -> StubURLProtocol.Reply {
+        let picture = state.withLock { $0.down ? nil : $0.heldPicture }
+        if request.url?.path().hasSuffix("/image/") == true, let picture {
+            return StubURLProtocol.Reply(status: 200, body: picture.body, type: picture.type)
+        }
+        let (status, body) = try handle(request)
+        return StubURLProtocol.Reply(status: status, body: body)
     }
 
     private func envelope(_ code: String) -> Data {

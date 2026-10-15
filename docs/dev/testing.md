@@ -118,10 +118,16 @@ starts, so a sync after signing in sends them to it.
    `OfflineE2ETests` plays an outage (below): it shares a page while
    Hrček is down, expects the offline note, types notes and expects
    **Kept for later**; then, with Hrček back, opens the app, whose
-   sync on becoming active leaves "Nothing is waiting."
+   sync on becoming active leaves "Nothing is waiting." Its second
+   test keeps two pages during an outage, then saves both straight to
+   Hrček as another device would (`saveDirectly`), so the app's sync
+   holds them. It opens the first and taps **Keep what's on Hrček**,
+   then the second and taps **Replace with mine**.
 5. It asks the API for the entry and checks the new title, and that the
-   notes, tag, field and picture survived the update; and for the page
-   kept during the outage, which must have reached Hrček with its notes.
+   notes, tag, field and picture survived the update; for the page
+   kept during the outage, which must have reached Hrček with its notes;
+   and for the two held pages: the kept one still has Hrček's title,
+   "From elsewhere", and the replaced one has the notes typed offline.
 
 The app reaches Hrček through `scripts/e2e-proxy` on port 8768, which
 passes requests through to the backend. `POST /proxy/outage` makes it
