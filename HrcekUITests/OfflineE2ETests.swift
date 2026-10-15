@@ -1,7 +1,7 @@
 import XCTest
 
-/// An outage as a person meets it: share while Hrček is down, then save
-/// another page once it is back. Run by scripts/e2e through its proxy.
+/// An outage as a person meets it: share while Hrček is down, then open
+/// the app once it is back. Run by scripts/e2e through its proxy.
 final class OfflineE2ETests: XCTestCase {
     @MainActor
     func testKeepsAPageSharedDuringAnOutageAndSendsItLater() async throws {
@@ -37,15 +37,12 @@ final class OfflineE2ETests: XCTestCase {
         XCTAssertTrue(kept.waitForExistence(timeout: patience), safari.debugDescription)
         XCTAssertTrue(kept.waitForNonExistence(timeout: patience))
 
-        // Hrček is back. In this task only a save sends kept pages (the
-        // app syncs on opening from Task 3), so share a second page.
+        // Hrček is back, and the person opens the app.
         try await setOutage(false, server: server)
-        let second = try XCTUnwrap(URL(string: page.absoluteString + "&second=1"))
-        XCUIDevice.shared.system.open(second)
-        openShareSheet(from: safari)
-        tapWhenHittable(safari.buttons["save"].firstMatch)
+        app.activate()
+        // Becoming active syncs; the list then has nothing left.
         XCTAssertTrue(
-            safari.descendants(matching: .any)["syncSummary"].waitForExistence(timeout: patience),
-            "the save sends the kept page too:\n\(safari.debugDescription)")
+            app.descendants(matching: .any)["nothingWaiting"].waitForExistence(timeout: patience),
+            app.debugDescription)
     }
 }

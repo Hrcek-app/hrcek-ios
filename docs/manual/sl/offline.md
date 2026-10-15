@@ -24,13 +24,50 @@ naložiti. Shranjena stran jih ne spremeni.
 ## Kam gredo shranjene strani
 
 Shranjene strani ostanejo na tem telefonu, v Hrčkovem lastnem
-prostoru, dokler ne pridejo v Hrček. Pošljejo se, ko naslednjič
-shranite stran, medtem ko je Hrček dosegljiv: po **Shranjeno** okno
-pokaže »Pošiljam 1 čakajočo stran …« in nato, kaj se je zgodilo, na
-primer »Shranjen je 1 vnos.«
+prostoru, dokler ne pridejo v Hrček. Pošljejo se, ko naslednjič odprete
+aplikacijo ali ko naslednjič shranite stran, medtem ko je Hrček
+dosegljiv: po **Shranjeno** okno pokaže »Pošiljam 1 čakajočo stran …«
+in nato, kaj se je zgodilo, na primer »Shranjen je 1 vnos.«
 
 Shranjena stran se s telefona odstrani, takoj ko je shranjena v Hrček
 ali ko jo izbrišete.
+
+## Seznam strani, ki čakajo
+
+Dokler strani čakajo, se aplikacija odpre na njih: **Čaka na
+sinhronizacijo** našteje vsako stran z naslovom, spletnim mestom,
+časom, ko ste jo shranili, in oznakami. Ob odprtju jih aplikacija tudi
+pošlje, zato je seznam pogosto prazen, še preden ga pogledate. Vrstica
+pove, kaj je naredila zadnja sinhronizacija, na primer »Shranjen je 1
+vnos.« ali »Hrčka ni mogoče doseči.«: pod prvim gumbom ali, ko je
+seznam prazen, pod »Nič ne čaka.«
+
+- **Sinhroniziraj zdaj** znova pošlje, kar čaka, na primer ko je Hrček
+  spet dosegljiv. Ko ni ničesar mogoče poslati, je siv.
+- **Za sinhronizacijo se prijavite.** se pokaže namesto njega, ko niste
+  prijavljeni. Tapnite in se prijavite; strani se pošljejo, ko ste
+  prijavljeni.
+- Stran izbrišete tako, da jo podrsate v levo in tapnete **Izbriši**.
+  Aplikacija najprej vpraša, ker je stran, ki še ni v Hrčku, potem za
+  vedno izgubljena.
+- Stran, ki jo Hrček že ima, pove »Hrček to stran že ima.« Čez Hrčkov
+  vnos ne bo poslana; stran znova delite, da izberete, katero obdržite.
+  Stran, ki jo je Hrček zavrnil, pokaže Hrčkov razlog.
+- Stran, shranjena, ko ste bili prijavljeni v drug strežnik, pove
+  »Shranjeno za …, ki ni strežnik, v katerega ste prijavljeni.« Poslana
+  bo samo na tisti strežnik, zato se tja prijavite, da jo pošljete, ali
+  pa jo izbrišite.
+
+Zobnik levo zgoraj odpre običajni zaslon: prijavo ali odjavo, kako
+shranite stran in jezik. Dokler strani čakajo, pove tudi, koliko jih
+je, na primer »2 strani čakata na sinhronizacijo«. **Končano** ga
+zapre.
+
+Ko ne ostane nič, seznam pove »Nič ne čaka.« in kaj je naredila
+sinhronizacija, tudi če je bila kakšna stran shranjena brez slike.
+Tapnite **Končano** in aplikacija pokaže običajni zaslon, dokler spet
+ne čaka kakšna stran. Če aplikacijo namesto tega zapustite, se
+naslednjič odpre na običajnem zaslonu.
 
 ## Ponovno deljenje shranjene strani
 

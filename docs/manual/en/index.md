@@ -9,6 +9,10 @@ online.
 You will not use the app much on its own. You save pages from your
 browser: open the page, tap **Share**, and choose **Hrček**.
 
+The app opens on sign-in, or once you are signed in, on how to save a
+page. While pages kept for later wait to reach Hrček, it opens on those
+instead; see [When Hrček can't be reached](offline.md).
+
 - [Signing in](sign-in.md) — do this once, in the app.
 - [Saving pages](saving-pages.md) — from Safari or another browser.
 - [When Hrček can't be reached](offline.md) — saving pages for later.

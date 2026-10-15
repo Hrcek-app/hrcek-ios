@@ -1,6 +1,58 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%lld pages waiting to sync" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld page waiting to sync"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld pages waiting to sync"
+                }
+              }
+            }
+          }
+        },
+        "sl" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld strani čakajo na sinhronizacijo"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld stran čaka na sinhronizacijo"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld strani čaka na sinhronizacijo"
+                }
+              },
+              "two" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld strani čakata na sinhronizacijo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "API token" : {
       "localizations" : {
         "sl" : {
@@ -27,6 +79,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Izberite Hrček. Če ga ni v vrstici, tapnite Več in ga dodajte."
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Izbriši"
+          }
+        }
+      }
+    },
+    "Delete this page?" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Izbrišem to stran?"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Končano"
           }
         }
       }
@@ -61,6 +143,26 @@
         }
       }
     },
+    "Hrček already has this page." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hrček to stran že ima."
+          }
+        }
+      }
+    },
+    "It has not been saved to Hrček, and will be gone from this phone." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "V Hrček še ni shranjena in bo izginila s tega telefona."
+          }
+        }
+      }
+    },
     "Language" : {
       "localizations" : {
         "sl" : {
@@ -91,6 +193,16 @@
         }
       }
     },
+    "Nothing is waiting." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nič ne čaka."
+          }
+        }
+      }
+    },
     "Open the page in Safari or another browser." : {
       "localizations" : {
         "sl" : {
@@ -111,12 +223,32 @@
         }
       }
     },
+    "Saved for %@, which is not the server you're signed in to." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shranjeno za %@, ki ni strežnik, v katerega ste prijavljeni."
+          }
+        }
+      }
+    },
     "Server address" : {
       "localizations" : {
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Naslov strežnika"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nastavitve"
           }
         }
       }
@@ -137,6 +269,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prijava v Hrček"
+          }
+        }
+      }
+    },
+    "Sign in to sync these." : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Za sinhronizacijo se prijavite."
           }
         }
       }
@@ -187,6 +329,16 @@
         }
       }
     },
+    "Sync now" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sinhroniziraj zdaj"
+          }
+        }
+      }
+    },
     "Tap the Share button." : {
       "localizations" : {
         "sl" : {
@@ -213,6 +365,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Telefon pozabi vašo prijavo. Njegov žeton za dostop deluje, dokler ga ne odstranite na strani odjemalcev na spletni strani."
+          }
+        }
+      }
+    },
+    "Waiting to sync" : {
+      "localizations" : {
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Čaka na sinhronizacijo"
           }
         }
       }
