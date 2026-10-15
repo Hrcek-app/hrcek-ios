@@ -200,7 +200,7 @@ final class FakePictures: Sendable {
     }
 
     @Test func saysSoWhenTheHeldPictureCannotBeShown() async throws {
-        // The server sends a sign-in page instead when it will not take the token.
+        // A Hrček from before this address took a token answers its sign-in page.
         let fake = FakePictures(held: true, heldImage: true)
         fake.state.withLock {
             $0.heldBytes = .init(status: 200, body: Data("<html>".utf8), type: "text/html")
