@@ -283,9 +283,16 @@ while the emptied list stays up, its empty state shows the summary.
 The usual screens move into the list's settings sheet, behind a gear,
 with an `onClose` button and `PendingCountSection` on top.
 
-When the scene becomes active, `RootView` calls `activate` first, so
-the screen is decided before the sync, then refreshes the session and
-syncs; a sync refused for the token refreshes again, which signs out.
+When the app opens, or comes back from the background, `RootView`
+calls `activate` first, so the screen is decided before the sync, then
+refreshes the session and syncs; a sync refused for the token
+refreshes again, which signs out. Becoming active straight from
+inactive does none of this: iOS's own alerts (the badge question
+among them), Control Centre and Notification Centre make the app
+inactive for a moment, and coming out of one must neither take down
+an emptied list nor start another sync. `RootView` keeps a `returning`
+flag, set at launch and on `.background`, and acts only on an
+`.active` while it is set.
 Signing in from the list's settings syncs too, since the list watches
 `session.credentials`. While the app is open it reloads on every Darwin
 notification, so a page kept from the share sheet shows at once.
@@ -335,3 +342,52 @@ held inside synchronous `FileLock.withLock` bodies, so no lock is held
 across a network call. Replace still runs through
 `BackgroundWork.start`, because it is a write the person asked for and
 should not be cut off by leaving the app.
+
+### The badge
+
+The app icon's badge shows how many copies the queue holds, waiting,
+held or refused alike, since each one waits for the person or for
+Hrček. `BadgeCenter` (HrcekKit) is the seam: `status`, `request` and
+`set`. `NotificationBadgeCenter` uses `UNUserNotificationCenter`,
+asking for `.badge` only, so the app never alerts or makes a sound;
+`FixedBadgeCenter` answers with a given status and records the counts,
+for package tests and, in DEBUG, for UI tests.
+
+When it is set:
+
+- **On every reload.** `PendingModel.reload` is the single point every
+  change to the queue passes through: activation, a sync, a deletion,
+  Keep or Replace, and the Darwin notification when the extension keeps
+  a page while the app is open. It chains a `refreshBadge` after any
+  still running, so an older count never lands after a newer one.
+  `sync` and `replace` await that chain (`badgeRefreshed`) before they
+  return, and the activation work in `RootView` awaits it last, so all
+  of it runs inside `BackgroundWork`'s background time: otherwise the
+  app could be suspended with the icon still counting pages that were
+  sent.
+- **As the share sheet closes.** `ShareViewController.finish` sets the
+  count before `completeRequest`, whichever way the sheet closes, so
+  the icon is right before the person is back on the home screen. A
+  spike on the iOS 27 simulator showed an extension may set its app's
+  badge; `setBadgeCount` needs no lock, so it is outside the
+  `.sync-lock` contract.
+
+`refreshBadge` also reads the status. With something queued and no
+answer yet, it raises `needsBadgePermission`, and `RootView` presents
+`BadgePermissionView`: a sentence on why, then **Continue**, which
+calls `askForBadge` and so shows iOS's own question, or **Not now**.
+The flag is a latch: a refresh only raises it, and only an answer
+lowers it (Continue, Not now, swiping the sheet away, or iOS reporting
+an answer given elsewhere). The sync on opening often empties the
+queue while the explanation is up, and it must not vanish under the
+person. Continue, Not now and swiping away set `askedThisLaunch`, so
+the explanation does not return, and iOS's question is not asked
+again, until the next launch. A refusal sets
+`badgeDenied`, and `PendingCountSection` then says the icon cannot
+show the count, with a link to `openNotificationSettingsURLString`.
+The status is read again on every activation, so turning the badge on
+in Settings takes effect when the person comes back.
+
+On the simulator, iOS 27 shows a badge set before anyone has answered
+iOS's question, and after the question it does not redraw a badge
+whose value did not change. Neither is something the app relies on.

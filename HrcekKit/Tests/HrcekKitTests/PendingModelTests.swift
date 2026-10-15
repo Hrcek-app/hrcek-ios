@@ -8,11 +8,12 @@ import Testing
     let queue = temporaryQueue()
     let fake = FakeHrcek()
     let service: EntryService
+    let badge = FixedBadgeCenter(.undetermined)
 
     init() throws { service = try fake.service() }
 
     func model() -> PendingModel {
-        PendingModel(queue: queue) { [service] _ in service }
+        PendingModel(queue: queue, badge: badge) { [service] _ in service }
     }
 
     @Test func isTheScreenWhileSomethingWaits() throws {

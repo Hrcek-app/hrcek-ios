@@ -16,12 +16,17 @@ enum TestLanguage {
 
 extension XCTestCase {
     @MainActor
-    func launchApp(resetting: Bool = true, seeding pending: Int = 0) -> XCUIApplication {
+    /// `badge` is the answer iOS gives about the app icon's badge; faked,
+    /// because iOS keeps the real one from run to run.
+    func launchApp(
+        resetting: Bool = true, seeding pending: Int = 0, badge: String = "allowed"
+    ) -> XCUIApplication {
         let app = XCUIApplication()
         let locale = TestLanguage.current == "sl" ? "sl_SI" : "en_GB"
         app.launchArguments += [
             "-AppleLanguages", "(\(TestLanguage.current))", "-AppleLocale", locale,
         ]
+        app.launchArguments += ["-HrcekBadgeStatus", badge]
         if resetting { app.launchArguments.append("-HrcekResetState") }
         if pending > 0 {
             app.launchArguments += [

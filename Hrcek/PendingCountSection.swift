@@ -1,5 +1,6 @@
 import HrcekKit
 import SwiftUI
+import UIKit
 
 /// How many pages wait, at the top of the settings.
 struct PendingCountSection: View {
@@ -16,6 +17,19 @@ struct PendingCountSection: View {
                 // One element, read as its text alone.
                 .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("pendingCount")
+                if pending.badgeDenied {
+                    Text(
+                        """
+                        The app icon can't show this count. \
+                        Allow notifications for Hrček in Settings.
+                        """
+                    )
+                    .font(.footnote)
+                    if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
+                        Link("Open Settings", destination: url)
+                            .accessibilityIdentifier("openSettings")
+                    }
+                }
             }
         }
     }

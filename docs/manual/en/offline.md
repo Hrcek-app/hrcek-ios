@@ -108,6 +108,27 @@ If Hrček can't be reached at that moment, the sheet shows your copy
 instead, as a page that is waiting; saving it for later keeps it, and it
 is checked against Hrček's entry again before it is sent.
 
+## The number on the app icon
+
+While pages wait, Hrček's icon on the home screen shows how many, the
+way a mail app shows unread mail. The number changes as soon as you
+keep a page from the Share sheet, before you open the app, and goes
+away once everything has reached Hrček.
+
+iOS shows the number only if you allow it. The first time the app opens
+with pages waiting, it says "Hrček can show how many pages are waiting
+on its icon. iOS asks whether to allow it." Tap **Continue** and iOS
+asks whether Hrček may send notifications; allow them to see the
+number. Hrček uses this only for the number on its icon: it never shows
+alerts or plays sounds. **Not now** closes the question; the app asks
+again the next time it opens with pages waiting.
+
+If you chose **Don't Allow**, the gear's count of waiting pages says
+"The app icon can't show this count. Allow notifications for Hrček in
+Settings." Tap **Open Settings** to go to Hrček's notifications in iOS
+Settings and turn them on. The number appears the next time you open
+the app.
+
 ## At most 100
 
 The phone keeps at most 100 pages. With 100 waiting, the sheet says
