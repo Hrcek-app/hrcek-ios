@@ -36,7 +36,9 @@ Run everything yourself with `prek run --all-files`.
 
 Jobs run on GitHub's `xcode-27` macOS image, which is a preview at the
 time of writing. Xcode is selected explicitly with `DEVELOPER_DIR`.
-Every action is pinned to a commit SHA. CI needs no secrets. A failing
+Every action is pinned to a commit SHA. CI needs no secrets; only the
+monthly TestFlight upload does, described in
+[Releasing](releasing.md). A failing
 test job uploads its result bundles as an artifact.
 
 Each simulator job boots its simulator with `scripts/simulator --boot`
