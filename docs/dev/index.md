@@ -13,5 +13,6 @@ For people working on Hrček for iOS. The rules of the house are in
 - [Debugging](debugging.md) — logs, the debugger, what is never logged.
 - [Hooks and CI](ci-and-hooks.md) — what runs on every commit and every
   push, and why.
+- [Releasing](releasing.md) — uploading a build to TestFlight.
 - [Contributing](contributing.md) — commits, stacked pull requests,
   review guides.
