@@ -1,12 +1,27 @@
 #!/usr/bin/env bash
 # Archives the app and uploads it to App Store Connect for TestFlight.
-# Signs with the team and bundle prefix in Config/Local.xcconfig.
+# Signs with the team and bundle prefix in Config/Local.xcconfig, as the
+# Apple account signed in to Xcode or, when HRCEK_ASC_KEY_PATH,
+# HRCEK_ASC_KEY_ID and HRCEK_ASC_ISSUER_ID are set, an App Store
+# Connect API key.
 set -euo pipefail
 root=$(cd "$(dirname "$0")/.." && pwd)
 cd "$root"
 if [[ ! -f Config/Local.xcconfig ]]; then
   echo "Config/Local.xcconfig is missing; see docs/dev/releasing.md" >&2
   exit 1
+fi
+setting() {
+  xcodebuild -showBuildSettings -project Hrcek.xcodeproj -target Hrcek \
+    -configuration Release 2>/dev/null | awk -v k="$1" '$1 == k { print $3 }'
+}
+team=$(setting DEVELOPMENT_TEAM)
+prefix=$(setting HRCEK_BUNDLE_PREFIX)
+auth=()
+if [[ -n "${HRCEK_ASC_KEY_PATH:-}" ]]; then
+  auth=(-authenticationKeyPath "$HRCEK_ASC_KEY_PATH"
+    -authenticationKeyID "$HRCEK_ASC_KEY_ID"
+    -authenticationKeyIssuerID "$HRCEK_ASC_ISSUER_ID")
 fi
 # Every upload needs a build number higher than the last; a UTC time
 # always is, with no counter to keep.
@@ -24,14 +39,36 @@ cat > "$out/ExportOptions.plist" <<PLIST
 	<string>upload</string>
 	<key>signingStyle</key>
 	<string>automatic</string>
+	<key>teamID</key>
+	<string>$team</string>
 </dict>
 </plist>
 PLIST
+# Signing an archive needs a development certificate, which a fresh CI
+# runner has not got, so the archive is built unsigned and the export
+# signs it with Apple's cloud-managed distribution certificate. The
+# export keeps the entitlements the archive was signed with, so each
+# bundle is first signed locally with its own; that signature needs no
+# certificate. Without signing, Xcode leaves AppIdentifierPrefix empty.
 xcodebuild archive -project Hrcek.xcodeproj -scheme Hrcek \
   -configuration Release -destination 'generic/platform=iOS' \
-  -archivePath "$out/Hrcek.xcarchive" -allowProvisioningUpdates \
-  CURRENT_PROJECT_VERSION="$build" -quiet
+  -archivePath "$out/Hrcek.xcarchive" CODE_SIGNING_ALLOWED=NO \
+  AppIdentifierPrefix="$team." CURRENT_PROJECT_VERSION="$build" -quiet
+app="$out/Hrcek.xcarchive/Products/Applications/Hrcek.app"
+sign() {
+  local entitlements="$out/$2.entitlements"
+  sed -e "s/\$(AppIdentifierPrefix)/$team./g" \
+    -e "s/\$(HRCEK_BUNDLE_PREFIX)/$prefix/g" \
+    "Support/$2.entitlements" > "$entitlements"
+  if grep -q '[$](' "$entitlements"; then
+    echo "Support/$2.entitlements uses a setting this script does not fill in" >&2
+    exit 1
+  fi
+  codesign --force --sign - --entitlements "$entitlements" "$1"
+}
+sign "$app/PlugIns/HrcekShare.appex" HrcekShare
+sign "$app" Hrcek
 xcodebuild -exportArchive -archivePath "$out/Hrcek.xcarchive" \
   -exportOptionsPlist "$out/ExportOptions.plist" -exportPath "$out" \
-  -allowProvisioningUpdates
+  -allowProvisioningUpdates ${auth[@]+"${auth[@]}"}
 echo "Uploaded build $build; it appears in TestFlight once processed."
